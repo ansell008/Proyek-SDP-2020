@@ -86,7 +86,7 @@
             if($_SESSION['aktif'][0]['role'] == 1){
           ?>
             <li class="nav-item">
-              <a href="<?= base_url().'admin/authAdmin' ?>" class="nav-link active">
+              <a href="<?= base_url().'admin/authAdmin' ?>" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                   Auth
@@ -97,7 +97,7 @@
             }
           ?>
           <li class="nav-item">
-            <a href="<?= base_url().'admin/userListing' ?>" class="nav-link">
+            <a href="<?= base_url().'admin/userListing' ?>" class="nav-link active">
               <i class="nav-icon fas fa-check-square"></i>
               <p>
                 Freelance Listing
@@ -129,14 +129,13 @@
             </a>
           </li>
           <li class="nav-item">
-          <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
+            <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
               <i class="nav-icon fas fa-lightbulb"></i>
               <p>
                 Skills
               </p>
             </a>
           </li>
-          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -151,12 +150,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Authentication Admin</h1>
+            <h1>Detail User</h1>
+            <br>
+            <a class="btn btn-warning btn-flat" href="<?= base_url().'admin/userListing'?>">Back</a>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?= base_url().'dash'; ?>">Dashboard</a></li>
-              <li class="breadcrumb-item active">Auth Admin</li>
+              <li class="breadcrumb-item"><a href="<?= base_url().'admin/dash'; ?>">Dashboard</a></li>
+              <li class="breadcrumb-item active">User Detail View</li>
             </ol>
           </div>
         </div>
@@ -166,58 +167,12 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      <div class="row">
-          <div class="col col-sm-12 col-md-6">
-            <!-- Default box -->
-            <form id="insertNewAdmin" method="post">
-              <div class="card card-info card-hidden" id="cardNewAdmin">
-                <div class="card-header">
-                  <h3 class="card-title">New Admin</h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                      <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                      <i class="fas fa-times"></i></button>
-                  </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="usernameNewAdmin">Username</label>
-                      <input type="text" class="form-control" name="usernameNewAdmin" id="usernameNewAdmin" placeholder="Enter username">
-                    </div>
-                    <div class="form-group">
-                      <label for="passwordNewAdmin">Password</label>
-                      <input type="password" class="form-control" name="passNewAdmin" id="passwordNewAdmin" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <label for="confPasswordNewAdmin">Password</label>
-                      <input type="password" class="form-control" name="confPassNewAdmin" id="confPasswordNewAdmin" placeholder="Confirm Password">
-                    </div>
-                    <div class="form-group">
-                      <label for="roleNewAdmin">Role</label>
-                      <select name="roleNewAdmin" id="roleNewAdmin" class="form-control">
-                        <option value="0">Admin</option>
-                        <option value="1">Master</option>
-                      </select>
-                    </div>
-                  </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-success btn-flat">Add</button>
-                </div>
-                <!-- /.card-footer-->
-              </div>
-            </form>
-            <!-- /.card -->
-          </div>
-        </div>
         <div class="row">
-          <div class="col-12">
+          <div class="col-8">
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List Admin</h3>
+                <h3 class="card-title">User Detail</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -227,35 +182,108 @@
                 </div>
               </div>
               <div class="card-body">
-                <table class="table table-bordered table-hover" id="db1">
-                  <thead>
-                    <th>Id</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                  </thead>
+                <?php
 
-                  <tbody id="tbAdminData">
-                    
-                  </tbody>
+                // echo "<pre>";
+                // print_r($dataUser);
+                // echo "</pre>";
 
-                  <tfoot>
-                    <th>Id</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                  </tfoot>
-                </table>
+                ?>
+                <h3>User Data</h3>
+                <dl class="row">
+                  <dt class="col-sm-4">First Name</dt>
+                  <dd class="col-sm-8"><?= $dataUser[0]['user_firstname']; ?></dd>
+                  <dt class="col-sm-4">Last Name</dt>
+                  <dd class="col-sm-8"><?= $dataUser[0]['user_lastname']; ?></dd>
+                  <dt class="col-sm-4">Email</dt>
+                  <dd class="col-sm-8"><?= $dataUser[0]['user_email']; ?></dd>
+                  <dt class="col-sm-4">Username</dt>
+                  <dd class="col-sm-8"><?= $dataUser[0]['user_username']; ?></dd>
+                  <dt class="col-sm-4">KTP</dt>
+                  <dd class="col-sm-8"><?= $dataUser[0]['user_ktp']; ?></dd>
+                  <dt class="col-sm-4">Status</dt>
+                  <dd class="col-sm-8">
+                    <?php
+                      if($dataUser[0]['user_banned'] == '0'){
+                        echo "<small class='badge badge-success'>Not Banned</small>";
+                      }else{
+                        echo "<small class='badge badge-danger'>Banned</small>";
+                      }
+                    ?>
+                  </dd>
+                </dl>
+                <h3>CV Data</h3>
+                <dl class="row">
+                  <dt class="col-sm-4">Education</dt>
+                  <dd class="col-sm-8"><?= $dataUser[0]['cv_education']; ?></dd>
+                  <dt class="col-sm-4">Experience</dt>
+                  <dd class="col-sm-8"><?= $dataUser[0]['cv_experience']; ?></dd>
+                </dl>
+
+                <?php
+                  if($dataUser[0]['user_banned'] == '0'){
+                    echo "<button class='btn btn-danger btn-flat' id='btnBan'>Ban User</button>";
+                  }else{
+                    echo "<button class='btn btn-success btn-flat' id='btnUnban'>Unban User</button>";
+                  }
+                ?>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button class="btn btn-success btn-flat" id="btnNewAdmin">New Admin</button>
               </div>
               <!-- /.card-footer-->
             </div>
             <!-- /.card -->
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Other Info</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <h3>User Skills</h3>
+                <hr>
+                <?php
+                  // print_r($userSkill);
+                  foreach($userSkill as $key => $value){
+                    echo '<li>' . $value['skill_name'] . '</li>';
+                  }
+                ?>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+              </div>
+              <!-- /.card-footer-->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">History Projects</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+              </div>
+              <!-- /.card-footer-->
+            </div>
           </div>
         </div>
       </div>
@@ -284,70 +312,18 @@
 
 <script>
   $(document).ready(function(){
-    updateTableAdmin();
-
-    $("#btnNewAdmin").click(function(){
-      $("#cardNewAdmin").removeClass('card-hidden');
-    });
-
-    $("#insertNewAdmin").submit(function(e){
-      e.preventDefault();
-      $.ajax({
-        method : "post",
-        url : '<?= base_url()."admin/authAdmin/insertNewAdmin"; ?>',
-        data : $("#insertNewAdmin").serialize(),
-        success : function(res){
-          if(res == "0"){
-            alert("Insert Gagal");
-          }else if(res == "1"){
-            alert("Insert Berhasil");
-            $("#tbAdminData").html('');
-            updateTableAdmin();
+    $("#btnBan").click(function(){
+      if(confirm("Are you sure?")){
+        $.ajax({
+          method: 'post',
+          url: '<?= base_url() ?>admin/userListing/banUser',
+          data: {idUser: '<?= $dataUser[0]['user_id'] ?>'},
+          success: function(res){
+            if(res == 'success') toastr.success('Ban Success');
+            else toastr.danger('Ban Failed');
           }
-        }
-      });
-    });
-
-    $("#tbAdminData").on("click", ".btnDelete", function(){
-      let ans = confirm("Are You Sure?");
-
-      if(ans){
-        deleteDataAdmin($(this).val());
-      }
+        });
+      }      
     });
   });
-
-  function deleteDataAdmin(id){
-    $.ajax({
-      method: 'post',
-      url: '<?= base_url()."admin/authAdmin/deleteAdmin/" ?>'+id,
-      success: function(res){
-        updateTableAdmin();
-      }
-    });
-  }
-
-  function updateTableAdmin(){
-    $("#tbAdminData").html('');
-    $.ajax({
-      method: "post",
-      url: "<?= base_url().'admin/authAdmin/getAll' ?>",
-      success: function(res){
-        let adminData = JSON.parse(res);
-
-        adminData.forEach(data => {
-          $("#tbAdminData").append(`
-            <tr>
-              <td>${data.admin_id}</td>
-              <td>${data.admin_username}</td>
-              <td>${data.admin_password}</td>
-              <td>${data.role}</td>
-              <td><button class="btnDelete btn btn-flat btn-danger" value="${data.admin_id}" type="submit"><i class='fa fa-trash'></i></button></td>
-            </tr>
-          `);
-          $("#db1").DataTable();
-        });
-      }
-    }); 
-  }
 </script>

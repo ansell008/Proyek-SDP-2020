@@ -3,7 +3,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-dark bg-orange">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -48,7 +48,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-orange elevation-2">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="<?= base_url().'asset/img/logo.png'; ?>"
@@ -122,7 +122,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
+            <a href="<?= base_url().'admin/skills'; ?> " class="nav-link active">
               <i class="nav-icon fas fa-lightbulb"></i>
               <p>
                 Skills

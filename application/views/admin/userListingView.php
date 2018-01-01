@@ -2,7 +2,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-dark bg-orange">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -47,7 +47,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-orange elevation-2">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="<?= base_url().'asset/img/logo.png'; ?>"
@@ -97,7 +97,7 @@
             }
           ?>
           <li class="nav-item">
-            <a href="<?= base_url().'admin/userListing' ?>" class="nav-link">
+            <a href="<?= base_url().'admin/userListing' ?>" class="nav-link active">
               <i class="nav-icon fas fa-check-square"></i>
               <p>
                 Freelance Listing
@@ -188,9 +188,9 @@
                     <th>Username</th>
                     <th>KTP</th>
                     <th>Action</th>
-                  </thead>
+                  </thead>  
                   <tbody id="tbUserData">
-                    
+                      
                   </tbody>
                   <tfoot>
                     <th>Id</th>
@@ -263,9 +263,9 @@
               <td>${item.user_username}</td>
               <td>${item.user_ktp}</td>
               <td>
-                <button class="btn btn-flat btn-success ${ch}"><i class="fa fa-check"></i></button> 
-                <button class="btn btn-flat btn-danger ${bn}"><i class="fa fa-times"></i></button> 
-                <button class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button> 
+                <form action="<?= base_url() ?>admin/userListing/getById" method="post">
+                  <button value='${item.user_id}' name='btnViewDetail' type='submit' class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button> 
+                </form>
               </td>
             </tr>
           `);
