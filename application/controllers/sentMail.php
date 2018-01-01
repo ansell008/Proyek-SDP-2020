@@ -25,7 +25,7 @@ class SentMail extends CI_Controller{
         $mail->Username = 'dominatorranger@gmail.com';
         $mail->Password = 'Stone4768';
         $mail->Port     = 587;
-        
+        // /usr/sbin/sendmail
         $mail->setFrom('aplinadm@gmail.com', 'Kerja.In');
         //$mail->addReplyTo('info@example.com', 'CodexWorld');
         
