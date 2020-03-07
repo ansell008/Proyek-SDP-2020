@@ -51,5 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'admin/authAdmin';
 $route['admin'] = 'admin/authAdmin';
+$route['authAdmin'] = 'admin/authAdmin/adminView';
+$route['dash'] = 'admin/authAdmin/loadViewAdmin/landing';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
