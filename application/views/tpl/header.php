@@ -16,6 +16,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url().'asset/admin'; ?>/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="<?= base_url().'asset/admin'; ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="<?= base_url().'asset/css' ?>/style.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script src="<?= base_url().'asset/admin' ?>/plugins/jquery/jquery.min.js"></script>
 </head>

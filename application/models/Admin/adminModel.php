@@ -9,6 +9,10 @@ class adminModel extends CI_Model{
     public function getAll(){
         return $this->db->get('auth_admin');
     }
+
+    public function insertAdmin($data){
+        $this->db->insert('auth_admin', $data);
+    }
 }
 
 ?>

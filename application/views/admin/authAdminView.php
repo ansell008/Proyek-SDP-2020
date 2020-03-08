@@ -141,27 +141,21 @@
               </div>
               <div class="card-body">
                 <table class="table table-bordered table-hover" id="db1">
-                  <th>Id</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Role</th>
-                <?php
-                  foreach($data as $key => $value){
-                ?>
-                  <tr>
-                    <td><?= $value['admin_id']; ?></td>
-                    <td><?= $value['admin_username']; ?></td>
-                    <td><?= $value['admin_password']; ?></td>
-                    <td><?= $value['role']; ?></td>
-                  </tr>
-                <?php
-                  }
-                ?>
+                  <thead>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                  </thead>
+
+                  <tbody id="tbAdminData">
+                    
+                  </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button class="btn btn-info btn-flat">Add New Admin</button>
+                <button class="btn btn-success btn-flat" id="btnNewAdmin">New Admin</button>
               </div>
               <!-- /.card-footer-->
             </div>
@@ -171,49 +165,46 @@
         <div class="row">
           <div class="col col-sm-12 col-md-6">
             <!-- Default box -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">List Admin</h3>
+            <form id="insertNewAdmin" method="post">
+              <div class="card card-info card-hidden" id="cardNewAdmin">
+                <div class="card-header">
+                  <h3 class="card-title">New Admin</h3>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                      <i class="fas fa-times"></i></button>
+                  </div>
                 </div>
-              </div>
-              <div class="card-body">
-
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                Footer
-              </div>
-              <!-- /.card-footer-->
-            </div>
-            <!-- /.card -->
-          </div>
-          <div class="col col-md-6 col-sm-12">
-            <!-- Default box -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">List Admin</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
+                <div class="card-body">
+                    <div class="form-group">
+                      <label for="usernameNewAdmin">Username</label>
+                      <input type="text" class="form-control" name="usernameNewAdmin" id="usernameNewAdmin" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                      <label for="passwordNewAdmin">Password</label>
+                      <input type="password" class="form-control" name="passNewAdmin" id="passwordNewAdmin" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                      <label for="confPasswordNewAdmin">Password</label>
+                      <input type="password" class="form-control" name="confPassNewAdmin" id="confPasswordNewAdmin" placeholder="Confirm Password">
+                    </div>
+                    <div class="form-group">
+                      <label for="roleNewAdmin">Role</label>
+                      <select name="roleNewAdmin" id="roleNewAdmin" class="form-control">
+                        <option value="0">Admin</option>
+                        <option value="1">Master</option>
+                      </select>
+                    </div>
+                  </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success btn-flat">Add</button>
                 </div>
+                <!-- /.card-footer-->
               </div>
-              <div class="card-body">
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                Footer
-              </div>
-              <!-- /.card-footer-->
-            </div>
+            </form>
             <!-- /.card -->
           </div>
         </div>
@@ -238,18 +229,55 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 
 <script>
   $(document).ready(function(){
-    $(function () {
-      $("#db1").DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
+    updateTableAdmin();
+
+    $("#btnNewAdmin").click(function(){
+      $("#cardNewAdmin").removeClass('card-hidden');
+    });
+
+    $("#insertNewAdmin").submit(function(e){
+      e.preventDefault();
+      $.ajax({
+        method : "post",
+        url : '<?= base_url()."admin/authAdmin/insertNewAdmin"; ?>',
+        data : $("#insertNewAdmin").serialize(),
+        success : function(res){
+          if(res == "0"){
+            alert("Insert Gagal");
+          }else if(res == "1"){
+            alert("Insert Berhasil");
+            $("#tbAdminData").html('');
+            updateTableAdmin();
+          }
+        }
       });
     });
   });
+
+  function updateTableAdmin(){
+    $.ajax({
+      method: "post",
+      url: "<?= base_url().'admin/authAdmin/getAll' ?>",
+      success: function(res){
+        let adminData = JSON.parse(res);
+
+        adminData.forEach(data => {
+          $("#tbAdminData").append(`
+            <tr>
+              <td>${data.admin_id}</td>
+              <td>${data.admin_username}</td>
+              <td>${data.admin_password}</td>
+              <td>${data.role}</td>
+            </tr>
+          `);
+          $("#db1").DataTable();
+        });
+      }
+    }); 
+  }
 </script>
