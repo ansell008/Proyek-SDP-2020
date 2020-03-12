@@ -97,17 +97,18 @@
             }
           ?>
           <li class="nav-item">
-<<<<<<< HEAD
             <a href="<?= base_url().'userListing' ?>" class="nav-link">
               <i class="nav-icon fas fa-check-square"></i>
               <p>
                 User Listing
-=======
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href=<?= base_url().'admin/categoryAdmin'; ?> class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Category
->>>>>>> 6ca14b7fd5b5233bb8fec34c3cc08f0e8b68457f
               </p>
             </a>
           </li>
