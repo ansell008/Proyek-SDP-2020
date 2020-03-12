@@ -77,6 +77,10 @@ class AuthAdmin extends CI_Controller{
             echo "1";
         }
     }
+
+    public function deleteAdmin($id){
+        $this->adminModel->deleteAdmin($id);
+    }
 }
 
 ?>

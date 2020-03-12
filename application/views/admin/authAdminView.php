@@ -75,7 +75,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?= base_url().'dash' ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -96,6 +96,14 @@
           <?php
             }
           ?>
+          <li class="nav-item">
+            <a href="<?= base_url().'userListing' ?>" class="nav-link">
+              <i class="nav-icon fas fa-check-square"></i>
+              <p>
+                User Listing
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -146,11 +154,20 @@
                     <th>Username</th>
                     <th>Password</th>
                     <th>Role</th>
+                    <th>Action</th>
                   </thead>
 
                   <tbody id="tbAdminData">
                     
                   </tbody>
+
+                  <tfoot>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -257,9 +274,28 @@
         }
       });
     });
+
+    $("#tbAdminData").on("click", ".btnDelete", function(){
+      let ans = confirm("Are You Sure?");
+
+      if(ans){
+        deleteDataAdmin($(this).val());
+      }
+    });
   });
 
+  function deleteDataAdmin(id){
+    $.ajax({
+      method: 'post',
+      url: '<?= base_url()."admin/authAdmin/deleteAdmin/" ?>'+id,
+      success: function(res){
+        updateTableAdmin();
+      }
+    });
+  }
+
   function updateTableAdmin(){
+    $("#tbAdminData").html('');
     $.ajax({
       method: "post",
       url: "<?= base_url().'admin/authAdmin/getAll' ?>",
@@ -273,6 +309,7 @@
               <td>${data.admin_username}</td>
               <td>${data.admin_password}</td>
               <td>${data.role}</td>
+              <td><button class="btnDelete btn btn-flat btn-danger" value="${data.admin_id}" type="submit"><i class='fa fa-trash'></i></button></td>
             </tr>
           `);
           $("#db1").DataTable();

@@ -13,6 +13,10 @@ class adminModel extends CI_Model{
     public function insertAdmin($data){
         $this->db->insert('auth_admin', $data);
     }
+
+    public function deleteAdmin($id){
+        $this->db->delete('auth_admin', array('admin_id' => $id));
+    }
 }
 
 ?>

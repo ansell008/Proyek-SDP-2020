@@ -75,7 +75,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?= base_url().'dash' ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -118,11 +118,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Your Dashboard</h1>
+            <h1>User Listing</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active"><a href="<?= base_url().'admin/dash' ?>">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="<?= base_url().'dash'; ?>">Dashboard</a></li>
+              <li class="breadcrumb-item active">User Listing</li>
             </ol>
           </div>
         </div>
@@ -133,30 +134,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
-            <!-- Default box -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Title</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="card-body">
-                Start creating your amazing application!
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                Footer
-              </div>
-              <!-- /.card-footer-->
-            </div>
-            <!-- /.card -->
-          </div>
+          
         </div>
       </div>
     </section>
@@ -179,3 +157,75 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+<script>
+  $(document).ready(function(){
+    updateTableAdmin();
+
+    $("#btnNewAdmin").click(function(){
+      $("#cardNewAdmin").removeClass('card-hidden');
+    });
+
+    $("#insertNewAdmin").submit(function(e){
+      e.preventDefault();
+      $.ajax({
+        method : "post",
+        url : '<?= base_url()."admin/authAdmin/insertNewAdmin"; ?>',
+        data : $("#insertNewAdmin").serialize(),
+        success : function(res){
+          if(res == "0"){
+            alert("Insert Gagal");
+          }else if(res == "1"){
+            alert("Insert Berhasil");
+            $("#tbAdminData").html('');
+            updateTableAdmin();
+          }
+        }
+      });
+    });
+
+    $("#tbAdminData").on("click", ".btnDelete", function(){
+      let ans = confirm("Are You Sure?");
+
+      if(ans){
+        deleteDataAdmin($(this).val());
+      }
+    });
+  });
+
+  function deleteDataAdmin(id){
+    $.ajax({
+      method: 'post',
+      url: '<?= base_url()."admin/authAdmin/deleteAdmin/" ?>'+id,
+      success: function(res){
+        updateTableAdmin();
+      }
+    });
+  }
+
+  function updateTableAdmin(){
+    $("#tbAdminData").html('');
+    $.ajax({
+      method: "post",
+      url: "<?= base_url().'admin/authAdmin/getAll' ?>",
+      success: function(res){
+        let adminData = JSON.parse(res);
+
+        adminData.forEach(data => {
+          $("#tbAdminData").append(`
+            <tr>
+              <td>${data.admin_id}</td>
+              <td>${data.admin_username}</td>
+              <td>${data.admin_password}</td>
+              <td>${data.role}</td>
+              <td><button class="btnDelete btn btn-flat btn-danger" value="${data.admin_id}" type="submit"><i class='fa fa-trash'></i></button></td>
+            </tr>
+          `);
+          $("#db1").DataTable();
+        });
+      }
+    }); 
+  }
+</script>
