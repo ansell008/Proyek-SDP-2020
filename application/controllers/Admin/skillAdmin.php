@@ -21,8 +21,9 @@ class SkillAdmin extends CI_Controller{
     public function updateById(){
         $id = $this->input->post('id');
         $name = $this->input->post('name');
+        $time = date("Y-m-d H:i:s");
 
-        $res = $this->db->update('skill_admin', array('skill_name' => $name), array('skill_id' => $id));
+        $res = $this->db->update('skill_admin', array('skill_name' => $name, 'updated_at' => $time), array('skill_id' => $id));
         
         if($res) echo "success";
         else echo "fail";
@@ -31,10 +32,13 @@ class SkillAdmin extends CI_Controller{
     public function addNewSkill(){
         $name = $this->input->post('name');
         $id = uniqid($name);
+        $time = date("Y-m-d H:i:s");
 
         $data = array(
             'skill_id' => $id,
-            'skill_name' => $name
+            'skill_name' => $name,
+            'created_at' => $time,
+            'updated_at' => $time
         );
         $res = $this->db->insert('skill_admin', $data);
 

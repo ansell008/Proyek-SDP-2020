@@ -142,11 +142,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>User Listing</h1>
+            <h1>Your Freelance Summary</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?= base_url().'dash'; ?>">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="<?= base_url().'admin/dash'; ?>">Dashboard</a></li>
               <li class="breadcrumb-item active">User Listing</li>
             </ol>
           </div>
