@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2020 at 10:48 AM
+-- Generation Time: Mar 18, 2020 at 03:42 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -70,7 +70,31 @@ CREATE TABLE `category_admin` (
 INSERT INTO `category_admin` (`category_id`, `category_name`, `created_at`, `updated_at`) VALUES
 ('jasa5e68fc00dbf9f', 'jasa', '2032-02-03 00:00:00', '2032-02-03 00:00:00'),
 ('pendidikan5e6891103daee', 'pendidikan', '2032-02-03 00:00:00', '2032-02-03 00:00:00'),
-('teknologi informatika5e69a63ba', 'teknologi informatika', '2032-02-03 00:00:00', '2032-02-03 00:00:00');
+('perhotelan5e71daaa4199d', 'perhotelan', '2032-02-03 00:00:00', '2032-02-03 00:00:00'),
+('pertambangan5e71f7fd3a067', 'pertambangan', '2032-02-03 00:00:00', '2032-02-03 00:00:00'),
+('teknologi5e71f9da7d32f', 'teknologi', '2032-02-03 00:00:00', '2032-02-03 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sub_category_admin`
+--
+
+DROP TABLE IF EXISTS `sub_category_admin`;
+CREATE TABLE `sub_category_admin` (
+  `sub_id` varchar(20) NOT NULL,
+  `fk_category_id` varchar(20) NOT NULL,
+  `sub_name` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sub_category_admin`
+--
+
+INSERT INTO `sub_category_admin` (`sub_id`, `fk_category_id`, `sub_name`, `created_at`, `updated_at`) VALUES
+('cuci piring5e71fa567', 'jasa5e68fc00dbf9f', 'cuci piring', '2032-02-03 00:00:00', '2032-02-03 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -87,6 +111,12 @@ ALTER TABLE `auth_admin`
 --
 ALTER TABLE `category_admin`
   ADD PRIMARY KEY (`category_id`);
+
+--
+-- Indexes for table `sub_category_admin`
+--
+ALTER TABLE `sub_category_admin`
+  ADD PRIMARY KEY (`sub_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
