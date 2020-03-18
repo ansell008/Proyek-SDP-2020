@@ -105,7 +105,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url().'admin/categoryAdmin'; ?>" class="nav-link">
+            <a href="<?= base_url().'admin/categoryAdmin'; ?> " class="nav-link">
               <i class="nav-icon fas fa-globe"></i>
               <p>
                 Category
