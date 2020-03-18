@@ -142,12 +142,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Category</h1>
+            <h1>Skills Listing</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?= base_url().'dash'; ?>">Dashboard</a></li>
-              <li class="breadcrumb-item active">Category</li>
+              <li class="breadcrumb-item active"><a href="<?= base_url().'admin/dash' ?>">Dashboard</a> / Skills</li>
             </ol>
           </div>
         </div>
@@ -157,49 +156,13 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <!-- Default box -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">List Category</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="card-body">
-                <table class="table table-bordered table-hover" id="db1">
-                  <thead>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Action</th>
-                  </thead>
-
-                  <tbody id="tbCategoryData">
-                    
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                <button class="btn btn-success btn-flat" id="btnNewCategory">New Category</button>
-              </div>
-              <!-- /.card-footer-->
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-        <div class="row">
+      <div class="row">
           <div class="col col-sm-12 col-md-6">
             <!-- Default box -->
-            <form id="insertNewCategory" method="post">
-              <div class="card card-info card-hidden" id="cardNewCategory">
+            <form id="insertNewSkill" method="post">
+              <div class="card card-info card-hidden" id="cardNewSkill">
                 <div class="card-header">
-                  <h3 class="card-title">New Category</h3>
+                  <h3 class="card-title">New Skill</h3>
 
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -210,8 +173,8 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                      <label for="nameNewCategory">Nama</label>
-                      <input type="text" class="form-control" name="nameNewCategory" id="usernameNewAdmin" placeholder="Enter Category Name">
+                      <label for="skillName">Skill Name</label>
+                      <input type="text" class="form-control" name="skillName" id="skillName" placeholder="Enter Skill Name">
                     </div>
                   </div>
                 <!-- /.card-body -->
@@ -221,43 +184,46 @@
                 <!-- /.card-footer-->
               </div>
             </form>
-            <form id="updateCategory" method="post">
-              <div class="card card-info card-hidden" id="cardUpdateCategory">
-                <div class="card-header">
-                  <h3 class="card-title">Update Category</h3>
+            <!-- /.card -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <!-- Default box -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">List Skills</h3>
 
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                      <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                      <i class="fas fa-times"></i></button>
-                  </div>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
                 </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="idCategoryUpdate">ID</label>
-                      <input type="text" class="form-control" name="idCategoryUpdate" id="idCategoryUpdate" readonly>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="nameCategory">Old Name</label>
-                      <input type="text" class="form-control" name="nameCategory" id="nameCategory" readonly>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="nameCategoryUpdate">New Name</label>
-                      <input type="text" class="form-control" name="nameCategoryUpdate" id="nameCategoryUpdate" placeholder="Update Category Name">
-                    </div>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-success btn-flat">Update</button>
-                </div>
-                <!-- /.card-footer-->
               </div>
-            </form>
+              <div class="card-body">
+                <table class="table table-bordered table-striped" id="tableSkill">
+                  <thead>
+                    <th>Id</th>
+                    <th>Skill Name</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody id="tbSkillData">
+                    
+                  </tbody>
+                  <tfoot>
+                    <th>Id</th>
+                    <th>Skill Name</th>
+                    <th>Action</th>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button id='addNewSkill' class='btn btn-flat btn-success'>Add New Skill</button>
+              </div>
+              <!-- /.card-footer-->
+            </div>
             <!-- /.card -->
           </div>
         </div>
@@ -282,87 +248,117 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
 <script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
 <script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 
 <script>
   $(document).ready(function(){
-    updateTableCategory();
+    loadDataSkill();
 
-    $("#btnNewCategory").click(function(){
-      $("#cardNewCategory").removeClass('card-hidden');
-    });
-
-    
-
-    $("#insertNewCategory").submit(function(e){
+    $("#insertNewSkill").submit(function(e){
       e.preventDefault();
+      let name = $("#skillName").val();
+
       $.ajax({
-        method : "post",
-        url : '<?= base_url()."admin/categoryAdmin/insertNewCategory"; ?>',
-        data : $("#insertNewCategory").serialize(),
-        success : function(){
-          alert("Insert Berhasil");
-          $("#tbCategoryData").html('');
-          updateTableCategory();
+        method: 'post',
+        url: '<?= base_url()."admin/skillAdmin/addNewSkill" ?>',
+        data: {name: name},
+        success: function(res){
+          if(res == 'success'){
+            alert('INSERT SUCCESS');
+          }else{
+            alert('INSERT FAILED');
+          }
+          loadDataSkill();
+          $("#insertNewSkill").addClass('card-hidden');
         }
       });
     });
-    $("#updateCategory").submit(function (e) {
-      e.preventDefault();
+
+    $("#addNewSkill").click(function(){
+      $("#cardNewSkill").removeClass('card-hidden');
+    });
+
+    $("#tbSkillData").on('click', '.btn-edit', function(){
+      let tdId = $(this).attr('id');
+
       $.ajax({
-          method: "post",
-          url: "<?= base_url().'admin/categoryAdmin/updateCategory' ?>",
-          data : $("#updateCategory").serialize(),
-          success : function(){
-            alert("Update Success");
-            $("#tbCategoryData").html('');
-            updateTableCategory();
+        method: 'post',
+        url: '<?= base_url()."admin/skillAdmin/getById" ?>',
+        data: {id : tdId},
+        success: function(data){
+          let item = JSON.parse(data);
+          
+          $(`#row-${tdId}`).html(`
+            <td><input type='text' id='skill_id-${item[0].skill_id}' class='form-control' name='skill_id' value='${item[0].skill_id}' readonly /></td>
+            <td><input type='text' id='skill_name-${item[0].skill_id}' class='form-control' name='skill_name' value='${item[0].skill_name}' /></td>
+            <td><button type='submit' class="btn btn-flat btn-success btn-done" id="${item[0].skill_id}"><i class="fa fa-check"></i></button></td>
+          `);
+        }
+      })
+    });
+
+    $("#tbSkillData").on('click', '.btn-done', function(){
+      let trId = $(this).attr("id");
+      let name = $(`#skill_name-${trId}`).val();
+
+      console.log(name);
+
+      $.ajax({
+        method: 'post',
+        url: '<?= base_url()."admin/skillAdmin/updateById" ?>',
+        data: {id: trId, name: name},
+        success: function(res){
+          if(res == 'success'){
+            alert("EDIT SUKSES");
+            loadDataSkill();
+          }
+        }
+      });
+    });
+
+    $("#tbSkillData").on('click', '.btn-delete', function(){
+      let id = $(this).attr('id');
+      
+      if(confirm('ARE YOU SURE?')){
+        $.ajax({
+          method: 'post',
+          url: '<?= base_url()."admin/skillAdmin/deleteById" ?>',
+          data: {id: id},
+          success: function(res){
+            if(res == 'success'){
+              alert("DELETE SUCCESS");
+            }else{
+              alert("DELETE FAILED");
+            }
+            loadDataSkill();
           }
         });
-    })
+      }
+    });
   });
 
-  function updateTableCategory(){
+  function loadDataSkill(){
+    $("#tbSkillData").html("");
     $.ajax({
-      method: "post",
-      url: "<?= base_url().'admin/categoryAdmin/getAll' ?>",
+      method: 'post',
+      url: '<?= base_url()."admin/skillAdmin/getAll" ?>',
       success: function(res){
-        let adminData = JSON.parse(res);
+        res = JSON.parse(res);
 
-        adminData.forEach(data => {
-          $("#tbCategoryData").append(`
-            <tr>
-              <td>${data.category_id}</td>
-              <td>${data.category_name}</td>
-              <td><button value='${data.category_id}' name='${data.category_name}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${data.category_id}' name='${data.category_name}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button></td>
+        res.forEach(item => {
+          $("#tbSkillData").append(`
+            <tr id="row-${item.skill_id}" class="tbRow">
+              <td>${item.skill_id}</td>
+              <td>${item.skill_name}</td>
+              <td><button class="btn btn-flat btn-warning btn-edit" id="${item.skill_id}"><i class="fa fa-edit"></i></button> <button class="btn btn-flat btn-danger btn-delete" id="${item.skill_id}"><i class="fa fa-trash"></i></button></td>
             </tr>
           `);
         });
-        $(".btnEdit").click(function(){
-          $("#cardUpdateCategory").removeClass('card-hidden');
-          $("#idCategoryUpdate").val($(this).val());
-          $("#nameCategory").val($(this).attr("name"));
-          
-        });
-        $(".btnDelete").click(function(){
-          var conf = confirm("Are you sure ?");
-          if(conf){
-            $.ajax({
-              method: "post",
-              url: "<?= base_url().'admin/categoryAdmin/deleteCategory' ?>",
-              data: {"id" : $(this).val()},
-              success: function () {
-                alert("delete success");
-                $("#tbCategoryData").html("");
-                updateTableCategory();
-              }
-            });
-          }
-          
-        });
-        $("#db1").DataTable();
+
+        $("#tableSkill").DataTable();
       }
-    }); 
+    });
   }
 </script>

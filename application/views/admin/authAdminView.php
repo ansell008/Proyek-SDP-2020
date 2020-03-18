@@ -75,7 +75,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?= base_url().'dash' ?>" class="nav-link">
+            <a href="<?= base_url().'admin/dash'; ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -86,7 +86,7 @@
             if($_SESSION['aktif'][0]['role'] == 1){
           ?>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?= base_url().'admin/authAdmin' ?>" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                   Auth
@@ -97,18 +97,34 @@
             }
           ?>
           <li class="nav-item">
-            <a href="<?= base_url().'userListing' ?>" class="nav-link">
+            <a href="<?= base_url().'admin/userListing' ?>" class="nav-link">
               <i class="nav-icon fas fa-check-square"></i>
               <p>
-                User Listing
+                Freelance Listing
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href=<?= base_url().'admin/categoryAdmin'; ?> class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="<?= base_url().'admin/companyListing'; ?> " class="nav-link">
+              <i class="nav-icon fas fa-briefcase"></i>
+              <p>
+                Company Listing
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url().'admin/categoryAdmin'; ?> " class="nav-link">
+              <i class="nav-icon fas fa-globe"></i>
               <p>
                 Category
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
+              <i class="nav-icon fas fa-lightbulb"></i>
+              <p>
+                Skills
               </p>
             </a>
           </li>
@@ -141,6 +157,52 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+      <div class="row">
+          <div class="col col-sm-12 col-md-6">
+            <!-- Default box -->
+            <form id="insertNewAdmin" method="post">
+              <div class="card card-info card-hidden" id="cardNewAdmin">
+                <div class="card-header">
+                  <h3 class="card-title">New Admin</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                      <i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                      <label for="usernameNewAdmin">Username</label>
+                      <input type="text" class="form-control" name="usernameNewAdmin" id="usernameNewAdmin" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                      <label for="passwordNewAdmin">Password</label>
+                      <input type="password" class="form-control" name="passNewAdmin" id="passwordNewAdmin" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                      <label for="confPasswordNewAdmin">Password</label>
+                      <input type="password" class="form-control" name="confPassNewAdmin" id="confPasswordNewAdmin" placeholder="Confirm Password">
+                    </div>
+                    <div class="form-group">
+                      <label for="roleNewAdmin">Role</label>
+                      <select name="roleNewAdmin" id="roleNewAdmin" class="form-control">
+                        <option value="0">Admin</option>
+                        <option value="1">Master</option>
+                      </select>
+                    </div>
+                  </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success btn-flat">Add</button>
+                </div>
+                <!-- /.card-footer-->
+              </div>
+            </form>
+            <!-- /.card -->
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
             <!-- Default box -->
@@ -184,52 +246,6 @@
               </div>
               <!-- /.card-footer-->
             </div>
-            <!-- /.card -->
-          </div>
-        </div>
-        <div class="row">
-          <div class="col col-sm-12 col-md-6">
-            <!-- Default box -->
-            <form id="insertNewAdmin" method="post">
-              <div class="card card-info card-hidden" id="cardNewAdmin">
-                <div class="card-header">
-                  <h3 class="card-title">New Admin</h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                      <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                      <i class="fas fa-times"></i></button>
-                  </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="usernameNewAdmin">Username</label>
-                      <input type="text" class="form-control" name="usernameNewAdmin" id="usernameNewAdmin" placeholder="Enter username">
-                    </div>
-                    <div class="form-group">
-                      <label for="passwordNewAdmin">Password</label>
-                      <input type="password" class="form-control" name="passNewAdmin" id="passwordNewAdmin" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <label for="confPasswordNewAdmin">Password</label>
-                      <input type="password" class="form-control" name="confPassNewAdmin" id="confPasswordNewAdmin" placeholder="Confirm Password">
-                    </div>
-                    <div class="form-group">
-                      <label for="roleNewAdmin">Role</label>
-                      <select name="roleNewAdmin" id="roleNewAdmin" class="form-control">
-                        <option value="0">Admin</option>
-                        <option value="1">Master</option>
-                      </select>
-                    </div>
-                  </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-success btn-flat">Add</button>
-                </div>
-                <!-- /.card-footer-->
-              </div>
-            </form>
             <!-- /.card -->
           </div>
         </div>

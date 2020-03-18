@@ -51,8 +51,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'admin/authAdmin';
 $route['admin'] = 'admin/authAdmin';
-$route['authAdmin'] = 'admin/authAdmin/adminView';
-$route['dash'] = 'admin/authAdmin/loadViewAdmin/landing';
-$route['userListing'] = 'admin/userListing';
+$route['admin/authAdmin'] = 'admin/authAdmin/adminView';
+$route['admin/dash'] = 'admin/authAdmin/loadViewAdmin/landing';
+$route['admin/userListing'] = 'admin/userListing/loadFreelance';
+$route['admin/companyListing'] = 'admin/userListing/loadCompany';
+$route['admin/skills'] = 'admin/skillAdmin';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
