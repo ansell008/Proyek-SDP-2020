@@ -75,7 +75,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?= base_url().'admin/dash'; ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -86,7 +86,7 @@
             if($_SESSION['aktif'][0]['role'] == 1){
           ?>
             <li class="nav-item">
-              <a href="<?= base_url().'authAdmin' ?>" class="nav-link">
+              <a href="<?= base_url().'admin/authAdmin' ?>" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                   Auth
@@ -97,8 +97,24 @@
             }
           ?>
           <li class="nav-item">
-            <a href=<?= base_url().'admin/categoryAdmin'; ?> class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="<?= base_url().'admin/userListing' ?>" class="nav-link">
+              <i class="nav-icon fas fa-check-square"></i>
+              <p>
+                Freelance Listing
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url().'admin/companyListing'; ?> " class="nav-link">
+              <i class="nav-icon fas fa-briefcase"></i>
+              <p>
+                Company Listing
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url().'admin/categoryAdmin'; ?> " class="nav-link">
+              <i class="nav-icon fas fa-globe"></i>
               <p>
                 Category
               </p>
@@ -109,6 +125,14 @@
               <i class="nav-icon fas fa-list-alt"></i>
               <p>
                 Sub - Category
+                </p>
+            </a>
+          </li>
+          <li class="nav-item">
+          <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
+              <i class="nav-icon fas fa-lightbulb"></i>
+              <p>
+                Skills
               </p>
             </a>
           </li>

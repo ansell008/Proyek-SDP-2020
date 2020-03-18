@@ -121,15 +121,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href=<?= base_url().'admin/subCategoryAdmin'; ?> class="nav-link">
-              <i class="nav-icon fas fa-list-alt"></i>
-              <p>
-                Sub - Category
-                </p>
-            </a>
-          </li>
-          <li class="nav-item">
-          <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
+            <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
               <i class="nav-icon fas fa-lightbulb"></i>
               <p>
                 Skills
@@ -150,11 +142,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Your Dashboard</h1>
+            <h1>Skills Listing</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active"><a href="<?= base_url().'admin/dash' ?>">Dashboard</a></li>
+              <li class="breadcrumb-item active"><a href="<?= base_url().'admin/dash' ?>">Dashboard</a> / Skills</li>
             </ol>
           </div>
         </div>
@@ -164,12 +156,43 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+      <div class="row">
+          <div class="col col-sm-12 col-md-6">
+            <!-- Default box -->
+            <form id="insertNewSkill" method="post">
+              <div class="card card-info card-hidden" id="cardNewSkill">
+                <div class="card-header">
+                  <h3 class="card-title">New Skill</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                      <i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                      <label for="skillName">Skill Name</label>
+                      <input type="text" class="form-control" name="skillName" id="skillName" placeholder="Enter Skill Name">
+                    </div>
+                  </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success btn-flat">Add</button>
+                </div>
+                <!-- /.card-footer-->
+              </div>
+            </form>
+            <!-- /.card -->
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Title</h3>
+                <h3 class="card-title">List Skills</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -179,11 +202,25 @@
                 </div>
               </div>
               <div class="card-body">
-                Start creating your amazing application!
+                <table class="table table-bordered table-striped" id="tableSkill">
+                  <thead>
+                    <th>Id</th>
+                    <th>Skill Name</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody id="tbSkillData">
+                    
+                  </tbody>
+                  <tfoot>
+                    <th>Id</th>
+                    <th>Skill Name</th>
+                    <th>Action</th>
+                  </tfoot>
+                </table>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                Footer
+                <button id='addNewSkill' class='btn btn-flat btn-success'>Add New Skill</button>
               </div>
               <!-- /.card-footer-->
             </div>
@@ -211,3 +248,117 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+<script>
+  $(document).ready(function(){
+    loadDataSkill();
+
+    $("#insertNewSkill").submit(function(e){
+      e.preventDefault();
+      let name = $("#skillName").val();
+
+      $.ajax({
+        method: 'post',
+        url: '<?= base_url()."admin/skillAdmin/addNewSkill" ?>',
+        data: {name: name},
+        success: function(res){
+          if(res == 'success'){
+            alert('INSERT SUCCESS');
+          }else{
+            alert('INSERT FAILED');
+          }
+          loadDataSkill();
+          $("#insertNewSkill").addClass('card-hidden');
+        }
+      });
+    });
+
+    $("#addNewSkill").click(function(){
+      $("#cardNewSkill").removeClass('card-hidden');
+    });
+
+    $("#tbSkillData").on('click', '.btn-edit', function(){
+      let tdId = $(this).attr('id');
+
+      $.ajax({
+        method: 'post',
+        url: '<?= base_url()."admin/skillAdmin/getById" ?>',
+        data: {id : tdId},
+        success: function(data){
+          let item = JSON.parse(data);
+          
+          $(`#row-${tdId}`).html(`
+            <td><input type='text' id='skill_id-${item[0].skill_id}' class='form-control' name='skill_id' value='${item[0].skill_id}' readonly /></td>
+            <td><input type='text' id='skill_name-${item[0].skill_id}' class='form-control' name='skill_name' value='${item[0].skill_name}' /></td>
+            <td><button type='submit' class="btn btn-flat btn-success btn-done" id="${item[0].skill_id}"><i class="fa fa-check"></i></button></td>
+          `);
+        }
+      })
+    });
+
+    $("#tbSkillData").on('click', '.btn-done', function(){
+      let trId = $(this).attr("id");
+      let name = $(`#skill_name-${trId}`).val();
+
+      console.log(name);
+
+      $.ajax({
+        method: 'post',
+        url: '<?= base_url()."admin/skillAdmin/updateById" ?>',
+        data: {id: trId, name: name},
+        success: function(res){
+          if(res == 'success'){
+            alert("EDIT SUKSES");
+            loadDataSkill();
+          }
+        }
+      });
+    });
+
+    $("#tbSkillData").on('click', '.btn-delete', function(){
+      let id = $(this).attr('id');
+      
+      if(confirm('ARE YOU SURE?')){
+        $.ajax({
+          method: 'post',
+          url: '<?= base_url()."admin/skillAdmin/deleteById" ?>',
+          data: {id: id},
+          success: function(res){
+            if(res == 'success'){
+              alert("DELETE SUCCESS");
+            }else{
+              alert("DELETE FAILED");
+            }
+            loadDataSkill();
+          }
+        });
+      }
+    });
+  });
+
+  function loadDataSkill(){
+    $("#tbSkillData").html("");
+    $.ajax({
+      method: 'post',
+      url: '<?= base_url()."admin/skillAdmin/getAll" ?>',
+      success: function(res){
+        res = JSON.parse(res);
+
+        res.forEach(item => {
+          $("#tbSkillData").append(`
+            <tr id="row-${item.skill_id}" class="tbRow">
+              <td>${item.skill_id}</td>
+              <td>${item.skill_name}</td>
+              <td><button class="btn btn-flat btn-warning btn-edit" id="${item.skill_id}"><i class="fa fa-edit"></i></button> <button class="btn btn-flat btn-danger btn-delete" id="${item.skill_id}"><i class="fa fa-trash"></i></button></td>
+            </tr>
+          `);
+        });
+
+        $("#tableSkill").DataTable();
+      }
+    });
+  }
+</script>
