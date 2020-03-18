@@ -36,8 +36,4 @@ class CategoryAdmin extends CI_Controller{
     }
 
 }
-
-
-
-
 ?>

@@ -112,6 +112,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href=<?= base_url().'admin/subCategoryAdmin'; ?> class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Sub - Category
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
