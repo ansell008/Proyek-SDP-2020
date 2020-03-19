@@ -75,7 +75,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?= base_url().'admin/dash'; ?>" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -86,7 +86,7 @@
             if($_SESSION['aktif'][0]['role'] == 1){
           ?>
             <li class="nav-item">
-              <a href="<?= base_url().'admin/authAdmin' ?>" class="nav-link">
+              <a href="<?= base_url().'authAdmin' ?>" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                   Auth
@@ -97,42 +97,18 @@
             }
           ?>
           <li class="nav-item">
-            <a href="<?= base_url().'admin/userListing' ?>" class="nav-link">
-              <i class="nav-icon fas fa-check-square"></i>
-              <p>
-                Freelance Listing
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?= base_url().'admin/companyListing'; ?> " class="nav-link">
-              <i class="nav-icon fas fa-briefcase"></i>
-              <p>
-                Company Listing
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?= base_url().'admin/categoryAdmin'; ?> " class="nav-link">
-              <i class="nav-icon fas fa-globe"></i>
+            <a href=<?= base_url().'admin/categoryAdmin'; ?> class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Category
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href=<?= base_url().'admin/subCategoryAdmin'; ?> class="nav-link">
+            <a href=<?= base_url().'admin/categoryAdmin'; ?> class="nav-link">
               <i class="nav-icon fas fa-list-alt"></i>
               <p>
                 Sub - Category
-                </p>
-            </a>
-          </li>
-          <li class="nav-item">
-          <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
-              <i class="nav-icon fas fa-lightbulb"></i>
-              <p>
-                Skills
               </p>
             </a>
           </li>
@@ -150,12 +126,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Category</h1>
+            <h1> Sub Category</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="<?= base_url().'dash'; ?>">Dashboard</a></li>
-              <li class="breadcrumb-item active">Category</li>
+              <li class="breadcrumb-item active">Sub Category</li>
             </ol>
           </div>
         </div>
@@ -170,7 +146,7 @@
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List Category</h3>
+                <h3 class="card-title">List Sub Category</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -184,6 +160,7 @@
                   <thead>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>Category</th>
                     <th>Action</th>
                   </thead>
 
@@ -194,7 +171,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button class="btn btn-success btn-flat" data-toggle="modal" data-target="#exampleModal" id="btnNewCategory">New Category</button>
+                <button class="btn btn-success btn-flat" data-toggle="modal" data-target="#exampleModal" id="btnNewCategory">Add Sub Category</button>
               </div>
               <!-- /.card-footer-->
             </div>
@@ -210,7 +187,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">New Category</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">New Sub Category</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -219,7 +196,20 @@
                       <form>
                         <div class="form-group">
                           <label for="nameNewCategory">Nama</label>
-                          <input type="text" class="form-control" name="nameNewCategory" id="usernameNewAdmin" placeholder="Enter Category Name">
+                          <input type="text" class="form-control" name="nameNewCategory" id="usernameNewAdmin" placeholder="Enter Sub Category Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="categoryName">Category</label>
+                          <select name="categoryName" id="categoryName" class="form-control">
+                            <?php
+                              foreach ($category as $row) {
+                                ?>
+                                <option value="<?=$row->category_id?>"><?=$row->category_name?></option>
+                            <?php
+                              }
+
+                            ?>
+                          </select>
                         </div>
                       </form>
                     </div>
@@ -233,7 +223,7 @@
             <form id="updateCategory" method="post">
               <div class="card card-info card-hidden" id="cardUpdateCategory">
                 <div class="card-header">
-                  <h3 class="card-title">Update Category</h3>
+                  <h3 class="card-title">Update Sub Category</h3>
 
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -315,7 +305,7 @@
       e.preventDefault();
       $.ajax({
         method : "post",
-        url : '<?= base_url()."admin/categoryAdmin/insertNewCategory"; ?>',
+        url : '<?= base_url()."admin/subCategoryAdmin/insertNewSubCategory"; ?>',
         data : $("#insertNewCategory").serialize(),
         success : function(){
           alert("Insert Berhasil");
@@ -328,7 +318,7 @@
       e.preventDefault();
       $.ajax({
           method: "post",
-          url: "<?= base_url().'admin/categoryAdmin/updateCategory' ?>",
+          url: "<?= base_url().'admin/subCategoryAdmin/updateSubCategory' ?>",
           data : $("#updateCategory").serialize(),
           success : function(){
             alert("Update Success");
@@ -342,16 +332,17 @@
   function updateTableCategory(){
     $.ajax({
       method: "post",
-      url: "<?= base_url().'admin/categoryAdmin/getAll' ?>",
+      url: "<?= base_url().'admin/subCategoryAdmin/getAll' ?>",
       success: function(res){
         let adminData = JSON.parse(res);
 
         adminData.forEach(data => {
           $("#tbCategoryData").append(`
             <tr>
-              <td>${data.category_id}</td>
-              <td>${data.category_name}</td>
-              <td><button value='${data.category_id}' name='${data.category_name}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${data.category_id}' name='${data.category_name}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button></td>
+              <td>${data.sub_id}</td>
+              <td>${data.sub_name}</td>
+              <td>${data.fk_category_id}</td>
+              <td><button value='${data.sub_id}' name='${data.sub_name}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${data.sub_id}' name='${data.sub_name}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button></td>
             </tr>
           `);
         });
@@ -366,7 +357,7 @@
           if(conf){
             $.ajax({
               method: "post",
-              url: "<?= base_url().'admin/categoryAdmin/deleteCategory' ?>",
+              url: "<?= base_url().'admin/SubCategoryAdmin/deleteSubCategory' ?>",
               data: {"id" : $(this).val()},
               success: function () {
                 alert("delete success");
