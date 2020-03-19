@@ -65,7 +65,7 @@
           <img src="<?= base_url().'asset/admin'; ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?=$_SESSION['aktif'][0]['admin_username']?></a>
+          <a href="#" class="d-block">Admin</a>
         </div>
       </div>
 
@@ -129,14 +129,13 @@
             </a>
           </li>
           <li class="nav-item">
-          <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
+            <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
               <i class="nav-icon fas fa-lightbulb"></i>
               <p>
                 Skills
               </p>
             </a>
           </li>
-          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -151,12 +150,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Authentication Admin</h1>
+            <h2>Detail Company</h2>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?= base_url().'dash'; ?>">Dashboard</a></li>
-              <li class="breadcrumb-item active">Auth Admin</li>
+              <li class="breadcrumb-item active"><a href="<?= base_url().'admin/dash' ?>">Dashboard</a> / Company Listing</li>
             </ol>
           </div>
         </div>
@@ -166,58 +164,12 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      <div class="row">
-          <div class="col col-sm-12 col-md-6">
-            <!-- Default box -->
-            <form id="insertNewAdmin" method="post">
-              <div class="card card-info card-hidden" id="cardNewAdmin">
-                <div class="card-header">
-                  <h3 class="card-title">New Admin</h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                      <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                      <i class="fas fa-times"></i></button>
-                  </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="usernameNewAdmin">Username</label>
-                      <input type="text" class="form-control" name="usernameNewAdmin" id="usernameNewAdmin" placeholder="Enter username">
-                    </div>
-                    <div class="form-group">
-                      <label for="passwordNewAdmin">Password</label>
-                      <input type="password" class="form-control" name="passNewAdmin" id="passwordNewAdmin" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <label for="confPasswordNewAdmin">Password</label>
-                      <input type="password" class="form-control" name="confPassNewAdmin" id="confPasswordNewAdmin" placeholder="Confirm Password">
-                    </div>
-                    <div class="form-group">
-                      <label for="roleNewAdmin">Role</label>
-                      <select name="roleNewAdmin" id="roleNewAdmin" class="form-control">
-                        <option value="0">Admin</option>
-                        <option value="1">Master</option>
-                      </select>
-                    </div>
-                  </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-success btn-flat">Add</button>
-                </div>
-                <!-- /.card-footer-->
-              </div>
-            </form>
-            <!-- /.card -->
-          </div>
-        </div>
         <div class="row">
           <div class="col-12">
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List Admin</h3>
+                <h3 class="card-title"><?= $_SESSION['comView'][0]['company_name'] ?></h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -227,31 +179,22 @@
                 </div>
               </div>
               <div class="card-body">
-                <table class="table table-bordered table-hover" id="db1">
-                  <thead>
-                    <th>Id</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                  </thead>
-
-                  <tbody id="tbAdminData">
-                    
-                  </tbody>
-
-                  <tfoot>
-                    <th>Id</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                  </tfoot>
-                </table>
+                <ul class="list-group detailCompany">
+                  <li class="list-group-item">ID : <?= $_SESSION['comView'][0]['company_id']?></li>
+                  <li class="list-group-item">Email : <?= $_SESSION['comView'][0]['company_email']?></li>
+                  <li class="list-group-item">NPWP Number : <?= $_SESSION['comView'][0]['company_npwp']?></li>
+                  <li class="list-group-item">Company Status : <?php
+                   if($_SESSION['comView'][0]['company_banned'] == 0) {
+                     echo "Active";
+                   }else{
+                     echo "Banned";
+                   }
+                  ?></li>
+                  <li class="list-group-item">Active Project : </li>
+                </ul>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button class="btn btn-success btn-flat" id="btnNewAdmin">New Admin</button>
               </div>
               <!-- /.card-footer-->
             </div>
@@ -284,70 +227,9 @@
 
 <script>
   $(document).ready(function(){
-    updateTableAdmin();
-
-    $("#btnNewAdmin").click(function(){
-      $("#cardNewAdmin").removeClass('card-hidden');
-    });
-
-    $("#insertNewAdmin").submit(function(e){
-      e.preventDefault();
-      $.ajax({
-        method : "post",
-        url : '<?= base_url()."admin/authAdmin/insertNewAdmin"; ?>',
-        data : $("#insertNewAdmin").serialize(),
-        success : function(res){
-          if(res == "0"){
-            alert("Insert Gagal");
-          }else if(res == "1"){
-            alert("Insert Berhasil");
-            $("#tbAdminData").html('');
-            updateTableAdmin();
-          }
-        }
-      });
-    });
-
-    $("#tbAdminData").on("click", ".btnDelete", function(){
-      let ans = confirm("Are You Sure?");
-
-      if(ans){
-        deleteDataAdmin($(this).val());
-      }
-    });
+    // updateTableCompany();
   });
 
-  function deleteDataAdmin(id){
-    $.ajax({
-      method: 'post',
-      url: '<?= base_url()."admin/authAdmin/deleteAdmin/" ?>'+id,
-      success: function(res){
-        updateTableAdmin();
-      }
-    });
-  }
+  
 
-  function updateTableAdmin(){
-    $("#tbAdminData").html('');
-    $.ajax({
-      method: "post",
-      url: "<?= base_url().'admin/authAdmin/getAll' ?>",
-      success: function(res){
-        let adminData = JSON.parse(res);
-
-        adminData.forEach(data => {
-          $("#tbAdminData").append(`
-            <tr>
-              <td>${data.admin_id}</td>
-              <td>${data.admin_username}</td>
-              <td>${data.admin_password}</td>
-              <td>${data.role}</td>
-              <td><button class="btnDelete btn btn-flat btn-danger" value="${data.admin_id}" type="submit"><i class='fa fa-trash'></i></button></td>
-            </tr>
-          `);
-          $("#db1").DataTable();
-        });
-      }
-    }); 
-  }
 </script>
