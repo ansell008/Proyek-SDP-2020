@@ -3,6 +3,7 @@
 class UserListing extends Ci_Controller{
     public function __construct(){
         parent::__construct();
+        $this->load->model('admin/UserModel', 'um');
     }
 
     public function loadFreelance(){
@@ -15,6 +16,10 @@ class UserListing extends Ci_Controller{
         $this->load->view("tpl/header");
         $this->load->view("admin/companyListingView");
         $this->load->view("tpl/footer");
+    }
+
+    public function getAllUser(){
+        echo json_encode($this->um->getAll());
     }
 }
 

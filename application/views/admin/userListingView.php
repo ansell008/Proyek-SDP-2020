@@ -180,7 +180,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <table class="table table-bordered table-striped" id="tableSkill">
+                <table class="table table-bordered table-striped" id="tableUser">
                   <thead>
                     <th>Id</th>
                     <th>Full Name</th>
@@ -189,7 +189,7 @@
                     <th>KTP</th>
                     <th>Action</th>
                   </thead>
-                  <tbody id="tbSkillData">
+                  <tbody id="tbUserData">
                     
                   </tbody>
                   <tfoot>
@@ -204,7 +204,6 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button id='addNewSkill' class='btn btn-flat btn-success'>Add New Skill</button>
               </div>
               <!-- /.card-footer-->
             </div>
@@ -237,70 +236,43 @@
 
 <script>
   $(document).ready(function(){
-    updateTableAdmin();
-
-    $("#btnNewAdmin").click(function(){
-      $("#cardNewAdmin").removeClass('card-hidden');
-    });
-
-    $("#insertNewAdmin").submit(function(e){
-      e.preventDefault();
-      $.ajax({
-        method : "post",
-        url : '<?= base_url()."admin/authAdmin/insertNewAdmin"; ?>',
-        data : $("#insertNewAdmin").serialize(),
-        success : function(res){
-          if(res == "0"){
-            alert("Insert Gagal");
-          }else if(res == "1"){
-            alert("Insert Berhasil");
-            $("#tbAdminData").html('');
-            updateTableAdmin();
-          }
-        }
-      });
-    });
-
-    $("#tbAdminData").on("click", ".btnDelete", function(){
-      let ans = confirm("Are You Sure?");
-
-      if(ans){
-        deleteDataAdmin($(this).val());
-      }
-    });
+    updateTableUser();
   });
 
-  function deleteDataAdmin(id){
+  function updateTableUser(){
+    $("#tbUserData").html('');
+
     $.ajax({
       method: 'post',
-      url: '<?= base_url()."admin/authAdmin/deleteAdmin/" ?>'+id,
+      url: '<?= base_url()."admin/userListing/getAllUser" ?>',
       success: function(res){
-        updateTableAdmin();
-      }
-    });
-  }
+        data = JSON.parse(res);
 
-  function updateTableAdmin(){
-    $("#tbAdminData").html('');
-    $.ajax({
-      method: "post",
-      url: "<?= base_url().'admin/authAdmin/getAll' ?>",
-      success: function(res){
-        let adminData = JSON.parse(res);
+        data.forEach(item => {
+          let ch = '';
+          let bn = '';
 
-        adminData.forEach(data => {
-          $("#tbAdminData").append(`
+          if(item.user_banned == '0') ch = 'disabled';
+          else bn = 'disabled';
+
+          $("#tbUserData").append(`
             <tr>
-              <td>${data.admin_id}</td>
-              <td>${data.admin_username}</td>
-              <td>${data.admin_password}</td>
-              <td>${data.role}</td>
-              <td><button class="btnDelete btn btn-flat btn-danger" value="${data.admin_id}" type="submit"><i class='fa fa-trash'></i></button></td>
+              <td>${item.user_id}</td>
+              <td>${item.user_firstname} ${item.user_lastname}</td>
+              <td>${item.user_email}</td>
+              <td>${item.user_username}</td>
+              <td>${item.user_ktp}</td>
+              <td>
+                <button class="btn btn-flat btn-success ${ch}"><i class="fa fa-check"></i></button> 
+                <button class="btn btn-flat btn-danger ${bn}"><i class="fa fa-times"></i></button> 
+                <button class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button> 
+              </td>
             </tr>
           `);
-          $("#db1").DataTable();
         });
+
+        $("#tableUser").DataTable();
       }
-    }); 
+    });
   }
 </script>

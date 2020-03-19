@@ -1,4 +1,5 @@
 <body class="hold-transition sidebar-mini sidebar-collapse">
+
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -230,6 +231,13 @@
       </div>
     </section>
     <!-- /.content -->
+
+    <!-- <div id="toast-container" class="toast-top-right">
+      <div class="toast toast-success" aria-live="polite" style="display: block;">
+        <div class="toast-title">toast</div>
+        <div class="toast-message">success</div>
+      </div>
+    </div> -->
   </div>
   <!-- /.content-wrapper -->
 
@@ -266,9 +274,9 @@
         data: {name: name},
         success: function(res){
           if(res == 'success'){
-            alert('INSERT SUCCESS');
+            toastr.success('Insert Success')
           }else{
-            alert('INSERT FAILED');
+            toastr.danger('Insert Failed')
           }
           loadDataSkill();
           $("#insertNewSkill").addClass('card-hidden');
@@ -311,7 +319,7 @@
         data: {id: trId, name: name},
         success: function(res){
           if(res == 'success'){
-            alert("EDIT SUKSES");
+            toastr.success('Update Success');
             loadDataSkill();
           }
         }
@@ -328,9 +336,9 @@
           data: {id: id},
           success: function(res){
             if(res == 'success'){
-              alert("DELETE SUCCESS");
+              toastr.success('Delete Success')
             }else{
-              alert("DELETE FAILED");
+              toastr.danger('Delete Failed')
             }
             loadDataSkill();
           }
