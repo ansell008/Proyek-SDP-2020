@@ -2,7 +2,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-dark bg-orange">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -47,7 +47,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-light-orange elevation-2">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="<?= base_url().'asset/img/logo.png'; ?>"
@@ -65,7 +65,7 @@
           <img src="<?= base_url().'asset/admin'; ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?=$_SESSION['aktif'][0]['admin_username']?></a>
+          <a href="#" class="d-block">Admin</a>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?= base_url().'admin/dash'; ?>" class="nav-link active">
+            <a href="<?= base_url().'admin/dash'; ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -129,7 +129,7 @@
             </a>
           </li>
           <li class="nav-item">
-          <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
+            <a href="<?= base_url().'admin/skills'; ?> " class="nav-link">
               <i class="nav-icon fas fa-lightbulb"></i>
               <p>
                 Skills
@@ -150,11 +150,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Your Dashboard</h1>
+            <h2>Detail Company</h2>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active"><a href="<?= base_url().'admin/dash' ?>">Dashboard</a></li>
+              <li class="breadcrumb-item active"><a href="<?= base_url().'admin/dash' ?>">Dashboard</a> / Company Listing</li>
             </ol>
           </div>
         </div>
@@ -169,7 +169,7 @@
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Title</h3>
+                <h3 class="card-title"><?= $_SESSION['comView'][0]['company_name'] ?></h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -179,11 +179,22 @@
                 </div>
               </div>
               <div class="card-body">
-                Start creating your amazing application!
+                <ul class="list-group detailCompany">
+                  <li class="list-group-item">ID : <?= $_SESSION['comView'][0]['company_id']?></li>
+                  <li class="list-group-item">Email : <?= $_SESSION['comView'][0]['company_email']?></li>
+                  <li class="list-group-item">NPWP Number : <?= $_SESSION['comView'][0]['company_npwp']?></li>
+                  <li class="list-group-item">Company Status : <?php
+                   if($_SESSION['comView'][0]['company_banned'] == 0) {
+                     echo "Active";
+                   }else{
+                     echo "Banned";
+                   }
+                  ?></li>
+                  <li class="list-group-item">Active Project : </li>
+                </ul>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                Footer
               </div>
               <!-- /.card-footer-->
             </div>
@@ -211,3 +222,14 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+<script>
+  $(document).ready(function(){
+    // updateTableCompany();
+  });
+
+  
+
+</script>

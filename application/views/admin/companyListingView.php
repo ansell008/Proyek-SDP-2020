@@ -65,7 +65,7 @@
           <img src="<?= base_url().'asset/admin'; ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Admin</a>
+          <a href="#" class="d-block"><?=$_SESSION['aktif'][0]['admin_username']?></a>
         </div>
       </div>
 
@@ -169,7 +169,7 @@
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Title</h3>
+                <h3 class="card-title">List Company</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -179,11 +179,21 @@
                 </div>
               </div>
               <div class="card-body">
-                Start creating your amazing application!
+                <table class="table table-bordered table-striped" id="tableCompany">
+                  <thead>
+                    <th>Id</th>
+                    <th>Company Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody id="tbComData">
+                    
+                  </tbody>
+                  
+                </table>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                Footer
               </div>
               <!-- /.card-footer-->
             </div>
@@ -211,3 +221,49 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+<script>
+  $(document).ready(function(){
+    updateTableCompany();
+  });
+
+  function updateTableCompany(){
+    $("#tbComData").html('');
+
+    $.ajax({
+      method: 'post',
+      url: '<?= base_url()."admin/companyListing/getAllCompany" ?>',
+      success: function(res){
+        data = JSON.parse(res);
+
+        data.forEach(item => {
+          let ch = '';
+          let bn = '';
+
+          if(item.company_banned == '0') ch = 'disabled';
+          else bn = 'disabled';
+
+          $("#tbComData").append(`
+            <tr>
+              <td>${item.company_id}</td>
+              <td>${item.company_name}</td>
+              <td>${item.company_email}</td>
+              <td>
+                <form method='post' action='<?= base_url().'admin/companyListing/getCompanyDetail';?>'>
+                <button class="btn btn-flat btn-success ${ch}"><i class="fa fa-check"></i></button> 
+                <button class="btn btn-flat btn-danger ${bn}"><i class="fa fa-times"></i></button> 
+                
+                  <button type='submit' value='${item.company_id}' class="btn btn-flat btn-info" name='btnDetail'><i class="fa fa-eye"></i></button> 
+                </form>
+              </td>
+            </tr>
+          `);
+        });
+
+        $("#tableCompany").DataTable();
+      }
+    });
+  }
+</script>

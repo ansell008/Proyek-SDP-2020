@@ -65,7 +65,7 @@
           <img src="<?= base_url().'asset/admin'; ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Admin</a>
+          <a href="#" class="d-block"><?=$_SESSION['aktif'][0]['admin_username']?></a>
         </div>
       </div>
 
@@ -308,7 +308,7 @@
         url : '<?= base_url()."admin/subCategoryAdmin/insertNewSubCategory"; ?>',
         data : $("#insertNewCategory").serialize(),
         success : function(){
-          alert("Insert Berhasil");
+          toastr.success('Insert Success');
           $("#tbCategoryData").html('');
           updateTableCategory();
         }
@@ -321,7 +321,7 @@
           url: "<?= base_url().'admin/subCategoryAdmin/updateSubCategory' ?>",
           data : $("#updateCategory").serialize(),
           success : function(){
-            alert("Update Success");
+            toastr.success('Update Success');
             $("#tbCategoryData").html('');
             updateTableCategory();
           }
@@ -360,7 +360,7 @@
               url: "<?= base_url().'admin/SubCategoryAdmin/deleteSubCategory' ?>",
               data: {"id" : $(this).val()},
               success: function () {
-                alert("delete success");
+                toastr.success('Delete Success');
                 $("#tbCategoryData").html("");
                 updateTableCategory();
               }
