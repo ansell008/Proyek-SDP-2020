@@ -279,7 +279,7 @@
             toastr.danger('Insert Failed')
           }
           loadDataSkill();
-          $("#insertNewSkill").addClass('card-hidden');
+          // $("#insertNewSkill").addClass('card-hidden');
         }
       });
     });

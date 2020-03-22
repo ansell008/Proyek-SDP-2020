@@ -204,7 +204,7 @@
                   <dt class="col-sm-4">Status</dt>
                   <dd class="col-sm-8">
                     <?php
-                      if($dataUser[0]['user_banned'] == '0'){
+                      if($dataUser[0]['user_status'] == '0'){
                         echo "<small class='badge badge-success'>Not Banned</small>";
                       }else{
                         echo "<small class='badge badge-danger'>Banned</small>";
@@ -221,7 +221,7 @@
                 </dl>
 
                 <?php
-                  if($dataUser[0]['user_banned'] == '0'){
+                  if($dataUser[0]['user_status'] == '0'){
                     echo "<button class='btn btn-danger btn-flat' id='btnBan'>Ban User</button>";
                   }else{
                     echo "<button class='btn btn-success btn-flat' id='btnUnban'>Unban User</button>";
@@ -277,7 +277,7 @@
                 </div>
               </div>
               <div class="card-body">
-                
+                <?= print_r($userProject); ?>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
@@ -321,6 +321,20 @@
           success: function(res){
             if(res == 'success') toastr.success('Ban Success');
             else toastr.danger('Ban Failed');
+          }
+        });
+      }      
+    });
+
+    $("#btnUnban").click(function(){
+      if(confirm("Are you sure?")){
+        $.ajax({
+          method: 'post',
+          url: '<?= base_url() ?>admin/userListing/unBanUser',
+          data: {idUser: '<?= $dataUser[0]['user_id'] ?>'},
+          success: function(res){
+            if(res == 'success') toastr.success('Unban Success');
+            else toastr.danger('Unban Failed');
           }
         });
       }      
