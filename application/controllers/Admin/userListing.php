@@ -26,6 +26,7 @@ class UserListing extends Ci_Controller{
         // echo $id;
         $data['dataUser'] = $this->um->findUser($id);
         $data['userSkill'] = $this->getSkills($id);
+        $data['userProject'] = $this->um->getUserProjects($id);
         // print_r($data);
 
         $this->load->view('tpl/header');
@@ -47,6 +48,14 @@ class UserListing extends Ci_Controller{
 
     public function getSkills($id){
         return $this->um->getUserSkills($id);
+    }
+
+    public function unBanuser(){
+        $id = $this->input->post('idUser');
+        $res = $this->um->unBanUserById($id);
+
+        if($res) echo 'success';
+        else echo 'failed';
     }
 }
 

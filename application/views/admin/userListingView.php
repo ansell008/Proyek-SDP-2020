@@ -187,6 +187,7 @@
                     <th>Email</th>
                     <th>Username</th>
                     <th>KTP</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </thead>  
                   <tbody id="tbUserData">
@@ -198,6 +199,7 @@
                     <th>Email</th>
                     <th>Username</th>
                     <th>KTP</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tfoot>
                 </table>
@@ -249,11 +251,8 @@
         data = JSON.parse(res);
 
         data.forEach(item => {
-          let ch = '';
-          let bn = '';
-
-          if(item.user_banned == '0') ch = 'disabled';
-          else bn = 'disabled';
+          let cl = (item.user_status == '0') ? 'success' : 'danger';
+          let banned = (item.user_status == '0') ? 'Not Banned' : 'Banned';
 
           $("#tbUserData").append(`
             <tr>
@@ -262,6 +261,7 @@
               <td>${item.user_email}</td>
               <td>${item.user_username}</td>
               <td>${item.user_ktp}</td>
+              <td class="bg-${cl}">${banned}</td>
               <td>
                 <form action="<?= base_url() ?>admin/userListing/getById" method="post">
                   <button value='${item.user_id}' name='btnViewDetail' type='submit' class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button> 
