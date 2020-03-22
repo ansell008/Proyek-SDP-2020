@@ -265,25 +265,139 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">History Projects</h3>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">History Projects</h3>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
-                </div>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                  <i class="fas fa-times"></i></button>
               </div>
-              <div class="card-body">
-                <?= print_r($userProject); ?>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-              </div>
-              <!-- /.card-footer-->
             </div>
+            <div class="card-body p-0">
+              <table class="table table-striped projects">
+                  <thead>
+                      <tr>
+                          <th>
+                              Project Id
+                          </th>
+                          <th>
+                              Project Name
+                          </th>
+                          <th>
+                              Project Members
+                          </th>
+                          <th>
+                              Project Start
+                          </th>
+                          <th>
+                              Project Deadline
+                          </th>
+                          <th>
+                              Status
+                          </th>
+                          <th>
+                              Action
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                      if(!isset($userProject[0])){
+                    ?>
+                      <tr>
+                        <td colspan="7" style="text-align: center;"><h5><b>NO PROJECTS YET</b></h5></td>
+                      </tr>
+                    <?php
+                      } else {
+                      $i = 0;
+                      foreach($userProject as $key => $value){
+                    ?>
+                      <tr>
+                        <td><?= $value['project_id'] ?></td>
+                        <td><?= $value['project_nama'] ?></td>
+                        <td><?= $value['jumlah'] ?></td>
+                        <td><?= $value['project_mulai'] ?></td>
+                        <td><?= $value['project_deadline'] ?></td>
+                        <td>
+                          <?php
+                            if($value['project_status'] == '0'){
+                              echo "<small class='badge badge-info'>Recruitment</small>";
+                            }else if($value['project_status'] == '1'){
+                              echo "<small class='badge badge-warning'>Progress</small>";
+                            }else if($value['project_status'] == '2'){
+                              echo "<small class='badge badge-success'>Finished</small>";
+                            }
+                          ?>
+                        </td>
+                        <td><button class="btn btn-flat btn-info" data-toggle="modal" data-target="#modal-lg-<?=$i?>"><i class="fa fa-eye"></i></button></td>
+                      </tr>
+                      <div class="modal fade show" id="modal-lg-<?=$i?>" style="display: none;" aria-modal="true">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Project Detail</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <dl class="row">
+                              <dt class="col-md-4">Id Project</dt>
+                              <dd class="col-md-8"><?= $value['project_id'] ?></dd>
+                              <dt class="col-md-4">Project Judul</dt>
+                              <dd class="col-md-8"><?= $value['project_nama'] ?></dd>
+                              <dt class="col-md-4">Project Deskripsi</dt>
+                              <dd class="col-md-8"><?= $value['project_deskripsi'] ?></dd>
+                              <dt class="col-md-4">Project Kategori</dt>
+                              <dd class="col-md-8"><?= $value['category_name'] ?></dd>
+                              <dt class="col-md-4">Project Anggaran</dt>
+                              <dd class="col-md-8"><?= $value['project_anggaran'] ?></dd>
+                              <dt class="col-md-4">Project Status</dt>
+                              <?php
+                                if($value['project_status'] == '0'){
+                                  echo "<dd class='col-md-8'><small class='badge badge-info'>Recruitment</small></dd>";
+                                }else if($value['project_status'] == '1'){
+                                  echo "<dd class='col-md-8'><small class='badge badge-warning'>Progress</small></dd>";
+                                }else if($value['project_status'] == '2'){
+                                  echo "<dd class='col-md-8'><small class='badge badge-success'>Finished</small></dd>";
+                                }
+                              ?>
+                              <dt class="col-md-4">Project Start</dt>
+                              <dd class="col-md-8"><?= $value['project_mulai'] ?></dd>
+                              <dt class="col-md-4">Project Deadline</dt>
+                              <dd class="col-md-8"><?= $value['project_deadline'] ?></dd>
+                              <dt class="col-md-4">Project Members</dt>
+                              <dd class="col-md-8">
+                                <ul style="padding-left: 20px">
+                                <?php
+                                  foreach($value['members'] as $idx => $member){
+                                    echo "<li>$member</li>";
+                                  }
+                                ?>
+                                </ul>
+                              </dd>
+                            </dl>
+                          </div>
+                          <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
           </div>
         </div>
       </div>
