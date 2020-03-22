@@ -2,7 +2,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-dark bg-orange">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -47,7 +47,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-orange elevation-2">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="<?= base_url().'asset/img/logo.png'; ?>"
@@ -105,7 +105,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url().'admin/companyListing'; ?> " class="nav-link">
+            <a href="<?= base_url().'admin/companyListing'; ?> " class="nav-link active">
               <i class="nav-icon fas fa-briefcase"></i>
               <p>
                 Company Listing
@@ -157,6 +157,9 @@
               <li class="breadcrumb-item active"><a href="<?= base_url().'admin/dash' ?>">Dashboard</a> / Company Listing</li>
             </ol>
           </div>
+          <div class="col-sm-4">
+            <a href="<?=base_url()."admin/companyListing"?>" class="btn btn-warning">Back</a>
+          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -165,11 +168,11 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div class="col-7">
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"><?= $_SESSION['comView'][0]['company_name'] ?></h3>
+                <h2 class="card-title"><?= $_SESSION['comView'][0]['perusahaan_nama'] ?></h2>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -180,17 +183,55 @@
               </div>
               <div class="card-body">
                 <ul class="list-group detailCompany">
-                  <li class="list-group-item">ID : <?= $_SESSION['comView'][0]['company_id']?></li>
-                  <li class="list-group-item">Email : <?= $_SESSION['comView'][0]['company_email']?></li>
-                  <li class="list-group-item">NPWP Number : <?= $_SESSION['comView'][0]['company_npwp']?></li>
-                  <li class="list-group-item">Company Status : <?php
-                   if($_SESSION['comView'][0]['company_banned'] == 0) {
+                  <li class="list-group-item list-group-item-warning"><b>ID</b> : <?= $_SESSION['comView'][0]['perusahaan_id']?></li>
+                  <li class="list-group-item list-group-item-warning"><b>Type </b> : <?= $_SESSION['comView'][0]['perusahaan_tipe']?></li>
+                  <li class="list-group-item list-group-item-warning"><b>Email </b> : <?= $_SESSION['comView'][0]['perusahaan_email']?></li>
+                  <li class="list-group-item list-group-item-warning"><b>Address</b> : <?= $_SESSION['comView'][0]['perusahaan_alamat']?></li>
+                  <li class="list-group-item list-group-item-warning"><b>Phone Number</b> : <?= $_SESSION['comView'][0]['perusahaan_telp']?></li>
+                  <li class="list-group-item list-group-item-warning"><b>NPWP Number</b> : <?= $_SESSION['comView'][0]['perusahaan_npwp']?></li>
+                  <li class="list-group-item list-group-item-warning"> <b>Company Status</b> : <?php
+                   if($_SESSION['comView'][0]['perusahaan_status'] == 0) {
                      echo "Active";
                    }else{
                      echo "Banned";
                    }
                   ?></li>
-                  <li class="list-group-item">Active Project : </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <?php
+                  if($_SESSION['comView'][0]['perusahaan_status'] == 0) {
+                  ?>
+                    <button id="btnStatus" name="btnStatus" value="<?= $_SESSION['comView'][0]['perusahaan_id']?>" class="btn btn-danger btnStatus">Banned <i class="fa fa-times"></i></button>
+                  <?php
+                  }else{
+                  ?>
+                    <button id="btnStatus1" name="btnStatus1" value="<?= $_SESSION['comView'][0]['perusahaan_id']?>" class="btn btn-success btnStatus">Active <i class="fa fa-check"></i></button>
+                  <?php
+                  }
+
+                ?>
+              </div>
+              <!-- /.card-footer-->
+            </div>
+            <!-- /.card -->
+          </div>
+          <div class="col-5">
+            <!-- Default box -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Active Project</h2>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <ul class="list-group detailCompany">
                 </ul>
               </div>
               <!-- /.card-body -->
@@ -228,6 +269,19 @@
 <script>
   $(document).ready(function(){
     // updateTableCompany();
+    $(".btnStatus").click(function () {
+      $.ajax(
+        {
+          method : "post",
+          url : '<?= base_url().'admin/companyListing/updateStatus' ?>',
+          data : {"status" : $(this).val()},
+          success : function(){
+            toastr.success('Update Success');
+          }
+        }
+      );
+    })
+    
   });
 
   
