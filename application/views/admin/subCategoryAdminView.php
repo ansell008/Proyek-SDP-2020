@@ -315,10 +315,6 @@
   $(document).ready(function(){
     updateTableCategory();
 
-    $("#btnNewCategory").click(function(){
-      // $("#cardNewCategory").removeClass('card-hidden');
-    });
-
     $('#exampleModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
       // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).

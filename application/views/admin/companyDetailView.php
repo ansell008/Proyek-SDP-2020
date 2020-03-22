@@ -231,7 +231,35 @@
                 </div>
               </div>
               <div class="card-body">
-                <ul class="list-group detailCompany">
+                <ul class="list-group" id="ProjectActive">
+                </ul>
+              </div>
+              <div class="card-header">
+                <h2 class="card-title">Project on going</h2>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <ul class="list-group" id="ProjectOnGoing">
+                </ul>
+              </div>
+              <div class="card-header">
+                <h2 class="card-title">Project Done</h2>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <ul class="list-group" id="ProjectDone">
                 </ul>
               </div>
               <!-- /.card-body -->
@@ -245,6 +273,9 @@
       </div>
     </section>
     <!-- /.content -->
+  </div>
+  <div id="detailViewProject">
+
   </div>
   <!-- /.content-wrapper -->
 
@@ -269,6 +300,7 @@
 <script>
   $(document).ready(function(){
     // updateTableCompany();
+    updateProjectCompany();
     $(".btnStatus").click(function () {
       $.ajax(
         {
@@ -280,10 +312,96 @@
           }
         }
       );
-    })
+    });
+    
+
+    
     
   });
-
+  function updateProjectCompany(){
+    $.ajax({
+      method: 'post',
+      url: '<?= base_url()."admin/companyListing/getAllProjectById" ?>',
+      data : {"perusahaan_id" : <?= $_SESSION['comView'][0]['perusahaan_id'] ?>},
+      success: function(res){
+        data = JSON.parse(res);
+        let ctr = 0;
+        data.forEach(
+          item => {
+            ctr++;
+            if(item.project_status == '0'){
+              // console.log("masyuk");
+              $("#ProjectActive").append(`
+              <li class="list-group-item">${item.project_nama} <button value="${ctr}" class="btn btn-primary float-right viewDetail">View</button></li>
+              `);
+              $("#detailViewProject").append(`
+              <div counter="${ctr}" class="modal fade bd-example-modal-lg" id="myModal${ctr}" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Detail Project</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                  <ul class="list-group detailCompany">
+                    <li class="list-group-item "><b>ID</b> : ${item.project_id}</li>
+                    <li class="list-group-item "><b>Name </b> : ${item.project_nama} </li>
+                    <li class="list-group-item "><b>Description </b> : ${item.project_deskripsi} </li>
+                    <li class="list-group-item "><b>Budget Detail</b> : ${item.project_anggaran} </li>
+                    <li class="list-group-item "><b>Start Date</b> : ${item.project_mulai} </li>
+                    <li class="list-group-item "><b>Deadline</b> : ${item.project_deadline} </li>
+                    
+                  </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div></div>
+              `);
+              
+            }else if(item.project_status=='1'){
+              $("#ProjectOnGoing").append(`
+              <li class="list-group-item">${item.project_nama} <button value="${ctr}" class="btn btn-primary float-right viewDetail">View</button> </li>
+              `);
+              $("#detailViewProject").append(`
+              <div class="modal fade bd-example-modal-lg" id="myModal${ctr}" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Detail Project</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                  <ul class="list-group detailCompany">
+                    <li class="list-group-item "><b>ID</b> : ${item.project_id}</li>
+                    <li class="list-group-item "><b>Name </b> : ${item.project_nama} </li>
+                    <li class="list-group-item "><b>Description </b> : ${item.project_deskripsi} </li>
+                    <li class="list-group-item "><b>Budget Detail</b> : ${item.project_anggaran} </li>
+                    <li class="list-group-item "><b>Start Date</b> : ${item.project_mulai} </li>
+                    <li class="list-group-item "><b>Deadline</b> : ${item.project_deadline} </li>
+                    
+                  </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div></div>
+              `);
+              $(".viewDetail").click(function(){
+                $("#myModal"+$(this).val()).modal();
+              });
+            }
+            
+          
+        });
+        
+      }
+    });
+  }
   
 
 </script>

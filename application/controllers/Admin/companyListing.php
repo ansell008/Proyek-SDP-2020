@@ -33,5 +33,10 @@ Class companyListing extends CI_Controller{
         $this->load->view('admin/companyDetailView');
         $this->load->view('tpl/footer');
     }
+
+    public function getAllProjectById(){
+        $id = $this->input->post('perusahaan_id');
+        echo json_encode($this->companyModel->getProjectById($id));
+    }
 }
 ?>
