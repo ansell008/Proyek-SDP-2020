@@ -25,5 +25,13 @@ Class companyListing extends CI_Controller{
         $this->load->view('admin/companyDetailView');
         $this->load->view('tpl/footer');
     }
+
+    public function updateStatus(){
+        $id = $this->input->post('status');
+        $this->companyModel->updateStatus($id);
+        $this->load->view('tpl/header');
+        $this->load->view('admin/companyDetailView');
+        $this->load->view('tpl/footer');
+    }
 }
 ?>

@@ -16,9 +16,9 @@ class SubCategoryAdmin extends CI_Controller{
     public function insertNewSubCategory(){
         $newData = $this->input->post();
         $newCategory = array(
-            "sub_id" => uniqid($newData['nameNewCategory']),
-            "sub_name" => $newData['nameNewCategory'],
-            "fk_category_id" => $newData['categoryName'],
+            "sub_kategori_id" => uniqid($newData['nameNewCategory']),
+            "kategori_id" => $newData['categoryName'],
+            "sub_kategori_nama" => $newData['nameNewCategory'],
             "created_at" => date("now"),
             "updated_at" => date("now")
         );

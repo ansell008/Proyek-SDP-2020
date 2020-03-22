@@ -2,7 +2,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-dark bg-orange">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -47,7 +47,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-orange elevation-2">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="<?= base_url().'asset/img/logo.png'; ?>"
@@ -113,7 +113,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url().'admin/categoryAdmin'; ?> " class="nav-link">
+            <a href="<?= base_url().'admin/categoryAdmin'; ?> " class="nav-link active">
               <i class="nav-icon fas fa-globe"></i>
               <p>
                 Category
@@ -161,12 +161,52 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+  
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
+          <div class="col-6">
+          <form id="updateCategory" method="post">
+              <div class="card card-info card-hidden" id="cardUpdateCategory">
+                <div class="card-header">
+                  <h3 class="card-title">Update Category</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                      <i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                      <label for="idCategoryUpdate">ID</label>
+                      <input type="text" class="form-control" name="idCategoryUpdate" id="idCategoryUpdate" readonly>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                      <label for="nameCategory">Old Name</label>
+                      <input type="text" class="form-control" name="nameCategory" id="nameCategory" readonly>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                      <label for="nameCategoryUpdate">New Name</label>
+                      <input type="text" class="form-control" name="nameCategoryUpdate" id="nameCategoryUpdate" placeholder="Update Category Name">
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success btn-flat">Update</button>
+                </div>
+                <!-- /.card-footer-->
+              </div>
+            </form>
+          </div>
           <div class="col-12">
+            
             <!-- Default box -->
             <div class="card">
               <div class="card-header">
@@ -230,43 +270,7 @@
                 </div>
               </div>
             </form>
-            <form id="updateCategory" method="post">
-              <div class="card card-info card-hidden" id="cardUpdateCategory">
-                <div class="card-header">
-                  <h3 class="card-title">Update Category</h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                      <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                      <i class="fas fa-times"></i></button>
-                  </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="idCategoryUpdate">ID</label>
-                      <input type="text" class="form-control" name="idCategoryUpdate" id="idCategoryUpdate" readonly>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="nameCategory">Old Name</label>
-                      <input type="text" class="form-control" name="nameCategory" id="nameCategory" readonly>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                      <label for="nameCategoryUpdate">New Name</label>
-                      <input type="text" class="form-control" name="nameCategoryUpdate" id="nameCategoryUpdate" placeholder="Update Category Name">
-                    </div>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-success btn-flat">Update</button>
-                </div>
-                <!-- /.card-footer-->
-              </div>
-            </form>
+            
             <!-- /.card -->
           </div>
         </div>

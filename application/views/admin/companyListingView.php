@@ -2,7 +2,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-dark bg-orange">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -47,7 +47,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-orange elevation-2">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="<?= base_url().'asset/img/logo.png'; ?>"
@@ -105,7 +105,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url().'admin/companyListing'; ?> " class="nav-link">
+            <a href="<?= base_url().'admin/companyListing'; ?> " class="nav-link active">
               <i class="nav-icon fas fa-briefcase"></i>
               <p>
                 Company Listing
@@ -184,6 +184,7 @@
                     <th>Id</th>
                     <th>Company Name</th>
                     <th>Email</th>
+                    <th>Phone Number</th>
                     <th>Action</th>
                   </thead>
                   <tbody id="tbComData">
@@ -247,15 +248,13 @@
 
           $("#tbComData").append(`
             <tr>
-              <td>${item.company_id}</td>
-              <td>${item.company_name}</td>
-              <td>${item.company_email}</td>
+              <td>${item.perusahaan_id}</td>
+              <td>${item.perusahaan_nama}</td>
+              <td>${item.perusahaan_email}</td>
+              <td>${item.perusahaan_telp}</td>
               <td>
                 <form method='post' action='<?= base_url().'admin/companyListing/getCompanyDetail';?>'>
-                <button class="btn btn-flat btn-success ${ch}"><i class="fa fa-check"></i></button> 
-                <button class="btn btn-flat btn-danger ${bn}"><i class="fa fa-times"></i></button> 
-                
-                  <button type='submit' value='${item.company_id}' class="btn btn-flat btn-info" name='btnDetail'><i class="fa fa-eye"></i></button> 
+                  <button type='submit' value='${item.perusahaan_id}' class="btn btn-flat btn-info" name='btnDetail'><i class="fa fa-eye"></i></button> 
                 </form>
               </td>
             </tr>
@@ -267,3 +266,7 @@
     });
   }
 </script>
+
+<!-- <button class="btn btn-flat btn-success ${ch}"><i class="fa fa-check"></i></button>  -->
+<!-- <button class="btn btn-flat btn-danger ${bn}"><i class="fa fa-times"></i></button>  -->
+                
