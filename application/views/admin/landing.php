@@ -291,8 +291,8 @@
           datasets: [
             {
               label               : 'Project',
-              backgroundColor     : '#28a745',
-              borderColor         : '#28a000',
+              backgroundColor     : '#17a2b8',
+              borderColor         : '#17a2a0',
               pointRadius         : false,
               pointColor          : 'rgba(210, 214, 222, 1)',
               pointStrokeColor    : '#c1c7d1',
