@@ -165,31 +165,76 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
-            <!-- Default box -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Title</h3>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-teal elevation-1"><i class="fas fa-users"></i></span>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
-                </div>
+              <div class="info-box-content">
+                <span class="info-box-text">New User</span>
+                <span class="info-box-number" id="numNewUser"></span>
               </div>
-              <div class="card-body">
-                Start creating your amazing application!
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                Footer
-              </div>
-              <!-- /.card-footer-->
+              <!-- /.info-box-content -->
             </div>
-            <!-- /.card -->
+            <!-- /.info-box -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-pink elevation-1"><i class="fas fa-briefcase"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">New Company</span>
+                <span class="info-box-number" id="numNewCompany"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-tasks"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Projects Created</span>
+                <span class="info-box-number" id="projectCreated"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Projects Finished</span>
+                <span class="info-box-number" id="projectFinished"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
           </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">User, Company, Projects Created by Months</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 328px;" width="328" height="250" class="chartjs-render-monitor"></canvas>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+            </div>
+          </div>
       </div>
     </section>
     <!-- /.content -->
@@ -211,3 +256,116 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<script src="<?= base_url().'asset/admin' ?>/plugins/chart.js/Chart.min.js"></script>
+
+
+<script>
+  $(document).ready(function(){
+    getDataPerMonth();
+    getData();
+  });
+
+  function getDataPerMonth(){
+    $.ajax({
+      method: 'post',
+      url: '<?= base_url() ?>admin/summaryAdmin/getDataPerMonth',
+      success: function(res){
+        let countCompany = [];
+        let countUser = [];
+        let countProject = [];
+        let data = JSON.parse(res);
+        data.company.forEach(item => {
+          countCompany.push(item[0].count);
+        });
+        data.user.forEach(item => {
+          countUser.push(item[0].count);
+        });
+        data.project.forEach(item => {
+          countProject.push(item[0].count);
+        });
+
+        var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+
+        var areaChartData = {
+          labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [
+            {
+              label               : 'Project',
+              backgroundColor     : '#17a2b8',
+              borderColor         : '#17a2a0',
+              pointRadius         : false,
+              pointColor          : 'rgba(210, 214, 222, 1)',
+              pointStrokeColor    : '#c1c7d1',
+              pointHighlightFill  : '#fff',
+              pointHighlightStroke: 'rgba(220,220,220,1)',
+              data                : countProject
+            },
+            {
+              label               : 'User',
+              backgroundColor     : '#20c997',
+              borderColor         : '#20c700',
+              pointRadius         : false,
+              pointColor          : 'rgba(210, 214, 222, 1)',
+              pointStrokeColor    : '#c1c7d1',
+              pointHighlightFill  : '#fff',
+              pointHighlightStroke: 'rgba(220,220,220,1)',
+              data                : countUser
+            },
+            {
+              label               : 'Company',
+              backgroundColor     : '#e83e8c',
+              borderColor         : '#e83e8c',
+              pointRadius         : false,
+              pointColor          : 'rgba(210, 214, 222, 1)',
+              pointStrokeColor    : '#c1c7d1',
+              pointHighlightFill  : '#fff',
+              pointHighlightStroke: 'rgba(220,220,220,1)',
+              data                : countCompany
+            },
+          ]
+        }
+
+        var areaChartOptions = {
+          maintainAspectRatio : false,
+          responsive : true,
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              gridLines : {
+                display : false,
+              }
+            }],
+            yAxes: [{
+              gridLines : {
+                display : false,
+              }
+            }]
+          }
+        }
+
+        // This will get the first returned node in the jQuery collection.
+        var areaChart       = new Chart(areaChartCanvas, { 
+          type: 'line',
+          data: areaChartData, 
+          options: areaChartOptions
+        })
+      }
+    });
+  }
+
+  function getData(){
+    $.ajax({
+      method: 'post',
+      url: '<?= base_url() ?>admin/summaryAdmin/getSummary',
+      success: function(res){
+        let data = JSON.parse(res);
+        $("#numNewUser").html(data['countUser'][0].jumlahUser);
+        $("#numNewCompany").html(data['countPerusahaan'][0].jumlahPerusahaan);
+        $("#projectCreated").html(data['countProject'][0].jumlahProject);
+        $("#projectFinished").html(data['countFinishedProject'][0].jumlahProjectFinish);
+      }
+    });
+  }
+</script>

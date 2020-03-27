@@ -27,14 +27,23 @@ class UserListing extends Ci_Controller{
         $data['dataUser'] = $this->um->findUser($id);
         $data['userSkill'] = $this->getSkills($id);
         $data['userProject'] = $this->um->getUserProjects($id);
+
+        $i = 0;
+        foreach($data['userProject'] as $key => &$value){
+            $value['jumlah'] = $this->um->countProjectMember($data['userProject'][$i]['project_id'])[0]['jumlah'];
+            $members = $this->um->showProjectMember($data['userProject'][$i]['project_id']);
+            foreach($members as $idx => $member){
+                $value['members'][] = $member['user_firstname'] . ' ' . $member['user_lastname'];
+            }
+            $i++;
+        }
+
+        // echo "<pre>";
         // print_r($data);
 
         $this->load->view('tpl/header');
         $this->load->view('admin/userDetailView', $data);
         $this->load->view('tpl/footer');
-        // echo '<pre>';
-        // print_r($dataUser);
-        // echo '</pre>';
 
     }
 
