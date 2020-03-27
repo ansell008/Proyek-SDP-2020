@@ -329,6 +329,23 @@
         data.forEach(
           item => {
             ctr++;
+            var x = new Date(item.project_mulai);
+            var y = new Date(item.project_deadline);
+
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+            // var jam_x = x.getHours();
+            // var menit_x = x.getMinutes();
+            // var jam_y = y.getHours();
+            // var menit_y = y.getMinutes();
+            var tanggal_x = x.getDate(); 
+            var tanggal_y = y.getDate(); 
+            var bulan_x = monthNames[x.getMonth()]; 
+            var bulan_y = monthNames[y.getMonth()]; 
+            var tahun_x = x.getFullYear(); 
+            var tahun_y = y.getFullYear(); 
+            let start_dates = tanggal_x + "-"+ bulan_x + '-'+ tahun_x ;
+            let deadline_dates = tanggal_y + "-"+ bulan_y + '-'+ tahun_y ;
             if(item.project_status == '0'){
               // console.log("masyuk");
               $("#ProjectActive").append(`
@@ -348,8 +365,8 @@
                     <li class="list-group-item "><b>Name </b> : ${item.project_nama} </li>
                     <li class="list-group-item "><b>Description </b> : ${item.project_deskripsi} </li>
                     <li class="list-group-item "><b>Budget Detail</b> : ${item.project_anggaran} </li>
-                    <li class="list-group-item "><b>Start Date</b> : ${item.project_mulai} </li>
-                    <li class="list-group-item "><b>Deadline</b> : ${item.project_deadline} </li>
+                    <li class="list-group-item "><b>Start Date</b> : ${start_dates} </li>
+                    <li class="list-group-item "><b>Deadline</b> : ${deadline_dates} </li>
                     
                   </ul>
                   </div>
@@ -379,8 +396,8 @@
                     <li class="list-group-item "><b>Name </b> : ${item.project_nama} </li>
                     <li class="list-group-item "><b>Description </b> : ${item.project_deskripsi} </li>
                     <li class="list-group-item "><b>Budget Detail</b> : ${item.project_anggaran} </li>
-                    <li class="list-group-item "><b>Start Date</b> : ${item.project_mulai} </li>
-                    <li class="list-group-item "><b>Deadline</b> : ${item.project_deadline} </li>
+                    <li class="list-group-item "><b>Start Date</b> : ${start_dates} </li>
+                    <li class="list-group-item "><b>Deadline</b> : ${deadline_dates} </li>
                     
                   </ul>
                   </div>
@@ -394,6 +411,41 @@
               $(".viewDetail").click(function(){
                 $("#myModal"+$(this).val()).modal();
               });
+              
+            }else if(item.project_status=='2'){
+              $("#ProjectDone").append(`
+              <li class="list-group-item">${item.project_nama} <button value="${ctr}" class="btn btn-primary float-right viewDetail">View</button> </li>
+              `);
+              $("#detailViewProject").append(`
+              <div class="modal fade bd-example-modal-lg" id="myModal${ctr}" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Detail Project</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                  <ul class="list-group detailCompany">
+                    <li class="list-group-item "><b>ID</b> : ${item.project_id}</li>
+                    <li class="list-group-item "><b>Name </b> : ${item.project_nama} </li>
+                    <li class="list-group-item "><b>Description </b> : ${item.project_deskripsi} </li>
+                    <li class="list-group-item "><b>Budget Detail</b> : ${item.project_anggaran} </li>
+                    <li class="list-group-item "><b>Start Date</b> : ${start_dates} </li>
+                    <li class="list-group-item "><b>Deadline</b> : ${deadline_dates} </li>
+                    
+                  </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div></div>
+              `);
+              $(".viewDetail").click(function(){
+                $("#myModal"+$(this).val()).modal();
+              });
+              
             }
             
           
