@@ -136,6 +136,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+          <a href="<?= base_url().'admin/ratings'; ?> " class="nav-link">
+              <i class="nav-icon fas fa-star"></i>
+              <p>
+                Reviews
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
