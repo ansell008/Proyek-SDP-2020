@@ -280,6 +280,9 @@
 </div>
 <!-- ./wrapper -->
 
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
 <script>
   $(document).ready(function(){
     $.ajax({
@@ -319,6 +322,9 @@
                     </tr>
                 `);
             });
+
+            $("#tableCompanyReview").DataTable();
+            $("#tableUserReview").DataTable();
         }
     });
   });

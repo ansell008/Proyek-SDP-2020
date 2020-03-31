@@ -319,8 +319,8 @@
                         <td><?= $value['project_id'] ?></td>
                         <td><?= $value['project_nama'] ?></td>
                         <td><?= $value['jumlah'] ?></td>
-                        <td><?= $value['project_mulai'] ?></td>
-                        <td><?= $value['project_deadline'] ?></td>
+                        <td><?= date_format(date_create($value['project_mulai']), 'd M yy') ?></td>
+                        <td><?= date_format(date_create($value['project_deadline']), 'd M yy') ?></td>
                         <td>
                           <?php
                             if($value['project_status'] == '0'){
@@ -366,9 +366,9 @@
                                 }
                               ?>
                               <dt class="col-md-4">Project Start</dt>
-                              <dd class="col-md-8"><?= $value['project_mulai'] ?></dd>
+                              <dd class="col-md-8"><?= date_format(date_create($value['project_mulai']), 'd M yy') ?></dd>
                               <dt class="col-md-4">Project Deadline</dt>
-                              <dd class="col-md-8"><?= $value['project_deadline'] ?></dd>
+                              <dd class="col-md-8"><?= date_format(date_create($value['project_deadline']), 'd M yy') ?></dd>
                               <dt class="col-md-4">Project Members</dt>
                               <dd class="col-md-8">
                                 <ul style="padding-left: 20px">

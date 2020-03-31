@@ -240,6 +240,10 @@
                   </div>
                 </div>
                 <!-- /.card-body -->
+                <div class="card-footer">
+                  <h6>X : Months</h6>
+                  <h6>Y : Number of Users Created</h6>
+                </div>
               </div>
             </div>
           </div>
