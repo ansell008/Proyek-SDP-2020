@@ -34,35 +34,11 @@
 
     <div class="page-header" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?= base_url() ?>asset/img/carousel/registerBack.jpg');">
     <div class="container">
-      <div class="row pt-5">
-        <div class="col-lg-5 mr-auto">
-          <div class="card">
-            <div class="card-body p-4">
-              <h3 class="card-title mx-auto mb-2">Register</h3>
-              <?= form_open(base_url().'authUser/validate1') ?> 
-                <div class="form-group">
-                  <label>First Name</label>
-                  <input type="text" class="form-control" name="firstname" placeholder="First Name">
-                </div>
-                <div class="form-group">
-                  <label>Last Name</label>
-                  <input type="text" class="form-control" name="lastname" placeholder="Last Name">
-                </div>
-                <button class="btn btn-danger btn-block btn-round">Next</button>
-              </form><br>
-              <?php 
-                if(validation_errors() != ''){
-              ?>
-                <div class="alert alert-danger"><?= validation_errors(); ?></div>
-              <?php
-                }
-              ?>
-            </div>
+      <div class="row">
+          <div class="col-md-8 mx-auto text-center text-white">
+              <h1>Registration Completed!</h1>
+              <a href="<?= base_url() ?>authUser/login">Click To Login</a>
           </div>
-        </div>
-        <div class="col-lg-5 ml-auto">
-            <h1 style="color: white">Register With Us!</h1>
-        </div>
       </div>
     </div>
   </div>

@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'indexController';
 
 $route['register'] = 'authUser/register';
+$route['login'] = 'authUser/login';
 
 
 $route['admin'] = 'admin/authAdmin';

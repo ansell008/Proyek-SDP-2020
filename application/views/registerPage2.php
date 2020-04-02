@@ -34,36 +34,43 @@
 
     <div class="page-header" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('<?= base_url() ?>asset/img/carousel/registerBack.jpg');">
     <div class="container">
-      <div class="row pt-5">
-        <div class="col-lg-5 mr-auto">
-          <div class="card">
-            <div class="card-body p-4">
-              <h3 class="card-title mx-auto mb-2">Register</h3>
-              <?= form_open(base_url().'authUser/validate1') ?> 
-                <div class="form-group">
-                  <label>First Name</label>
-                  <input type="text" class="form-control" name="firstname" placeholder="First Name">
-                </div>
-                <div class="form-group">
-                  <label>Last Name</label>
-                  <input type="text" class="form-control" name="lastname" placeholder="Last Name">
-                </div>
-                <button class="btn btn-danger btn-block btn-round">Next</button>
-              </form><br>
-              <?php 
-                if(validation_errors() != ''){
-              ?>
-                <div class="alert alert-danger"><?= validation_errors(); ?></div>
-              <?php
-                }
-              ?>
-            </div>
+      <div class="row">
+          <div class="col-md-8 mx-auto text-center">
+            <h1 class="mx-auto text-white">Hello, <?= $data['user_firstname']; ?> <?= $data['user_lastname']; ?>!</h1>
+            <h3 class="mx-auto text-white">What do you want to be?</h3>
           </div>
+      </div>
+      <form action="<?= base_url() ?>authUser/validate2" method="post">
+      <div class="row mt-4 text-center">
+        <input type="hidden" name="data" value='<?= json_encode($data); ?>'>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="info">
+                        <div class="icon icon-danger">
+                            <i class="nc-icon nc-circle-10"></i>
+                        </div>
+                        <h4 class="info-title" style="color:black">Job Seeker</h4><br>
+                        <button type="submit" name="type" value="js" class="btn btn-danger">Choose</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-5 ml-auto">
-            <h1 style="color: white">Register With Us!</h1>
+        <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                    <div class="info">
+                        <div class="icon icon-danger">
+                            <i class="nc-icon nc-briefcase-24"></i>
+                        </div>
+                        <h4 class="info-title" style="color:black">Job Provider</h4><br>
+                        <button type="submit" name="type" value="jp" class="btn btn-danger">Choose</button>
+                    </div>
+                </div>
+              </div>
         </div>
       </div>
+      </form>
     </div>
   </div>
 

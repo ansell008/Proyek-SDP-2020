@@ -17,7 +17,7 @@
             <a href="" class="nav-link">About</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">Login</a>
+            <a href="<?= base_url() ?>login" class="nav-link">Login</a>
           </li>
           <li class="nav-item">
             <a href="<?= base_url() ?>register" class="btn btn-danger btn-round">Register</a>
