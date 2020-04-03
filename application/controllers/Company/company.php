@@ -9,9 +9,9 @@ Class Company extends CI_Controller
     }
     public function index(){
         // $data = $this->cm->getCompanyById($_SESSION['compAktif'][0]['perusahaan_id']);
-        $this->load->view('tpl/_header');
+        $this->load->view('tpl/headerComp');
         $this->load->view('company/landingCompany');
-        $this->load->view('tpl/_footer');
+        $this->load->view('tpl/footerComp');
     }
 }
 

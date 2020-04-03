@@ -49,7 +49,7 @@
             </div>
             <a class="navbar-brand" href="javascript:;"><?php
             if(isset($_SESSION['compAktif'])){
-                echo "Hi, ". $_SESSION['compAktif']['data'][0]['perusahaan_nama']."!";
+                echo "Welcome back, ". $_SESSION['compAktif']['data'][0]['perusahaan_nama']."!";
             }
              ?></a>
           </div>
@@ -211,7 +211,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header ">
@@ -229,8 +229,27 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="row">
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header ">
+                <h5 class="card-title">Activity</h5>
+                <p>Welcome to Kerja.In ! Now, You can create some projects and update your profile </p>
+              </div>
+              <div class="card-body ">
+                
+              </div>
+              <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                  <i class="fa fa-history"></i> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row">
           <div class="col-md-4">
             <div class="card ">
               <div class="card-header ">
@@ -276,27 +295,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer> -->
+      </div> -->
+      
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
         <b>Version</b> 0.0.1
