@@ -200,9 +200,9 @@ class AuthUser extends CI_Controller{
 
         if($res->num_rows() > 0){
             if($this->input->post('sbm') == 'auth_perusahaan'){
-                $this->load->view('tpl/_header');
+                $this->load->view('tpl/headerComp');
                 $this->load->view('company/landingCompany', array("data" => $res->result_array()));
-                $this->load->view('tpl/_footer');
+                $this->load->view('tpl/footerComp');
                 $this->session->set_userdata(array('compAktif' => array("data" => $res->result_array())));
             }
             
