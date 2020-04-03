@@ -4,6 +4,7 @@ class AuthUser extends CI_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->helper('form');
+        $this->load->library('session');
     }
 
     public function register(){
@@ -198,7 +199,13 @@ class AuthUser extends CI_Controller{
         $res = $this->authUserModel->findUser($this->input->post('sbm'), $a, $b);
 
         if($res->num_rows() > 0){
-            $this->load->view('landing', array("data" => $res->result_array()));
+            if($this->input->post('sbm') == 'auth_perusahaan'){
+                $this->load->view('tpl/_header');
+                $this->load->view('company/landingCompany', array("data" => $res->result_array()));
+                $this->load->view('tpl/_footer');
+                $this->session->set_userdata(array('compAktif' => array("data" => $res->result_array())));
+            }
+            
         }else {
             echo "gagal";
         }

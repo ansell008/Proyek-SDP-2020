@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="shortcut icon" href="<?= base_url().'asset/img/logo-icon.png'; ?>">
 
@@ -16,6 +16,8 @@
     <!-- CSS Files -->
     <link href="<?= base_url().'asset/paperkit' ?>/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="<?= base_url().'asset/paperkit' ?>/assets/css/paper-kit.css" rel="stylesheet" />
-
+    <link href="<?= base_url().'asset/style.css'?>" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="<?= base_url().'asset/paper-dashboard-master' ?>/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   </head>
   <body>

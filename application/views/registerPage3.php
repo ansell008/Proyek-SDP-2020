@@ -53,11 +53,11 @@
                           </div>
                           <div class="form-group">
                               <label>Password</label>
-                              <input type="text" class="form-control" name="pass" placeholder="Password">
+                              <input type="password" class="form-control" name="pass" placeholder="Password">
                           </div>
                           <div class="form-group">
                               <label>Confirm Password</label>
-                              <input type="text" class="form-control" name="confPass" placeholder="Minimum of 6 length">
+                              <input type="password" class="form-control" name="confPass" placeholder="Minimum of 6 length">
                           </div>
                           <div class="form-group">
                               <label>KTP</label>
