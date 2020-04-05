@@ -1,76 +1,49 @@
-<body>
-<div class="wrapper ">
+
+<body class="">
+  <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
         <a href="https://www.creative-tim.com" class="simple-text logo-mini">
           <div class="logo-image-small">
-            <img src="../assets/img/logo-small.png">
+            <img src="<?= base_url().'asset/img/logo.png'; ?>">
           </div>
           <!-- <p>CT</p> -->
         </a>
-        <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+        <a href="<?= base_url(); ?>" class="simple-text logo-normal">
+          Kerja.In
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->
         </a>
+
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li>
-            <a href="./dashboard.html">
-              <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li>
-            <a href="./icons.html">
-              <i class="nc-icon nc-diamond"></i>
-              <p>Icons</p>
-            </a>
-          </li>
-          <li>
-            <a href="./map.html">
-              <i class="nc-icon nc-pin-3"></i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li>
-            <a href="./notifications.html">
-              <i class="nc-icon nc-bell-55"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li class="active ">
-            <a href="./user.html">
-              <i class="nc-icon nc-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li>
-            <a href="./tables.html">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>Table List</p>
-            </a>
-          </li>
-          <li>
-            <a href="./typography.html">
-              <i class="nc-icon nc-caps-small"></i>
-              <p>Typography</p>
-            </a>
-          </li>
-          <li class="active-pro">
-            <a href="./upgrade.html">
-              <i class="nc-icon nc-spaceship"></i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li>
+            <li class=" ">
+                <a href="<?=base_url().'/company/company' ?>">
+                <i class="nc-icon nc-diamond"></i>
+                <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="active">
+                <a href="<?=base_url().'/company/company/profileCompany' ?>">
+                <i class="nc-icon nc-single-02"></i>
+                <p>Profile</p>
+                </a>
+            </li>
+            <li class="">
+                <a href="<?=base_url().'/company/company' ?>">
+                <i class="nc-icon nc-ruler-pencil"></i>
+                <p>Projects</p>
+                </a>
+            </li>
+          
         </ul>
       </div>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-light bg-danger">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -80,7 +53,11 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Paper Dashboard 2</a>
+            <a class="navbar-brand" href="javascript:;"><?php
+            if(isset($_SESSION['compAktif'])){
+                echo "Welcome back, ". $profil[0]['perusahaan_nama']."!";
+            }
+             ?></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -138,27 +115,48 @@
           <div class="col-md-4">
             <div class="card card-user">
               <div class="image">
-                <img src="../assets/img/damir-bosnjak.jpg" alt="...">
+                <img src="<?= base_url().'asset/img/profile/back.jfif' ?>" alt="...">
               </div>
               <div class="card-body">
                 <div class="author">
                   <a href="#">
-                    <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
-                    <h5 class="title">Chet Faker</h5>
+                    <img class="avatar border-gray" src="<?=base_url().$profil[0]['perusahaan_profPic'] ?>" alt="Profile Picture">
+                    <!-- <form method="post" action="<?//= base_url().'/company/company/updateProfile' ?>"> -->
+                    <?php
+                        echo form_open_multipart('company/company/updateProfile');
+                    ?>
+                        <input type="hidden" name="editPP" value="true"/>
+                        <div class="form-group">
+                            <input type="file" class="custom-file-input" id="customFile" name="profile_pic">
+                            <button class="btn btn-info" for="customFile">Change Profile Picture</label>
+                        </div>
                   </a>
+                  <h5 class="title"><?=$profil[0]['perusahaan_nama']?></h5>
                   <p class="description">
-                    @chetfaker
+                    <?=$profil[0]['perusahaan_email']?>
                   </p>
                 </div>
                 <p class="description text-center">
-                  "I like the way you work it <br>
-                  No diggity <br>
-                  I wanna bag it up"
+                  <?php
+                    for ($i=0; $i < 5-$profil[0]['perusahaan_rate']; $i++) { 
+                        echo "✰";
+                    }
+                    if($profil[0]['perusahaan_rate']>0){
+                        for ($i=0; $i < $profil[0]['perusahaan_rate']; $i++) { 
+                            echo "⭐";
+                        }
+                    }    
+                  ?>
                 </p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;&nbsp;<?=$profil[0]['perusahaan_alamat']?></li>
+                    <li class="list-group-item"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;<?=$profil[0]['perusahaan_telp']?></li>
+                    <li class="list-group-item"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;&nbsp;<?=$profil[0]['perusahaan_tipe']?></li>
+                </ul>
               </div>
               <div class="card-footer">
                 <hr>
-                <div class="button-container">
+                <!-- <div class="button-container">
                   <div class="row">
                     <div class="col-lg-3 col-md-6 col-6 ml-auto">
                       <h5>12<br><small>Files</small></h5>
@@ -170,67 +168,7 @@
                       <h5>24,6$<br><small>Spent</small></h5>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">Team Members</h4>
-              </div>
-              <div class="card-body">
-                <ul class="list-unstyled team-members">
-                  <li>
-                    <div class="row">
-                      <div class="col-md-2 col-2">
-                        <div class="avatar">
-                          <img src="../assets/img/faces/ayo-ogunseinde-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                        </div>
-                      </div>
-                      <div class="col-md-7 col-7">
-                        DJ Khaled
-                        <br />
-                        <span class="text-muted"><small>Offline</small></span>
-                      </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="row">
-                      <div class="col-md-2 col-2">
-                        <div class="avatar">
-                          <img src="../assets/img/faces/joe-gardner-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                        </div>
-                      </div>
-                      <div class="col-md-7 col-7">
-                        Creative Tim
-                        <br />
-                        <span class="text-success"><small>Available</small></span>
-                      </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="row">
-                      <div class="col-md-2 col-2">
-                        <div class="avatar">
-                          <img src="../assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                        </div>
-                      </div>
-                      <div class="col-ms-7 col-7">
-                        Flume
-                        <br />
-                        <span class="text-danger"><small>Busy</small></span>
-                      </div>
-                      <div class="col-md-3 col-3 text-right">
-                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                </div> -->
               </div>
             </div>
           </div>
@@ -240,108 +178,75 @@
                 <h5 class="card-title">Edit Profile</h5>
               </div>
               <div class="card-body">
-                <form>
+                
                   <div class="row">
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
-                        <label>Company (disabled)</label>
-                        <input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">
+                        <label>Company ID</label>
+                        <input type="text" name="id" class="form-control" disabled="" placeholder="Company ID" value="<?=$profil[0]['perusahaan_id']?>">
                       </div>
                     </div>
-                    <div class="col-md-3 px-1">
+                    <div class="col-md-5 pr-1">
                       <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" placeholder="Username" value="michael23">
+                        <label>Company Name</label>
+                        <input type="text" name="name" class="form-control" value="<?=$profil[0]['perusahaan_nama']?>">
                       </div>
                     </div>
-                    <div class="col-md-4 pl-1">
+                    
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" name="email" class="form-control" value="<?=$profil[0]['perusahaan_email']?>">
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" name="address" class="form-control" value="<?=$profil[0]['perusahaan_alamat']?>" >
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" placeholder="Company" value="Chet">
+                        <label>Telephone</label>
+                        <input type="text" name="telephone" class="form-control" value="<?=$profil[0]['perusahaan_telp']?>">
                       </div>
                     </div>
-                    <div class="col-md-6 pl-1">
+                    
+                    <div class="col-md-2 pl-1">
                       <div class="form-group">
-                        <label>Last Name</label>
-                        <input type="text" class="form-control" placeholder="Last Name" value="Faker">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control" placeholder="Home Address" value="Melbourne, Australia">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 pr-1">
-                      <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" placeholder="City" value="Melbourne">
-                      </div>
-                    </div>
-                    <div class="col-md-4 px-1">
-                      <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" class="form-control" placeholder="Country" value="Australia">
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>Postal Code</label>
-                        <input type="number" class="form-control" placeholder="ZIP Code">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>About Me</label>
-                        <textarea class="form-control textarea">Oh so, your weak rhyme You doubt I'll bother, reading into it</textarea>
+                        <label>Type</label>
+                        <input type="text" name="type" class="form-control" value="<?=$profil[0]['perusahaan_tipe']?>">
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="update ml-auto mr-auto">
-                      <button type="submit" class="btn btn-primary btn-round">Update Profile</button>
+                      <button type="submit" name="idBtn" class="btn btn-danger btn-round" value="<?=$profil[0]['perusahaan_id']?>">Update Profile</button>
                     </div>
                   </div>
-                </form>
+                <!-- </form> -->
+                <?php
+                    echo form_close();
+                ?>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
-          </div>
+      
+      <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+        <b>Version</b> 0.0.1
         </div>
-      </footer>
+        <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
+        reserved.
+    </footer>
     </div>
   </div>
 </body>
+
+</html>

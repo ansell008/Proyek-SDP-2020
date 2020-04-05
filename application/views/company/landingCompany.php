@@ -26,12 +26,17 @@
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url() ?>">
+                <a href="<?=base_url().'/company/company/profileCompany' ?>">
                 <i class="nc-icon nc-single-02"></i>
                 <p>Profile</p>
                 </a>
             </li>
-          
+            <li class="">
+                <a href="<?=base_url().'/company/company' ?>">
+                <i class="nc-icon nc-ruler-pencil"></i>
+                <p>Projects</p>
+                </a>
+            </li>
         </ul>
       </div>
     </div>
@@ -118,7 +123,7 @@
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">Projects</p>
-                      <p class="card-title">150GB<p>
+                      <p class="card-title">0<p>
                     </div>
                   </div>
                 </div>
