@@ -52,6 +52,9 @@
                 <div class="row mt-1">
                   <a href="#" class="btn btn-link btn-danger">Forgot password?</a>
                 </div>
+                <?php
+                  if(isset($_SESSION['err'])) echo '<div class="alert alert-danger">'.$_SESSION['err'].'</div>'
+                ?>
               </form>
             </div>
           </div>

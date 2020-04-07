@@ -99,7 +99,7 @@ class AuthUser extends CI_Controller{
             $data['user'] = json_decode($this->input->post('data'), true);
             $data['user']['user_email'] = $this->input->post('email');
             $data['user']['user_username'] = $this->input->post('username');
-            $data['user']['user_password'] = $this->input->post('pass');
+            $data['user']['user_password'] = sha1($this->input->post('pass'));
             $data['user']['user_ktp'] = $this->input->post('ktp');
             $data['user']['created_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
             $data['user']['updated_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
@@ -163,7 +163,7 @@ class AuthUser extends CI_Controller{
             $data['user'] = json_decode($this->input->post('data'), true);
             $data['user']['perusahaan_nama'] = $data['user']['user_firstname'] . ' ' . $data['user']['user_lastname'];
             $data['user']['perusahaan_email'] = $this->input->post('email');
-            $data['user']['perusahaan_password'] = $this->input->post('pass');
+            $data['user']['perusahaan_password'] = sha1($this->input->post('pass'));
             $data['user']['perusahaan_alamat'] = $this->input->post('add');
             $data['user']['perusahaan_telp'] = $this->input->post('telp');
             $data['user']['perusahaan_tipe'] = $this->input->post('type');
@@ -205,9 +205,9 @@ class AuthUser extends CI_Controller{
                 $this->load->view('tpl/footerComp');
                 $this->session->set_userdata(array('compAktif' => array("data" => $res->result_array())));
             }
-            
         }else {
-            echo "gagal";
+            $this->session->set_flashdata('err', 'Wrong Username / Password');
+            redirect('login');
         }
     }
 }

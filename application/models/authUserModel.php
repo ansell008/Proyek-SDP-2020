@@ -7,6 +7,7 @@ class AuthUserModel extends CI_Model{
 
     public function findUser($table, $user, $pass){
         $query = '';
+        $pass = sha1($pass);
         if($table == 'auth_perusahaan'){
             $query = "SELECT * FROM auth_perusahaan WHERE perusahaan_email = '$user' AND perusahaan_password = '$pass'";
         }else{
