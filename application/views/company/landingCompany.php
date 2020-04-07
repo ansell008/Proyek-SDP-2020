@@ -26,12 +26,17 @@
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url() ?>">
+                <a href="<?=base_url().'/company/company/profileCompany' ?>">
                 <i class="nc-icon nc-single-02"></i>
                 <p>Profile</p>
                 </a>
             </li>
-          
+            <li class="">
+                <a href="<?=base_url().'/company/company' ?>">
+                <i class="nc-icon nc-ruler-pencil"></i>
+                <p>Projects</p>
+                </a>
+            </li>
         </ul>
       </div>
     </div>
@@ -80,24 +85,14 @@
               </li>
               <li class="nav-item btn-rotate dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-bell-55"></i>
+                  <i class="nc-icon nc-settings-gear-65"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Some Actions</span>
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
+                  <a class="dropdown-item" href="<?= base_url().'/authUser/logout' ?>">Logout</a>
                 </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-rotate" href="javascript:;">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Account</span>
-                  </p>
-                </a>
               </li>
             </ul>
           </div>
@@ -118,7 +113,7 @@
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">Projects</p>
-                      <p class="card-title">150GB<p>
+                      <p class="card-title">0<p>
                     </div>
                   </div>
                 </div>

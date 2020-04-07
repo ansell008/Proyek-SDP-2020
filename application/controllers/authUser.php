@@ -190,6 +190,10 @@ class AuthUser extends CI_Controller{
         $this->load->view('loginPage');
         $this->load->view('tpl/_footer');
     }
+    public function logout(){
+        $this->session->unset_userdata('compAktif');
+        $this->login();
+    }
 
     public function loginproses(){
         $this->load->model('authUserModel');
