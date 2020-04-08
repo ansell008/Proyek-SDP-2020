@@ -17,6 +17,5 @@
     <link href="<?= base_url().'asset/paperkit' ?>/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="<?= base_url().'asset/paperkit' ?>/assets/css/paper-kit.css" rel="stylesheet" />
     <!-- CSS Files -->
-    <link href="<?= base_url().'asset/paper-dashboard-master' ?>/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   </head>
   <body>
