@@ -54,6 +54,10 @@ $route['default_controller'] = 'indexController';
 $route['register'] = 'authUser/register';
 $route['login'] = 'authUser/login';
 
+$route['user/profile'] = 'user/userController/loadProfile';
+$route['user/changePassword'] = 'user/userController/changePass';
+$route['user/updateProfile'] = 'user/userController/updateProfile';
+
 
 $route['admin'] = 'admin/authAdmin';
 $route['admin/authAdmin'] = 'admin/authAdmin/adminView';

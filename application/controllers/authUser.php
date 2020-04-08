@@ -195,6 +195,11 @@ class AuthUser extends CI_Controller{
         $this->login();
     }
 
+    public function logoutUser(){
+        $this->session->unset_userdata('userAktif');
+        $this->login();
+    }
+
     public function loginproses(){
         $this->load->model('authUserModel');
         $a = $this->input->post('em');
@@ -204,10 +209,15 @@ class AuthUser extends CI_Controller{
 
         if($res->num_rows() > 0){
             if($this->input->post('sbm') == 'auth_perusahaan'){
+                $this->session->set_userdata(array('compAktif' => array("data" => $res->result_array())));
                 $this->load->view('tpl/headerComp');
                 $this->load->view('company/landingCompany', array("data" => $res->result_array()));
                 $this->load->view('tpl/footerComp');
-                $this->session->set_userdata(array('compAktif' => array("data" => $res->result_array())));
+            }else if($this->input->post('sbm') == 'auth_user'){
+                $this->session->set_userdata(array('userAktif' => $res->result_array()));
+                $this->load->view('tpl/headerComp');
+                $this->load->view('user/landingUser');
+                $this->load->view('tpl/footerComp');
             }
         }else {
             $this->session->set_flashdata('err', 'Wrong Username / Password');
