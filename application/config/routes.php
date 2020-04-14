@@ -53,6 +53,7 @@ $route['default_controller'] = 'indexController';
 
 $route['register'] = 'authUser/register';
 $route['login'] = 'authUser/login';
+$roue['verify/(:any)'] = 'authUser/verify/$1';
 
 $route['user/profile'] = 'user/userController/loadProfile';
 $route['user/changePassword'] = 'user/userController/changePass';

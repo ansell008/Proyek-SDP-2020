@@ -15,19 +15,22 @@ class SentMail extends CI_Controller{
         $mail = $this->phpmailer_lib->load();
         
         // SMTP configuration
-        $mail->isSMTP();
-        $mail->Host     = gethostbyname('smtp.gmail.com');
+        $mail->IsSMTP();
+        $mail->SMTPDebug = 2;
+        $mail->SMTPAuth = false;  // authentication enabled
+        $mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+        $mail->SMTPAutoTLS = false;
+        $mail->Host     = '74.125.130.109';
         $mail->SMTPAuth = true;
-        $mail->Username = 'ansell24.es@gmail.com';
-        $mail->Password = 'Ansell24';
-        $mail->SMTPSecure = 'ssl';
+        $mail->Username = 'dominatorranger@gmail.com';
+        $mail->Password = 'Stone4768';
         $mail->Port     = 587;
         
         $mail->setFrom('aplinadm@gmail.com', 'Kerja.In');
         //$mail->addReplyTo('info@example.com', 'CodexWorld');
         
         // Add a recipient
-        $mail->addAddress('ansell08.es@gmail.com');
+        $mail->addAddress('rommycy00@gmail.com');
         
         // Add cc or bcc 
         //$mail->addCC('cc@example.com');

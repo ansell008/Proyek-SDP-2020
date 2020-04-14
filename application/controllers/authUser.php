@@ -6,6 +6,7 @@ class AuthUser extends CI_Controller{
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
         $this->load->model('EmailModel');
+        mail("rommycy00@gmail.com","Success","Great, Localhost Mail works");
     }
 
     public function register(){
@@ -263,6 +264,10 @@ class AuthUser extends CI_Controller{
             $this->session->set_flashdata('err', 'Wrong Username / Password');
             redirect('login');
         }
+    }
+
+    public function verify($code){
+        echo $code;
     }
 }
 
