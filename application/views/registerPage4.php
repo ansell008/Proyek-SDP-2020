@@ -40,7 +40,10 @@
               <div class="card p-3">
                   <div class="card-body">
                       <?= validation_errors(); ?>
-                      <form action="<?= base_url() ?>authUser/validate4" method="post">
+                      <!-- <form action="<?//= base_url() ?>authUser/validate4" method="post"> -->
+                      <?php
+                          echo form_open_multipart('authUser/validate4');
+                      ?>
                           <input type="hidden" name='data' value='<?= json_encode($user); ?>'>
                           <input type="hidden" name='table' value='<?= json_encode($table); ?>'>
                           <div class="form-group">
@@ -49,7 +52,11 @@
                           </div>
                           <div class="form-group">
                               <label>Address</label>
-                              <input type="text" class="form-control" name="add" placeholder="Address">
+                              <textarea class="form-control" name="add" placeholder="Address"></textarea>
+                          </div>
+                          <div class="form-group">
+                              <label>Post Code</label>
+                              <input type="text" class="form-control" name="code" placeholder="Post Code">
                           </div>
                           <div class="form-group">
                               <label>Password</label>
@@ -68,11 +75,14 @@
                               <input type="number" class="form-control" name="telp" placeholder="Phone Number">
                           </div>
                           <div class="form-group">
-                              <label>NPWP</label>
-                              <input type="text" class="form-control" name="npwp" placeholder="NPWP number">
+                              <label>NPWP [.png/.jpg]</label>
+                              <input type="file" class="form-control" name="npwp">
                           </div>
                           <button type="submit" class="btn btn-danger">Register</button>
-                        </form>
+                        <!-- </form> -->
+                        <?php
+                            echo form_close();
+                        ?>
                   </div>
               </div>
           </div>
