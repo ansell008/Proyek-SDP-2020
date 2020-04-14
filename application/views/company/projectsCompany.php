@@ -102,156 +102,40 @@
       <!-- End Navbar -->
       <div class="content">
         <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title"> Simple Table</h4>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Country
-                      </th>
-                      <th>
-                        City
-                      </th>
-                      <th class="text-right">
-                        Salary
-                      </th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-right">
-                          $36,738
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-right">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-right">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-right">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $98,615
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+            <div class="col-md-4">
+                <form action="<?= base_url().'/company/company/createProject' ?>">
+                    <button class="btn btn-warning" type="submit">Create Project</button>
+                </form>
             </div>
+            <div class="col-md-12">
+                <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">List Projects</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table class="table">
+                    <col width="10">
+                    <col width="150">
+                    <col width="180">
+                        <thead>
+                            <th>Project ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Budget</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody id="tbProject">
+                            
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div>
           </div>
       </div>
-      <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
-  </div>
       
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
@@ -263,5 +147,106 @@
     </div>
   </div>
 </body>
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
+<script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script>
+    $(document).ready(function () {
+        updateTableProject();
+    });
+    function updateTableProject(){
+        $("#tbProject").html('');
 
-</html>
+        $.ajax({
+        method: 'post',
+        url: '<?= base_url()."company/company/getAllProjectById" ?>',
+        success: function(res){
+            data = JSON.parse(res);
+
+            data.forEach(item => {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+            var x = new Date(item.project_deadline);
+            var tanggal_x = x.getDate(); 
+            var bulan_x = monthNames[x.getMonth()]; 
+            var tahun_x = x.getFullYear(); 
+            let deadline_dates = tanggal_x + " "+ bulan_x + ' '+ tahun_x ;
+            let status='';
+            if(item.project_status=='0')status = `<small class='badge badge-success'>OPEN</small>`;
+            else if(item.project_status=='1')status = `<small class='badge badge-warning'>ON GOING</small>`;
+            else status = `<small class='badge badge-danger'>DONE</small>`;
+            $("#tbProject").append(`
+                <tr id="row-${item.project_id}">
+                <td>${item.project_id}</td>
+                <td>${item.project_nama}</td>
+                <td>${item.project_deskripsi}</td>
+                <td>${item.project_anggaran}</td>
+                <td>${deadline_dates}</td>
+                <td>${status}</td>
+                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button></td>
+                </tr>
+            `);
+            });
+            $(".btnDelete").click(function(){
+                var conf = confirm("Are you sure ?");
+                if(conf){
+                    $.ajax({
+                    method: "post",
+                    url: "<?= base_url().'company/company/deleteProject' ?>",
+                    data: {"id" : $(this).val()},
+                    success: function () {
+                        toastr.success('Delete Success');
+                        $("#tbCategoryData").html("");
+                        updateTableProject();
+                    }
+                    });
+                }
+            });
+            $(".btnEdit").click(function () {
+                let tdId = $(this).val();
+                $.ajax({
+                    method: 'post',
+                    url: '<?= base_url()."company/company/getProjectById" ?>',
+                    data: {id : tdId},
+                    success: function(data){
+                    let item = JSON.parse(data);
+                    let status='';
+                    if(item[0].project_status=='0')status = `<small class='badge badge-success'>OPEN</small>`;
+                    else if(item[0].project_status=='1')status = `<small class='badge badge-warning'>ON GOING</small>`;
+                    else status = `<small class='badge badge-danger'>DONE</small>`;
+                    $(`#row-${tdId}`).html(`
+                        <td><input type='text' id='project_id-${item[0].project_id}' class='form-control' name='project_id' value='${item[0].project_id}' readonly /></td>
+                        <td><input type='text' id='project_name-${item[0].project_id}' class='form-control' name='project_name' value='${item[0].project_nama}' /></td>
+                        <td><textarea id='project_desc-${item[0].project_id}' class='form-control' name='project_desc' placeholder='' >${item[0].project_deskripsi}</textarea></td>
+                        <td><textarea id='project_budget-${item[0].project_id}' class='form-control' name='project_budget' placeholder='' >${item[0].project_anggaran}</textarea></td>
+                        <td><input type='date' id='project_deadline-${item[0].project_id}' class='form-control' name='project_deadline' /></td>
+                        <td>${status}</td>
+                        <td><button type='submit' class="btn btn-flat btn-success btnDone" id="${item[0].project_id}"><i class="fa fa-check"></i></button></td>
+                    `);
+                    $(".btnDone").click(function () {
+                        let trId = $(this).attr("id");
+                        let name = $(`#project_name-${trId}`).val();
+                        let desc = $(`#project_desc-${trId}`).val();
+                        let budget = $(`#project_budget-${trId}`).val();
+                        let deadline = $(`#project_deadline-${trId}`).val();
+                        $.ajax({
+                            method: 'post',
+                            url: '<?= base_url()."company/company/updateProjectById" ?>',
+                            data: {id: trId, name: name,desc: desc, budget: budget, deadline: deadline},
+                            success: function(res){
+                            if(res == 'success'){
+                                toastr.success('Update Success');
+                                updateTableProject();
+                            }
+                            }
+                        });
+                    })
+
+                    }
+                })
+            });
+            
+            $("#tableCompany").DataTable();
+        }
+        });
+    }
+</script>
