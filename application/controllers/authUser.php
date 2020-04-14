@@ -145,9 +145,10 @@ class AuthUser extends CI_Controller{
                 "required" => "Phone Number field cannot empty"
             )
         );
-        $this->form_validation->set_rules('npwp', 'NPWP', 'required',
+        $this->form_validation->set_rules('npwp', 'NPWP', 'required|exact_length[15]',
             array(
-                "required" => "NPWP field cannot empty"
+                "required" => "NPWP field cannot empty",
+                "exact_length" => "NPWP needs to be 16 characters in length"
             )
         );
 
