@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url().'/company/company' ?>">
+                <a href="<?=base_url().'/company/company/projectsCompany' ?>">
                 <i class="nc-icon nc-ruler-pencil"></i>
                 <p>Projects</p>
                 </a>
