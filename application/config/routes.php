@@ -68,6 +68,7 @@ $route['admin/companyListing'] = 'admin/userListing/loadCompany';
 $route['admin/ratings'] = 'admin/ratingController';
 $route['admin/skills'] = 'admin/skillAdmin';
 
+$route['company/project'] = 'company/company/projectsCompany';
 
 $route['sendEmail'] = 'sentMail/send';
 

@@ -16,5 +16,15 @@ class CompanyModel extends CI_Model{
         $this->db->where('perusahaan_id',$id);
         $this->db->update('auth_perusahaan',$updateData);
     }
+    public function getProjectById($id){
+        return $this->db->get_where('project',array('perusahaan_id' => $id))->result_array();
+    }
+    public function insertProject($new){
+        $this->db->insert('project', $new);
+    }
+    public function deleteProject($id){
+        $this->db->where('project_id', $id);
+        $this->db->delete('project');
+    }
 }
 ?>
