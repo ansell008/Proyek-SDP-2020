@@ -40,7 +40,9 @@
               <div class="card p-3">
                   <div class="card-body">
                       <?= validation_errors(); ?>
-                      <form action="<?= base_url() ?>authUser/validate3" method="post">
+                      <?php
+                          echo form_open_multipart('authUser/validate3');
+                      ?>
                           <input type="hidden" name='data' value='<?= json_encode($user); ?>'>
                           <input type="hidden" name='table' value='<?= json_encode($table); ?>'>
                           <div class="form-group">
@@ -60,8 +62,16 @@
                               <input type="password" class="form-control" name="confPass" placeholder="Minimum of 6 length">
                           </div>
                           <div class="form-group">
-                              <label>KTP</label>
-                              <input type="text" class="form-control" name="ktp" placeholder="KTP number">
+                              <label>Address</label>
+                              <textarea class="form-control" name="add" placeholder="Address"></textarea>
+                          </div>
+                          <div class="form-group">
+                              <label>Post Code</label>
+                              <input type="text" class="form-control" name="code" placeholder="Post Code">
+                          </div>
+                          <div class="form-group">
+                              <label>KTP [.png/.jpg]</label>
+                              <input type="file" class="form-control" name="ktp">
                           </div>
                           <button type="submit" class="btn btn-danger">Register</button>
                         </form>

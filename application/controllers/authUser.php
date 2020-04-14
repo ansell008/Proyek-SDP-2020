@@ -3,9 +3,9 @@
 class AuthUser extends CI_Controller{
     public function __construct(){
         parent::__construct();
-        $this->load->helper('form');
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
+        $this->load->model('EmailModel');
     }
 
     public function register(){
@@ -81,12 +81,6 @@ class AuthUser extends CI_Controller{
                 "matches" => "Password must match with Confirm Password"
             )
         );
-        $this->form_validation->set_rules('ktp', 'KTP', 'required|exact_length[16]',
-            array(
-                "required" => "KTP field cannot empty",
-                "exact_length" => "Must provide a valid KTP number"
-            )
-        );
 
         if($this->form_validation->run() == FALSE){
             $data['table'] = json_decode($this->input->post('table'), true);
@@ -105,6 +99,24 @@ class AuthUser extends CI_Controller{
             $data['user']['created_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
             $data['user']['updated_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
             $data['user']['user_id'] = uniqid('US_');
+
+            $f = $_FILES['ktp'];
+                if($f==''){
+                }else{
+                    $config['upload_path']      = './asset/upload/ktp-user/';
+                    $config['allowed_types']    = 'jpg|png';
+                    $config['max_size']         = 2048;
+                    $this->load->library('upload',$config);
+        
+                    if($this->upload->do_upload('ktp')){
+                        $foto = $this->upload->data('file_name');
+                    }else{
+                        var_dump($_FILES['ktp']);
+                        var_dump($this->upload->display_errors()); die();
+                    }
+                    $finalF = 'asset/upload/ktp-user/'.$foto;
+                    $data['user']['user_ktp'] = $finalF;
+                }
 
             $res = $this->authUserModel->insertNewUser($data['table'], $data['user']);
             if($res){
@@ -152,12 +164,6 @@ class AuthUser extends CI_Controller{
                 "required" => "Phone Number field cannot empty"
             )
         );
-        $this->form_validation->set_rules('npwp', 'NPWP', 'required|exact_length[15]',
-            array(
-                "required" => "NPWP field cannot empty",
-                "exact_length" => "NPWP needs to be 16 characters in length"
-            )
-        );
 
         if($this->form_validation->run() == FALSE){
             $data['table'] = json_decode($this->input->post('table'), true);
@@ -183,7 +189,7 @@ class AuthUser extends CI_Controller{
                 }else{
                     $config['upload_path']      = './asset/upload/npwp-company/';
                     $config['allowed_types']    = 'jpg|png';
-                    $config['max_size']         = 100;
+                    $config['max_size']         = 2048;
                     $this->load->library('upload',$config);
         
                     if($this->upload->do_upload('npwp')){
