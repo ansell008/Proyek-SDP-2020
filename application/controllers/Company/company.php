@@ -15,11 +15,17 @@ Class Company extends CI_Controller
         $this->load->view('tpl/footerComp');
     }
     public function profileCompany(){
-            $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
-            $this->load->view('tpl/headerComp');
-            $this->load->view('company/profileCompany',$data);
-            $this->load->view('tpl/footerComp');
+        $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
+        $this->load->view('tpl/headerComp');
+        $this->load->view('company/profileCompany',$data);
+        $this->load->view('tpl/footerComp');
     }
+    public function projectsCompany(){
+        $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
+        $this->load->view('tpl/headerComp');
+        $this->load->view('company/projectsCompany',$data);
+        $this->load->view('tpl/footerComp');
+}
 
     public function updateProfile(){
         $updateData = $this->input->post();
