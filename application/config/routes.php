@@ -66,5 +66,9 @@ $route['admin/userListing'] = 'admin/userListing/loadFreelance';
 $route['admin/companyListing'] = 'admin/userListing/loadCompany';
 $route['admin/ratings'] = 'admin/ratingController';
 $route['admin/skills'] = 'admin/skillAdmin';
+
+
+$route['sendEmail'] = 'sentMail/send';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

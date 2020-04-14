@@ -15,6 +15,17 @@ class AuthUserModel extends CI_Model{
         }
         return $this->db->query($query);
     }
+    public function checkEmail($table, $email){
+        $query = '';
+        if($table == 'auth_perusahaan'){
+            $query = "SELECT * FROM auth_perusahaan WHERE perusahaan_email = '$email'";
+        }else{
+            $query = "SELECT * FROM auth_user WHERE user_email = '$email'";
+        }
+        $num =  $this->db->query($query)->num_rows();
+        return $num;
+    }
+
 }
 
 ?>

@@ -118,7 +118,7 @@
                         <input type="hidden" name="editPP" value="true"/>
                         <div class="form-group">
                             <input type="file" class="custom-file-input" id="customFile" name="profile_pic">
-                            <button class="btn btn-info" for="customFile">Change Profile Picture</label>
+                            <button class="btn btn-info" for="customFile">Change Profile Picture</button>
                         </div>
                   </a>
                   <h5 class="title"><?=$profil[0]['perusahaan_nama']?></h5>
