@@ -54,6 +54,7 @@ $route['default_controller'] = 'indexController';
 $route['register'] = 'authUser/register';
 $route['login'] = 'authUser/login';
 $route['verify/(:any)'] = 'authUser/verify/$1';
+$route['verifyP/(:any)'] = 'authUser/verifyP/$1';
 
 $route['user/profile'] = 'user/userController/loadProfile';
 $route['user/changePassword'] = 'user/userController/changePass';
@@ -69,8 +70,6 @@ $route['admin/ratings'] = 'admin/ratingController';
 $route['admin/skills'] = 'admin/skillAdmin';
 
 $route['company/project'] = 'company/company/projectsCompany';
-
-$route['sendEmail'] = 'sentMail/send';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

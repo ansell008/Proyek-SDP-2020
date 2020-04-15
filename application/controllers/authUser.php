@@ -130,26 +130,39 @@ class AuthUser extends CI_Controller{
             $em = md5($em);
             $data['user']['user_email_confirmation_hash'] = $em;
             $res = $this->authUserModel->insertNewUser($data['table'], $data['user']);
-            if($res){
-                // send mail confirmation
-                $to = $data['user']['user_email'];
-                $subject = 'Hello Kerja.In Partners !';
-                $message = "<h1>Welcome to Kerja.In</h1>
-                <p>Click the link below to start using your account!</p><br><br>
-                <a href='http://localhost/Proyek-SDP-2020/verify/$em'>Activate Account</a><br><p>Ciao!</p>";
-                $headers = 'From: dominatorranger@gmail.com' . "\r\n" .
-                    'Reply-To: dominatorranger@gmail.com' . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
 
-                mail($to, $subject, $message, $headers);
-
+            $this->sendMail($data['user']['user_email'], $em);
                 // end
-                $this->load->view('tpl/_header');
-                $this->load->view('success', $data);
-                $this->load->view('tpl/_footer');
-            }
+            $this->load->view('tpl/_header');
+            $this->load->view('success', $data);
+            $this->load->view('tpl/_footer');
         }
     }
+
+    public function sendMail($em, $hash){
+        $subject = 'Hello Kerja.In Partners !';
+        $message = "<h1>Welcome to Kerja.In</h1>
+        <p>Click the link below to start using your account!</p><br><br>
+        <a href='http://localhost/Proyek-SDP-2020/verify/$hash'>Activate Account</a><br><p>Ciao!</p>";
+        $headers = "From: dominatorranger@gmail.com\r\n".
+        "MIME-Version: 1.0" . "\r\n" .
+        "Content-type: text/html; charset=UTF-8" . "\r\n";
+        mail($em, $subject, $message, $headers);
+    }
+
+    public function sendMailP($em, $hash){
+        $subject = 'Hello Kerja.In Partners !';
+        $message = "<h1>Welcome to Kerja.In</h1>
+        <p>Click the link below to start using your account!</p><br><br>
+        <a href='http://localhost/Proyek-SDP-2020/verifyP/$hash'>Activate Account</a><br><p>Ciao!</p>";
+        $headers = "From: dominatorranger@gmail.com\r\n".
+        "MIME-Version: 1.0" . "\r\n" .
+        "Content-type: text/html; charset=UTF-8" . "\r\n";
+        mail($em, $subject, $message, $headers);
+    }
+
+    // list dikasih data
+    // 
 
     public function validate4(){
         $this->load->library('form_validation');
@@ -235,20 +248,25 @@ class AuthUser extends CI_Controller{
                 $em = md5($email);
                 $data['user']['perusahaan_email_confirmation_hash'] = $em;
                 $res = $this->authUserModel->insertNewUser($data['table'], $data['user']);
-                if($res){
-                    $to = $data['user']['perusahaan_email'];
-                    $subject = 'Hello Kerja.In Partners !';
-                    $message = "<h1>Welcome to Kerja.In</h1>
-                    <p>Click the link below to start using your account!</p><br><br>
-                    <a href='http://localhost/Proyek-SDP-2020/verify/$em'>Activate Account</a><br><p>Ciao!</p>";
-                    $headers = 'From: dominatorranger@gmail.com' . "\r\n" .
-                    'Reply-To: dominatorranger@gmail.com' . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
-                    mail($to, $subject, $message, $headers);
 
-                    $this->load->view('tpl/_header');
-                    $this->load->view('success', $data);
-                    $this->load->view('tpl/_footer');
+                $this->sendMailP($email, $em);
+
+                $this->load->view('tpl/_header');
+                $this->load->view('success', $data);
+                $this->load->view('tpl/_footer');
+
+                if($res){
+                    // $to = $data['user']['perusahaan_email'];
+                    // $subject = 'Hello Kerja.In Partners !';
+                    // $message = "<h1>Welcome to Kerja.In</h1>
+                    // <p>Click the link below to start using your account!</p><br><br>
+                    // <a href='http://localhost/Proyek-SDP-2020/verify/$em'>Activate Account</a><br><p>Ciao!</p>";
+                    // $headers = 'From: dominatorranger@gmail.com' . "\r\n" .
+                    // 'Reply-To: dominatorranger@gmail.com' . "\r\n" .
+                    // 'X-Mailer: PHP/' . phpversion();
+                    // mail($to, $subject, $message, $headers);
+
+                    
                     //redirect('sendEmail');
                 }
             }else {
