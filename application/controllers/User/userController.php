@@ -6,6 +6,13 @@ class UserController extends Ci_Controller{
         $this->load->library('form_validation');
         $this->load->model('user/userModel');
     }
+
+    public function showDash(){
+        $this->load->view('tpl/headerComp');
+        $this->load->view('user/landingUser');
+        $this->load->view('tpl/footerComp');
+    }
+
     public function loadProfile(){
         $this->load->view('tpl/headerComp');
         $this->load->view('user/profileUser');
@@ -47,6 +54,18 @@ class UserController extends Ci_Controller{
 
         $this->session->set_userdata(array('userAktif' => $this->userModel->getUserById($idAktif)));
         redirect('user/profile');
+    }
+    
+    public function showProject(){
+        $this->load->view('tpl/headerComp');
+        $this->load->view('user/projectUser');
+        $this->load->view('tpl/footerComp');
+    }
+
+    public function loadProjects(){
+        $this->load->model("user/projectModel");
+        $res = $this->projectModel->loadAllProjects();
+        echo json_encode($res);
     }
 
     // 7c4a8d09ca3762af61e59520943dc26494f8941b
