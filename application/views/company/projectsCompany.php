@@ -176,13 +176,15 @@
             else status = `<small class='badge badge-danger'>DONE</small>`;
             $("#tbProject").append(`
                 <tr id="row-${item.project_id}">
+
                 <td>${item.project_id}</td>
                 <td>${item.project_nama}</td>
                 <td>${item.project_deskripsi}</td>
                 <td>${item.project_anggaran}</td>
                 <td>${deadline_dates}</td>
                 <td>${status}</td>
-                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button></td>
+                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button>  &nbsp;  <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i></button></form></td>
+                
                 </tr>
             `);
             });

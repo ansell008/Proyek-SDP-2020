@@ -80,6 +80,26 @@ Class Company extends CI_Controller
         else echo "fail";
     }
 
+    public function projectsDetail()
+    {
+        $id = $this->input->post('btnView');
+        $res = $this->cm->getProject($id);
+        $data['projectDetail'] = $res;
+        $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
+        $data['participant'] = $this->cm->getUserByProjectId($_SESSION['compAktif']['data'][0]['perusahaan_id']);
+        $this->load->view('tpl/headerComp',$data);
+        $this->load->view('company/projectsDetail',$data);
+        $this->load->view('tpl/footerComp',$data);
+    }
+    public function getAllUserByProject(){
+        echo json_encode($this->cm->getUserByProjectId($_SESSION['compAktif']['data'][0]['perusahaan_id']));
+    }
+    public function acceptParticipant(){
+        $id = $this->input->post('id');
+        $res = $this->db->update('project_pekerja', array('project_pekerja_status' => 1), array('project_pekerja_id' => $id));
+        
+    }
+
     public function updateProfile(){
         $updateData = $this->input->post();
         $id = $updateData['idBtn'];
@@ -88,6 +108,8 @@ Class Company extends CI_Controller
         $c = $updateData['address'];
         $d = $updateData['telephone'];
         $e = $updateData['type'];
+        $g = $updateData['city'];
+        $h = $updateData['code'];
         if(isset($_FILES['profile_pic'])){
             if($_FILES['profile_pic']['name']!=""){
                 $f = $_FILES['profile_pic'];
@@ -105,22 +127,26 @@ Class Company extends CI_Controller
                         var_dump($this->upload->display_errors()); die();
                     }
                     $finalF = 'asset/img/profile/'.$foto;
-                    $res = $this->cm->updateProfile($id, $a,$b,$c,$d,$e,$finalF);
+                    $res = $this->cm->updateProfile($id, $a,$b,$c,$d,$e,$finalF,$g,$h);
                     $_SESSION['compAktif']['data'][0]['perusahaan_nama']= $a;
                     $_SESSION['compAktif']['data'][0]['perusahaan_email']= $b;
                     $_SESSION['compAktif']['data'][0]['perusahaan_alamat']= $c;
                     $_SESSION['compAktif']['data'][0]['perusahaan_telp']= $d;
                     $_SESSION['compAktif']['data'][0]['perusahaan_tipe']= $e;
+                    $_SESSION['compAktif']['data'][0]['perusahaan_kota']= $g;
+                    $_SESSION['compAktif']['data'][0]['perusahaan_kodepos']= $h;
                     $_SESSION['compAktif']['data'][0]['perusahaan_profPic']= $finalF;
                 }
             }else{
                 $finalF = $_SESSION['compAktif']['data'][0]['perusahaan_profPic'];
-                $res = $this->cm->updateProfile($id, $a,$b,$c,$d,$e,$finalF);
+                $res = $this->cm->updateProfile($id, $a,$b,$c,$d,$e,$finalF,$g,$h);
                 $_SESSION['compAktif']['data'][0]['perusahaan_nama']= $a;
                 $_SESSION['compAktif']['data'][0]['perusahaan_email']= $b;
                 $_SESSION['compAktif']['data'][0]['perusahaan_alamat']= $c;
                 $_SESSION['compAktif']['data'][0]['perusahaan_telp']= $d;
                 $_SESSION['compAktif']['data'][0]['perusahaan_tipe']= $e;
+                $_SESSION['compAktif']['data'][0]['perusahaan_kota']= $g;
+                $_SESSION['compAktif']['data'][0]['perusahaan_kodepos']= $h;
             }
         }
         $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
