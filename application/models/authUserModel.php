@@ -32,7 +32,7 @@ class AuthUserModel extends CI_Model{
         else return false;
     }
     public function verifyEmailCompany($hash){
-        $query = "UPDATE auth_perusahaan SET perusahaan_status = 0 WHERE perusahaan_email_confirmation_hash = '$hash' AND perusahaan_status = -1";
+        $query = "UPDATE auth_perusahaan SET perusahaan_status = 0 WHERE perusahaan_verification_hash = '$hash' AND perusahaan_status = -1";
         $res = $this->db->query($query);
         if($res) return true;
         else return false;

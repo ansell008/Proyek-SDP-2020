@@ -199,6 +199,24 @@
                     </div>
                   </div>
                   <div class="row">
+                    <div class="col-md-7 pr-1">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">City</label>
+                            <select name="city" class="form-control">
+                                <option value="Surabaya Utara">Surabaya Utara</option>
+                                <option value="Surabaya Selatan">Surabaya Selatan</option>
+                                <option value="Surabaya Barat">Surabaya Barat</option>
+                                <option value="Surabaya Timur">Surabaya Timur</option>
+                            </select></div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Post Code</label>
+                        <input type="text" name="code" class="form-control" value="<?=$profil[0]['perusahaan_kodepos']?>" >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Telephone</label>
