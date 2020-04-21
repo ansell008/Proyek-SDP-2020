@@ -100,26 +100,36 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-
+      <h3>All Available Projects</h3>
         <div class="row">
             <div class="col-md-9">
-                <h3>All Available Projects</h3>
-                <div class="projectContainer">
-
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">
-                            Projects by 
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        This is some text within a card body.
-                    </div>
+                <div id="projectContainer">
+                
                 </div>
             </div>
             <div class="col-md-3">
-                
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Search</h4>
+                  </div>
+                  <div class="card-body">
+                    <form id="form-search" class="form-inline">
+                      <div class="form-group">
+                        <input type="text" name="search" id="sc-query" class="form-control" placeholder="Enter Name">&nbsp;<button type="submit" class="btn btn-info btn-fab btn-icon btn-round"><i class="fa fa-search"></i></button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Filter</h4>
+                  </div>
+                  <div class="card-body">
+                    <small>By Category</small><br>
+                    <select id="category" class="form-control">
+                    </select>
+                  </div>
+                </div>
             </div>
         </div>
 
@@ -134,11 +144,115 @@
     </div>
   </div>
 
+  <style>
+    a:hover{
+      text-decoration: none;
+      color: black;
+      box-shadow: 5px 5px;
+    }
+  </style>
+
 <script>
 
     $(document).ready(function(){
         loadProjects();
+        loadCategory();
+
+        $("#form-search").submit(function(e){
+          e.preventDefault();
+          searchProjects($("#sc-query").val());
+        });
+
+        $("#category").change(function(){
+          let value = $(this).val();
+          $.ajax({
+            method: 'post',
+            url: '<?= base_url() ?>user/searchFilterCategory',
+            data: {id: value},
+            success: function(res){
+              let data = JSON.parse(res);
+              parseProjects(data);
+            }
+          });
+        });
     });
+
+    function searchProjects(name){
+      $.ajax({
+        url: '<?= base_url() ?>searchProject',
+        data: {query: name},
+        method: 'post',
+        success: function(res){
+          let data = JSON.parse(res);
+          parseProjects(data);
+        }
+      });
+    }
+
+    function parseCategory(data){
+      data.forEach(item => {
+            $("#category").append(`
+              <option value="${item.category_id}">${item.category_name}</option>
+            `);
+          });
+    }
+
+    function loadCategory(){
+      $.ajax({
+        method: 'post',
+        url: '<?= base_url() ?>user/searchByCategory',
+        data: {id: $("#category").val()},
+        success: function(res){
+          let data = JSON.parse(res);
+          parseCategory(data);
+        }
+      });
+    }
+
+    function parseProjects(data){
+      $("#projectContainer").html('');
+      let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      data.forEach(item => {
+        var cr = new Date(item.created_at);
+        var cn = new Date(item.project_mulai);
+        var status, statusclass;
+
+        if(item.project_status == 0){
+          status = "OPEN";
+          statusclass = "success";
+        }else if(item.project_status == 1){
+          status = "PROGRESS";
+          statusclass = "warning";
+        }else if(item.project_status == 2){
+          status = "DONE";
+          statusclass = "info";
+        }
+
+        console.log(cr.getDay());
+        $("#projectContainer").append(`
+                    <a href="<?php base_url() ?>detailProject/${item.project_id}">
+                      <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title">
+                                ${item.project_nama}
+                                <br>
+                                <small>on ${days[cr.getDay()]}, ${cr.getDate()} ${months[cr.getMonth()]} ${cr.getFullYear()} by ${item.perusahaan_nama}</small>
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-truncate">
+                              ${item.project_deskripsi}
+                            </p>
+                            <span class="badge badge-${statusclass}">${status}</span>
+                            <small>Until ${days[cn.getDay()]}, ${cn.getDate()} ${months[cn.getMonth()]} ${cn.getFullYear()}</small>
+                            <span class="pull-right"><i class="fa fa-user"></i> ${item.bidder}</span>
+                        </div>
+                      </div>
+                    </a>
+                  `);
+      });
+    }
 
     function loadProjects(){
         $.ajax({
@@ -146,7 +260,7 @@
             method: 'post',
             success: function(res){
                 let data = JSON.parse(res);
-                
+                parseProjects(data);
             }
         });
     }

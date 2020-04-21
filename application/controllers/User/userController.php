@@ -62,9 +62,69 @@ class UserController extends Ci_Controller{
         $this->load->view('tpl/footerComp');
     }
 
+    public function detailProject($idProject){
+        $this->load->model("user/projectModel");
+        $res = $this->projectModel->searchProjectById(urldecode($idProject));
+        
+        $this->load->view('tpl/headerComp');
+        $this->load->view('user/projectDetail', array("data" => $res));
+        $this->load->view('tpl/footerComp');
+    }
+
+    public function searchProject(){
+        $this->load->model("user/projectModel");
+        $query = $this->input->post('query');
+        $res = $this->projectModel->searchProject($query);
+
+        foreach($res as $key => &$value){
+            $bidder = $this->projectModel->getCount($value["perusahaan_id"]);
+            $value["bidder"] = $bidder[0]["bid"];
+        }
+
+        echo json_encode($res);
+    }
+
+    public function takeProject(){
+        $this->load->model("user/projectModel");
+        $idProject = $this->input->post("idProject");
+        $idUser = $_SESSION['userAktif'][0]['user_id'];
+
+        $res = $this->projectModel->takeProjectUser($idProject, $idUser);
+
+        if($res) echo "SUCCESS";
+        else echo "FAILED";
+    }
+
     public function loadProjects(){
         $this->load->model("user/projectModel");
         $res = $this->projectModel->loadAllProjects();
+        
+        foreach($res as $key => &$value){
+            $bidder = $this->projectModel->getCount($value["perusahaan_id"]);
+            $value["bidder"] = $bidder[0]["bid"];
+        }
+
+        echo json_encode($res);
+    }
+
+    public function searchCat(){
+        $this->load->model("user/projectModel");
+        $res = $this->projectModel->searchCategory();
+
+        echo json_encode($res);
+    }
+
+    public function searchByCat(){
+        $id = $this->input->post("id");
+        $this->load->model("user/projectModel");
+
+        $res = $this->projectModel->searchCategory($id);
+
+        foreach($res as $key => &$value){
+            $bidder = $this->projectModel->getCount($value["perusahaan_id"]);
+            $value["bidder"] = $bidder[0]["bid"];
+        }
+
         echo json_encode($res);
     }
 

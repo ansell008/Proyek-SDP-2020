@@ -62,7 +62,11 @@ $route['user/updateProfile'] = 'user/userController/updateProfile';
 $route['user/dash'] = 'user/userController/showDash';
 $route['user/projects'] = 'user/userController/showProject';
 $route['user/loadProject'] = 'user/userController/loadProjects';
-
+$route['user/detailProject/(:any)'] = 'user/userController/detailProject/$1';
+$route['user/searchProject'] = 'user/userController/searchProject';
+$route['user/searchByCategory'] = 'user/userController/searchCat';
+$route['user/searchFilterCategory'] = 'user/userController/searchByCat';
+$route['user/takeProject'] = 'user/userController/takeProject';
 
 $route['admin'] = 'admin/authAdmin';
 $route['admin/authAdmin'] = 'admin/authAdmin/adminView';
