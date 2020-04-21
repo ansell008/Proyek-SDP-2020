@@ -59,6 +59,9 @@ $route['verifyP/(:any)'] = 'authUser/verifyP/$1';
 $route['user/profile'] = 'user/userController/loadProfile';
 $route['user/changePassword'] = 'user/userController/changePass';
 $route['user/updateProfile'] = 'user/userController/updateProfile';
+$route['user/dash'] = 'user/userController/showDash';
+$route['user/projects'] = 'user/userController/showProject';
+$route['user/loadProject'] = 'user/userController/loadProjects';
 
 
 $route['admin'] = 'admin/authAdmin';

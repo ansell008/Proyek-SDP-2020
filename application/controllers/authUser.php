@@ -147,7 +147,7 @@ class AuthUser extends CI_Controller{
                     $data['user']['user_ktp'] = $finalF;
                 }
             $em = md5($em);
-            $data['user']['user_email_confirmation_hash'] = $em;
+            $data['user']['user_verification_code'] = $em;
             $res = $this->authUserModel->insertNewUser($data['table'], $data['user']);
 
             $this->sendMail($data['user']['user_email'], $em);
@@ -265,7 +265,7 @@ class AuthUser extends CI_Controller{
                 unset($data['user']['user_lastname']);
 
                 $em = md5($email);
-                $data['user']['perusahaan_email_confirmation_hash'] = $em;
+                $data['user']['perusahaan_verification_hash'] = $em;
                 $res = $this->authUserModel->insertNewUser($data['table'], $data['user']);
 
                 $this->sendMailP($email, $em);
@@ -320,21 +320,27 @@ class AuthUser extends CI_Controller{
         $res = $this->authUserModel->findUser($this->input->post('sbm'), $a, $b);
 
         if($res->num_rows() > 0){
-            if($res->result_array()["user_status"] == -1){
-                if($this->input->post('sbm') == 'auth_perusahaan'){
-                    $this->session->set_userdata(array('compAktif' => array("data" => $res->result_array())));
+            $res = $res->result_array();
+            if($this->input->post('sbm') == 'auth_perusahaan'){
+                if($res[0]["perusahaan_status"] != -1){
+                    $this->session->set_userdata(array('compAktif' => array("data" => $res)));
                     $this->load->view('tpl/headerComp');
-                    $this->load->view('company/landingCompany', array("data" => $res->result_array()));
+                    $this->load->view('company/landingCompany', array("data" => $res));
                     $this->load->view('tpl/footerComp');
-                }else if($this->input->post('sbm') == 'auth_user'){
-                    $this->session->set_userdata(array('userAktif' => $res->result_array()));
+                }else{
+                    $this->session->set_flashdata('err', 'Your account has not been verified yet, go check your email for verification.');
+                    redirect('login');
+                }
+            }else if($this->input->post('sbm') == 'auth_user'){
+                if($res[0]["user_status"] != -1){
+                    $this->session->set_userdata(array('userAktif' => $res));
                     $this->load->view('tpl/headerComp');
                     $this->load->view('user/landingUser');
                     $this->load->view('tpl/footerComp');
+                }else{
+                    $this->session->set_flashdata('err', 'Your account has not been verified yet, go check your email for verification.');
+                    redirect('login');
                 }
-            }else{
-                $this->session->set_flashdata('err', 'Your account has not been verified yet, go check your email for verification.');
-                redirect('login');
             }
         }else {
             $this->session->set_flashdata('err', 'Wrong Username / Password');
