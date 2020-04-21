@@ -174,7 +174,7 @@ class AuthUser extends CI_Controller{
         $message = "<h1>Welcome to Kerja.In</h1>
         <p>Click the link below to start using your account!</p><br><br>
         <a href='http://localhost/Proyek-SDP-2020/verifyP/$hash'>Activate Account</a><br><p>Ciao!</p>";
-        $headers = "From: dominatorranger@gmail.com\r\n".
+        $headers = "From: ansell24.es@gmail.com\r\n".
         "MIME-Version: 1.0" . "\r\n" .
         "Content-type: text/html; charset=UTF-8" . "\r\n";
         mail($em, $subject, $message, $headers);
