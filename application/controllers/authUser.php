@@ -82,6 +82,22 @@ class AuthUser extends CI_Controller{
                 "matches" => "Password must match with Confirm Password"
             )
         );
+        $this->form_validation->set_rules('add', 'Address', 'required',
+            array(
+                "required" => "Address field cannot empty"
+            )
+        );
+        $this->form_validation->set_rules('city', 'City', 'required',
+            array(
+                "required" => "City field cannot empty"
+            )
+        );
+        $this->form_validation->set_rules('code', 'Post Code', 'required|exact_length[5]',
+            array(
+                "required" => "Postcode field cannot empty",
+                "exact_length" => "Enter a valid postcode"
+            )
+        );
 
         if($this->form_validation->run() == FALSE){
             $data['table'] = json_decode($this->input->post('table'), true);
@@ -96,7 +112,10 @@ class AuthUser extends CI_Controller{
             $data['user']['user_email'] = $this->input->post('email');
             $data['user']['user_username'] = $this->input->post('username');
             $data['user']['user_password'] = sha1($this->input->post('pass'));
+            $data['user']['user_alamat'] = $this->input->post('add');
+            $data['user']['user_kota'] = $this->input->post('city');
             $data['user']['user_ktp'] = $this->input->post('ktp');
+            $data['user']['user_kodepos'] = $this->input->post('code');
             $data['user']['created_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
             $data['user']['updated_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
             $data['user']['user_id'] = uniqid('US_');
@@ -249,16 +268,21 @@ class AuthUser extends CI_Controller{
         $res = $this->authUserModel->findUser($this->input->post('sbm'), $a, $b);
 
         if($res->num_rows() > 0){
-            if($this->input->post('sbm') == 'auth_perusahaan'){
-                $this->session->set_userdata(array('compAktif' => array("data" => $res->result_array())));
-                $this->load->view('tpl/headerComp');
-                $this->load->view('company/landingCompany', array("data" => $res->result_array()));
-                $this->load->view('tpl/footerComp');
-            }else if($this->input->post('sbm') == 'auth_user'){
-                $this->session->set_userdata(array('userAktif' => $res->result_array()));
-                $this->load->view('tpl/headerComp');
-                $this->load->view('user/landingUser');
-                $this->load->view('tpl/footerComp');
+            if($res->result_array()["user_status"] == -1){
+                if($this->input->post('sbm') == 'auth_perusahaan'){
+                    $this->session->set_userdata(array('compAktif' => array("data" => $res->result_array())));
+                    $this->load->view('tpl/headerComp');
+                    $this->load->view('company/landingCompany', array("data" => $res->result_array()));
+                    $this->load->view('tpl/footerComp');
+                }else if($this->input->post('sbm') == 'auth_user'){
+                    $this->session->set_userdata(array('userAktif' => $res->result_array()));
+                    $this->load->view('tpl/headerComp');
+                    $this->load->view('user/landingUser');
+                    $this->load->view('tpl/footerComp');
+                }
+            }else{
+                $this->session->set_flashdata('err', 'Your account has not been verified yet, go check your email for verification.');
+                redirect('login');
             }
         }else {
             $this->session->set_flashdata('err', 'Wrong Username / Password');

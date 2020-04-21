@@ -66,6 +66,15 @@
                               <textarea class="form-control" name="add" placeholder="Address"></textarea>
                           </div>
                           <div class="form-group">
+                              <label>City</label>
+                              <select name="city">
+                                <option value="surabaya-timur">Surabaya Timur</option>
+                                <option value="surabaya-barat">Surabaya Barat</option>
+                                <option value="surabaya-selatan">Surabaya Selatan</option>
+                                <option value="surabaya-utara">Surabaya Utara</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
                               <label>Post Code</label>
                               <input type="text" class="form-control" name="code" placeholder="Post Code">
                           </div>
