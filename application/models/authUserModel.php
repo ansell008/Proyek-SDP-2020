@@ -2,7 +2,7 @@
 
 class AuthUserModel extends CI_Model{
     public function insertNewUser($table, $data){
-        return $this->db->insert($table, $data);
+        $this->db->insert($table, $data);
     }
 
     public function findUser($table, $user, $pass){
@@ -24,6 +24,18 @@ class AuthUserModel extends CI_Model{
         }
         $num =  $this->db->query($query)->num_rows();
         return $num;
+    }
+    public function verifyEmail($hash){
+        $query = "UPDATE auth_user SET user_status = 0 WHERE user_email_confirmation_hash = '$hash' AND user_status = -1";
+        $res = $this->db->query($query);
+        if($res) return true;
+        else return false;
+    }
+    public function verifyEmailCompany($hash){
+        $query = "UPDATE auth_perusahaan SET perusahaan_status = 0 WHERE perusahaan_email_confirmation_hash = '$hash' AND perusahaan_status = -1";
+        $res = $this->db->query($query);
+        if($res) return true;
+        else return false;
     }
 
 }

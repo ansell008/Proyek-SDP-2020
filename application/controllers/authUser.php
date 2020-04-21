@@ -119,33 +119,69 @@ class AuthUser extends CI_Controller{
             $data['user']['created_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
             $data['user']['updated_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
             $data['user']['user_id'] = uniqid('US_');
+            $em = $data['user']['user_email'];
 
             $f = $_FILES['ktp'];
                 if($f==''){
                 }else{
+                    $path_parts = pathinfo($_FILES["ktp"]["name"]);
+                    $filen = $_FILES['ktp']['name'];
+                    $extension = $path_parts['extension'];
+                    $filename = password_hash($em.$filen, PASSWORD_DEFAULT).'.'.$extension;
+
                     $config['upload_path']      = './asset/upload/ktp-user/';
                     $config['allowed_types']    = 'jpg|png';
                     $config['max_size']         = 2048;
+                    $config['file_name']        = $filename;
+
                     $this->load->library('upload',$config);
         
                     if($this->upload->do_upload('ktp')){
                         $foto = $this->upload->data('file_name');
                     }else{
+                        echo $extension;
                         var_dump($_FILES['ktp']);
                         var_dump($this->upload->display_errors()); die();
                     }
-                    $finalF = 'asset/upload/ktp-user/'.$foto;
+                    $finalF = 'asset/upload/ktp-user/'.$filename;
                     $data['user']['user_ktp'] = $finalF;
                 }
-
+            $em = md5($em);
+            $data['user']['user_email_confirmation_hash'] = $em;
             $res = $this->authUserModel->insertNewUser($data['table'], $data['user']);
-            if($res){
-                $this->load->view('tpl/_header');
-                $this->load->view('success', $data);
-                $this->load->view('tpl/_footer');
-            }
+
+            $this->sendMail($data['user']['user_email'], $em);
+                // end
+            $this->load->view('tpl/_header');
+            $this->load->view('success', $data);
+            $this->load->view('tpl/_footer');
         }
     }
+
+    public function sendMail($em, $hash){
+        $subject = 'Hello Kerja.In Partners !';
+        $message = "<h1>Welcome to Kerja.In</h1>
+        <p>Click the link below to start using your account!</p><br><br>
+        <a href='http://localhost/Proyek-SDP-2020/verify/$hash'>Activate Account</a><br><p>Ciao!</p>";
+        $headers = "From: dominatorranger@gmail.com\r\n".
+        "MIME-Version: 1.0" . "\r\n" .
+        "Content-type: text/html; charset=UTF-8" . "\r\n";
+        mail($em, $subject, $message, $headers);
+    }
+
+    public function sendMailP($em, $hash){
+        $subject = 'Hello Kerja.In Partners !';
+        $message = "<h1>Welcome to Kerja.In</h1>
+        <p>Click the link below to start using your account!</p><br><br>
+        <a href='http://localhost/Proyek-SDP-2020/verifyP/$hash'>Activate Account</a><br><p>Ciao!</p>";
+        $headers = "From: dominatorranger@gmail.com\r\n".
+        "MIME-Version: 1.0" . "\r\n" .
+        "Content-type: text/html; charset=UTF-8" . "\r\n";
+        mail($em, $subject, $message, $headers);
+    }
+
+    // list dikasih data
+    // 
 
     public function validate4(){
         $this->load->library('form_validation');
@@ -221,7 +257,6 @@ class AuthUser extends CI_Controller{
                     $finalF = 'asset/upload/npwp-company/'.$foto;
                     $data['user']['perusahaan_npwp'] = $finalF;
                 }
-                $data['user']['perusahaan_status'] = '0';
                 $data['user']['created_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
                 $data['user']['updated_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
                 $data['user']['perusahaan_id'] = uniqid('PE_');
@@ -229,11 +264,28 @@ class AuthUser extends CI_Controller{
                 unset($data['user']['user_firstname']);
                 unset($data['user']['user_lastname']);
 
+                $em = md5($email);
+                $data['user']['perusahaan_email_confirmation_hash'] = $em;
                 $res = $this->authUserModel->insertNewUser($data['table'], $data['user']);
+
+                $this->sendMailP($email, $em);
+
+                $this->load->view('tpl/_header');
+                $this->load->view('success', $data);
+                $this->load->view('tpl/_footer');
+
                 if($res){
-                    $this->load->view('tpl/_header');
-                    $this->load->view('success', $data);
-                    $this->load->view('tpl/_footer');
+                    // $to = $data['user']['perusahaan_email'];
+                    // $subject = 'Hello Kerja.In Partners !';
+                    // $message = "<h1>Welcome to Kerja.In</h1>
+                    // <p>Click the link below to start using your account!</p><br><br>
+                    // <a href='http://localhost/Proyek-SDP-2020/verify/$em'>Activate Account</a><br><p>Ciao!</p>";
+                    // $headers = 'From: dominatorranger@gmail.com' . "\r\n" .
+                    // 'Reply-To: dominatorranger@gmail.com' . "\r\n" .
+                    // 'X-Mailer: PHP/' . phpversion();
+                    // mail($to, $subject, $message, $headers);
+
+                    
                     //redirect('sendEmail');
                 }
             }else {
@@ -291,7 +343,21 @@ class AuthUser extends CI_Controller{
     }
 
     public function verify($code){
-        echo $code;
+        $this->load->model('authUserModel');
+        $res = $this->authUserModel->verifyEmail($code);
+        if($res) redirect('login');
+        else {
+            $this->load->view('tpl/failed');
+        }
+    }
+
+    public function verifyP($code){
+        $this->load->model('authUserModel');
+        $res = $this->authUserModel->verifyEmailCompany($code);
+        if($res) redirect('login');
+        else {
+            $this->load->view('tpl/failed');
+        }
     }
 }
 
