@@ -26,7 +26,7 @@ class AuthUserModel extends CI_Model{
         return $num;
     }
     public function verifyEmail($hash){
-        $query = "UPDATE auth_user SET user_status = 0 WHERE user_email_confirmation_hash = '$hash' AND user_status = -1";
+        $query = "UPDATE auth_user SET user_status = 0 WHERE user_verification_code = '$hash' AND user_status = -1";
         $res = $this->db->query($query);
         if($res) return true;
         else return false;

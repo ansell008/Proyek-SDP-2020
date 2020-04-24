@@ -20,19 +20,19 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
             <li class=" ">
-                <a href="<?=base_url().'/company/company' ?>">
+                <a href="<?=base_url().'user/dash' ?>">
                 <i class="nc-icon nc-diamond"></i>
                 <p>Dashboard</p>
                 </a>
             </li>
             <li class="active">
-                <a href="<?=base_url().'/company/company/profileCompany' ?>">
+                <a href="<?=base_url().'user/profile' ?>">
                 <i class="nc-icon nc-single-02"></i>
                 <p>Profile</p>
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url().'/company/company' ?>">
+                <a href="<?=base_url().'user/projects' ?>">
                 <i class="nc-icon nc-ruler-pencil"></i>
                 <p>Projects</p>
                 </a>
@@ -104,7 +104,7 @@
               <div class="image">
                 <img src="<?= base_url().'asset/img/profile/back.jfif' ?>" alt="...">
               </div>
-              <div class="content">
+              <div class="card-body">
                 <div class="author">
                     <img class="avatar border-gray" src="<?=base_url().'asset/img/profile/back.jfif' ?>" alt="Profile Picture">
                     <h4 class="title">
@@ -158,7 +158,8 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>KTP</label>
-                        <input type="text" name="ktp" class="form-control" readonly="true" value="<?= $_SESSION['userAktif'][0]['user_ktp']; ?>">
+                        <button class="btn btn-flat btn-info" type="button" id="btnViewKtp"><i class='fa fa-eye'></i></button>
+                        <img style="display:none" id="imgKtp" src="<?= base_url() . $_SESSION['userAktif'][0]['user_ktp']; ?>" alt="">
                       </div>
                     </div>
                     
@@ -209,8 +210,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <?php print_r($_SESSION['userAktif']); ?>
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
         <b>Version</b> 0.0.1
@@ -235,6 +234,11 @@
                 $('input[name="ktp"]').removeAttr('readonly');
                 $('input[name="username"]').removeAttr('readonly');
             }
+          });
+
+          $("#btnViewKtp").click(function(){
+            $("#imgKtp").removeAttr("style");
+            $("#imgKtp").attr("style", "display: block");
           });
       });
   </script>

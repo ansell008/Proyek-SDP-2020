@@ -114,7 +114,6 @@ class AuthUser extends CI_Controller{
             $data['user']['user_password'] = sha1($this->input->post('pass'));
             $data['user']['user_alamat'] = $this->input->post('add');
             $data['user']['user_kota'] = $this->input->post('city');
-            $data['user']['user_ktp'] = $this->input->post('ktp');
             $data['user']['user_kodepos'] = $this->input->post('code');
             $data['user']['created_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
             $data['user']['updated_at'] = date_format(date_create('now'), 'Y:m:d H:i:s');
@@ -127,7 +126,7 @@ class AuthUser extends CI_Controller{
                     $path_parts = pathinfo($_FILES["ktp"]["name"]);
                     $filen = $_FILES['ktp']['name'];
                     $extension = $path_parts['extension'];
-                    $filename = password_hash($em.$filen, PASSWORD_DEFAULT).'.'.$extension;
+                    $filename = md5($em.$filen).'.'.$extension;
 
                     $config['upload_path']      = './asset/upload/ktp-user/';
                     $config['allowed_types']    = 'jpg|png';
@@ -163,7 +162,7 @@ class AuthUser extends CI_Controller{
         $message = "<h1>Welcome to Kerja.In</h1>
         <p>Click the link below to start using your account!</p><br><br>
         <a href='http://localhost/Proyek-SDP-2020/verify/$hash'>Activate Account</a><br><p>Ciao!</p>";
-        $headers = "From: dominatorranger@gmail.com\r\n".
+        $headers = "From: kerja.in.project@gmail.com\r\n".
         "MIME-Version: 1.0" . "\r\n" .
         "Content-type: text/html; charset=UTF-8" . "\r\n";
         mail($em, $subject, $message, $headers);
@@ -335,6 +334,7 @@ class AuthUser extends CI_Controller{
             }else if($this->input->post('sbm') == 'auth_user'){
                 if($res[0]["user_status"] != -1){
                     $this->session->set_userdata(array('userAktif' => $res));
+                    if($res[0]["user_cv"] == null) $this->session->set_flashdata('cv_upload', 'no');
                     $this->load->view('tpl/headerComp');
                     $this->load->view('user/landingUser');
                     $this->load->view('tpl/footerComp');
