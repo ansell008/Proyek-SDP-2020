@@ -65,9 +65,10 @@ class UserController extends Ci_Controller{
     public function detailProject($idProject){
         $this->load->model("user/projectModel");
         $res = $this->projectModel->searchProjectById(urldecode($idProject));
+        $pekerja = $this->projectModel->searchUserByProject($idProject);
         
         $this->load->view('tpl/headerComp');
-        $this->load->view('user/projectDetail', array("data" => $res));
+        $this->load->view('user/projectDetail', array("data" => $res, "user" => $pekerja));
         $this->load->view('tpl/footerComp');
     }
 

@@ -59,6 +59,14 @@ class ProjectModel extends Ci_Model{
         if($res) return true;
         else return false;
     }
+
+    public function searchUserByProject($idProject){
+        $query = "SELECT au.user_firstname, au.user_lastname, au.user_profile, au.user_email, au.user_alamat, pp.created_at
+                  FROM project_pekerja pp
+                  JOIN auth_user au ON au.user_id = pp.user_id
+                  ";
+        return $this->db->query($query)->result_array();
+    }
 }
 
 ?>
