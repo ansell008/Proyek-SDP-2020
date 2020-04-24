@@ -113,7 +113,7 @@
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">Projects</p>
-                      <p class="card-title">0<p>
+                      <p class="card-title"><?= $jumlahProject[0]['jumProj']?><p>
                     </div>
                   </div>
                 </div>

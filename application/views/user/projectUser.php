@@ -179,7 +179,7 @@
 
     function searchProjects(name){
       $.ajax({
-        url: '<?= base_url() ?>searchProject',
+        url: '<?= base_url() ?>user/searchProject',
         data: {query: name},
         method: 'post',
         success: function(res){

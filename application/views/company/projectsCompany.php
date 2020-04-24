@@ -115,7 +115,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                     <table class="table">
-                    <col width="10">
+                    <col width="200">
                     <col width="150">
                     <col width="180">
                         <thead>
@@ -183,8 +183,7 @@
                 <td>${item.project_anggaran}</td>
                 <td>${deadline_dates}</td>
                 <td>${status}</td>
-                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button>  &nbsp;  <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i></button></form></td>
-                
+                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i><b> EDIT</b></button> &nbsp;<br> <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i><b> DELETE</b></button>  &nbsp;  <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
                 </tr>
             `);
             });

@@ -10,6 +10,9 @@ Class Company extends CI_Controller
     }
     public function index(){
         $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
+        $idPerusahaan = $_SESSION['compAktif']['data'][0]['perusahaan_id'];
+        $projectCount = $this->db->query("SELECT COUNT(*) as jumProj FROM PROJECT P WHERE P.PERUSAHAAN_ID = '$idPerusahaan'")->result_array();
+        $data['jumlahProject'] = $projectCount;
         $this->load->view('tpl/headerComp');
         $this->load->view('company/landingCompany',$data);
         $this->load->view('tpl/footerComp');
@@ -42,23 +45,47 @@ Class Company extends CI_Controller
         $res = $this->db->get_where('project', array('project_id' => $id));
         echo json_encode($res->result_array());
     }
+    public function getSubProjectById(){
+        $id = $this->input->post('id');
+        $res = $this->db->get_where('sub_project', array('sub_project_id' => $id));
+        echo json_encode($res->result_array());
+    }
 
     public function insertProject(){
         $newData = $this->input->post();
-        $newProject = array(
-            "project_id" => uniqid($newData['name']),
-            "perusahaan_id" => $_SESSION['compAktif']['data'][0]['perusahaan_id'],
-            "transaksi_id" => "1",
-            "kategori_id" => $newData['categoryName'],
-            "project_nama" => $newData['name'],
-            "project_deskripsi" => $newData['desc'],
-            "project_anggaran" => $newData['budget'],
-            "project_status" => '0',
-            "project_mulai" => $newData['start'],
-            "project_deadline" => $newData['deadline'],
-            "created_at" => date("now"),
-            "updated_at" => date("now")
-        );
+        $nama = $newData['name'];
+        if(strstr($nama,' ')){
+            $newProject = array(
+                "project_id" => uniqid(substr($newData['name'],0,strpos($newData['name'],' '))),
+                "perusahaan_id" => $_SESSION['compAktif']['data'][0]['perusahaan_id'],
+                "transaksi_id" => "1",
+                "kategori_id" => $newData['categoryName'],
+                "project_nama" => $newData['name'],
+                "project_deskripsi" => $newData['desc'],
+                "project_anggaran" => $newData['budget'],
+                "project_status" => '0',
+                "project_mulai" => $newData['start'],
+                "project_deadline" => $newData['deadline'],
+                "created_at" => date("now"),
+                "updated_at" => date("now")
+            );
+        }else {
+            $newProject = array(
+                "project_id" => uniqid($nama),
+                "perusahaan_id" => $_SESSION['compAktif']['data'][0]['perusahaan_id'],
+                "transaksi_id" => "1",
+                "kategori_id" => $newData['categoryName'],
+                "project_nama" => $newData['name'],
+                "project_deskripsi" => $newData['desc'],
+                "project_anggaran" => $newData['budget'],
+                "project_status" => '0',
+                "project_mulai" => $newData['start'],
+                "project_deadline" => $newData['deadline'],
+                "created_at" => date("now"),
+                "updated_at" => date("now")
+            );
+        }
+        
         $res = $this->cm->insertProject($newProject);
         redirect('company/project');
     }
@@ -79,25 +106,67 @@ Class Company extends CI_Controller
         if($res) echo "success";
         else echo "fail";
     }
+    public function updateSubProjectById(){
+        $id = $this->input->post('id');
+        $name = $this->input->post('name');
+        $deadline = $this->input->post('deadline');
+        $time = date("Y-m-d H:i:s");
+        $res = $this->db->update('sub_project', array('sub_project_name' => $name,'sub_project_deadline' => $deadline, 'updated_at' => $time), array('sub_project_id' => $id));
+        if($res) echo "success";
+        else echo "fail";
+    }
 
+    public function insertSubProject(){
+        $newData = $this->input->post();
+        $nama = $newData['nameNewSub'];
+        if(strstr($nama,' ')){
+            $newSubProject = array(
+                "sub_project_id" => uniqid(substr($newData['nameNewSub'],0,strpos($newData['nameNewSub'],' '))),
+                "project_id" => $newData['btnProjectID'],
+                "sub_project_name" => $newData['nameNewSub'],
+                "sub_project_deadline" => $newData['deadlineSub'],
+                "created_at" => date("now"),
+                "updated_at" => date("now")
+            );
+        }else {
+            $newSubProject = array(
+                "sub_project_id" => uniqid($nama),
+                "project_id" => $newData['btnProjectID'],
+                "sub_project_name" => $newData['nameNewSub'],
+                "sub_project_deadline" => $newData['deadlineSub'],
+                "created_at" => date("now"),
+                "updated_at" => date("now")
+            );
+        }
+        $res = $this->db->insert('sub_project',$newSubProject);
+        redirect('company/company/projectsDetail');
+    }
+    public function deleteSubProject(){
+        $id = $this->input->post('id');
+        $this->cm->deleteSubProject($id);
+    }
     public function projectsDetail()
     {
         $id = $this->input->post('btnView');
         $res = $this->cm->getProject($id);
         $data['projectDetail'] = $res;
         $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
-        $data['participant'] = $this->cm->getUserByProjectId($_SESSION['compAktif']['data'][0]['perusahaan_id']);
+        $data['participant'] = $this->cm->getUserByProjectId($_SESSION['compAktif']['data'][0]['perusahaan_id'],$id);
         $this->load->view('tpl/headerComp',$data);
         $this->load->view('company/projectsDetail',$data);
         $this->load->view('tpl/footerComp',$data);
+    }
+    public function getAllSubProject(){
+        $id = $this->input->post('idProject');
+        $query = "SELECT * FROM SUB_PROJECT WHERE PROJECT_ID = '$id'";
+        echo json_encode($this->db->query($query)->result_array());
     }
     public function getAllUserByProject(){
         echo json_encode($this->cm->getUserByProjectId($_SESSION['compAktif']['data'][0]['perusahaan_id']));
     }
     public function acceptParticipant(){
         $id = $this->input->post('id');
-        $res = $this->db->update('project_pekerja', array('project_pekerja_status' => 1), array('project_pekerja_id' => $id));
-        
+        $res = $this->db->update('project_pekerja', array('project_pekerja_status' => 1), array('project_pekerja_id' => $id));   
     }
 
     public function updateProfile(){
