@@ -137,6 +137,40 @@
             </div>
           </div>
       </div>
+
+      <div class="row">
+        <div class="container">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <h4>User Applied</h4>
+              </div>
+            </div>
+            <div class="card-body">
+              <table class='table table-bordered'>
+                <thead>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Alamat</th>
+                  <th>Applied On</th>
+                </thead>
+                <tbody>
+                <?php
+                  foreach($user as $key => $value){
+                    echo "<tr>";
+                    echo "<td>$value[user_firstname] $value[user_lastname]</td>";
+                    echo "<td>$value[user_email]</td>";
+                    echo "<td>$value[user_alamat]</td>";
+                    echo "<td>".date_format(date_create($value['created_at']), 'N F Y')."</td>";
+                    echo "</tr>";
+                  }
+                ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
       
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block">

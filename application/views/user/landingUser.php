@@ -100,6 +100,12 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
+        
+          <?php if(isset($_SESSION['cv_upload']))
+            echo "<div class='alert alert-warning'>
+            You have not completed your CV, please go to <a href='" . base_url() . "user/profile'>Profile</a> section to upload CV.
+            </div>";
+          ?>
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
