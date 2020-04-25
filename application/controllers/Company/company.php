@@ -162,11 +162,16 @@ Class Company extends CI_Controller
         echo json_encode($this->db->query($query)->result_array());
     }
     public function getAllUserByProject(){
-        echo json_encode($this->cm->getUserByProjectId($_SESSION['compAktif']['data'][0]['perusahaan_id']));
+        $id = $this->input->post('id');
+        echo json_encode($this->cm->getUserByProjectId($_SESSION['compAktif']['data'][0]['perusahaan_id'],$id));
     }
     public function acceptParticipant(){
         $id = $this->input->post('id');
         $res = $this->db->update('project_pekerja', array('project_pekerja_status' => 1), array('project_pekerja_id' => $id));   
+    }
+    public function updateProjectFinish(){
+        $id = $this->input->post('id');
+        $this->db->update('project', array('project_status' => 2), array('project_id' => $id));
     }
 
     public function updateProfile(){
@@ -223,6 +228,7 @@ Class Company extends CI_Controller
         $this->load->view('company/profileCompany',$data);
         $this->load->view('tpl/footerComp');
     }
+    
 
 }
 

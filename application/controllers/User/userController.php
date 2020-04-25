@@ -129,6 +129,30 @@ class UserController extends Ci_Controller{
         echo json_encode($res);
     }
 
+    public function uploadCV(){
+        $id= $this->input->post("idUser");
+        $cvInput = $_FILES['cv'];
+        if($cvInput==''){
+        }else{
+            $config['upload_path']      = './asset/upload/cv-user/';
+            $config['allowed_types']    = 'jpg|png';
+            $config['max_size']         = 2048;
+            $this->load->library('upload',$config);
+
+            if($this->upload->do_upload('cv')){
+                $foto = $this->upload->data('file_name');
+            }else{
+                var_dump($_FILES['cv']);
+                var_dump($this->upload->display_errors()); die();
+            }
+            $cv = 'asset/upload/cv-user/'.$foto;
+            $_SESSION['userAktif'][0]['user_cv'] = $cv;
+        }
+        $time = date("Y-m-d H:i:s");
+        $this->db->update('auth_user', array('user_cv' => $cv, 'updated_at' => $time), array('user_id' => $id));
+        redirect('user/profile');
+    }
+
     // 7c4a8d09ca3762af61e59520943dc26494f8941b
 }
 
