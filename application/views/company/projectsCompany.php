@@ -196,16 +196,18 @@
               const monthNames = ["January", "February", "March", "April", "May", "June",
               "July", "August", "September", "October", "November", "December"];
               var x = new Date(item.project_deadline);
+              var y = new Date(item.project_mulai);
               var tanggal_x = x.getDate(); 
               var bulan_x = monthNames[x.getMonth()]; 
               var tahun_x = x.getFullYear(); 
               let deadline_dates = tanggal_x + " "+ bulan_x + ' '+ tahun_x ;
+              let durasi = x - y;
               $("#projectsDone").append(`
                   <tr id="row-${item.project_id}">
                   <td>${item.project_id}</td>
                   <td>${item.project_nama}</td>
                   <td>${item.project_anggaran}</td>
-                  <td>${deadline_dates}</td>
+                  <td>${durasi}</td>
                   <td>${deadline_dates}</td>
                   <td> <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
                   </tr>

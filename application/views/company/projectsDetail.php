@@ -181,7 +181,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-info float-right btnInsertSub" data-toggle="modal" data-target="insertSub" type="submit">Create Sub Project</button>
+                    <button class="btn btn-info float-right btnInsertSub" data-toggle="modal" data-target="insertSub" type="submit" id="createSub">Create Sub Project</button>
                 </div>
                 </div>
           </div>
@@ -334,10 +334,16 @@
     $(document).ready(function () {
         showDetail();
         showPendingDetail();
+        updateTableSub();
 
         $(".btnInsertSub").click(function () {
             $("#insertSub").modal();
         });
+        let status = '<?=$projectDetail[0]['project_status']?>';
+        if(status==2){
+            $('.btnFinish').addClass('disabled');
+            $('#createSub').addClass('disabled');
+        }
 
         $("#insertSubProject").submit(function(e){
             e.preventDefault();
@@ -355,7 +361,7 @@
             });
         });
         
-        updateTableSub();
+        
     });
 
     function updateTableSub(){
@@ -398,6 +404,7 @@
             $(".progress").append(`
                 <div class="progress-bar bg-warning" role="progressbar" style="width:${valueProgressBar}%" aria-valuenow="${valueProgressBar}" aria-valuemin="0" aria-valuemax="100"></div>        
             `);
+            
             if(valueProgressBar==100){
                 $(".progress").html('');
                 $(".progress").append(`
@@ -415,7 +422,8 @@
                     data: {id : tdId},
                     success: function () {
                         toastr.success('Project Success');
-                        $('.btnFinish').attr('disabled');
+                        $('.btnFinish').addClass('disabled');
+                        $('#createSub').addClass('disabled');
                     }
                 });
             });
