@@ -132,7 +132,7 @@
                                 echo "<div class='badge badge-info'>DONE</div>";
                             }
                         ?>
-                    <button class="btn btn-success pull-right" value="<?= $data[0]["project_id"] ?>" id="btnApply">Apply</button>
+                  <button class="btn btn-success pull-right" value="<?= $data[0]["project_id"] ?>" id="btnApply">Apply</button>
                 </div>
             </div>
           </div>
