@@ -193,6 +193,9 @@
                     <div class="card-body">
                         <div class="progress">
                         </div>
+                        <div class="finishProject">
+
+                        </div>
                     </div>
                 </div>
           </div>
@@ -351,6 +354,7 @@
                 }
             });
         });
+        
         updateTableSub();
     });
 
@@ -394,6 +398,27 @@
             $(".progress").append(`
                 <div class="progress-bar bg-warning" role="progressbar" style="width:${valueProgressBar}%" aria-valuenow="${valueProgressBar}" aria-valuemin="0" aria-valuemax="100"></div>        
             `);
+            if(valueProgressBar==100){
+                $(".progress").html('');
+                $(".progress").append(`
+                    <div class="progress-bar bg-success" role="progressbar" style="width:${valueProgressBar}%" aria-valuenow="${valueProgressBar}" aria-valuemin="0" aria-valuemax="100">100%</div>        
+                `);
+                $(".finishProject").append(`
+                    <button value=""  name="" class="btn btn-success btn-flat float-right btnFinish">Finish Project</button>
+                `)
+            }
+            $(".btnFinish").click(function() {
+                let tdId = '<?=$projectDetail[0]['project_id']?>';
+                $.ajax({
+                    method: "post",
+                    url: "<?= base_url().'/company/company/updateProjectFinish'?>",
+                    data: {id : tdId},
+                    success: function () {
+                        toastr.success('Project Success');
+                        $('.btnFinish').attr('disabled');
+                    }
+                });
+            });
             $(".btnEdit").click(function () {
                 let tdId = $(this).val();
                 $.ajax({
@@ -457,9 +482,11 @@
 
 
     function showDetail(){
+        let tdId = '<?=$projectDetail[0]['project_id']?>';
         $.ajax({
             method: 'post',
             url: '<?= base_url()."company/company/getAllUserByProject" ?>',
+            data: {id : tdId},
             success: function(res){
                 data = JSON.parse(res);
                 let ctr = 0;
@@ -501,13 +528,15 @@
         $('.btnPar').click(function () {
             let ctr = $(this).attr('ctr');
             alert(ctr)
-            $("exampleModal1"+ctr).modal();
+            $("#exampleModal1"+ctr).modal();
         });
     }
     function showPendingDetail(){
+        let tdId = '<?=$projectDetail[0]['project_id']?>';
         $.ajax({
             method: 'post',
             url: '<?= base_url()."company/company/getAllUserByProject" ?>',
+            data: {id : tdId},
             success: function(res){
                 data = JSON.parse(res);
                 let ctr = 0;
@@ -545,13 +574,12 @@
                         `);
                         
                     }
-                    $('.btnPending').click(function () {
-                        let ctr = $(this).attr('ctr');
-                        alert(ctr);
-                        $("exampleModal2"+ctr).modal();
-                    });
                     
-                    
+                });
+                $('.btnPending').click(function () {
+                    let ctr = $(this).attr('ctr');
+                    alert(ctr);
+                    $("#exampleModal2"+ctr).modal();
                 });
                 
                 $('.btnAccept').click(function () {
@@ -567,6 +595,7 @@
                 });
             }
         });
+        
         
     }
 
