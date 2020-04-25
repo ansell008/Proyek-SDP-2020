@@ -410,9 +410,17 @@
                 $(".progress").append(`
                     <div class="progress-bar bg-success" role="progressbar" style="width:${valueProgressBar}%" aria-valuenow="${valueProgressBar}" aria-valuemin="0" aria-valuemax="100">100%</div>        
                 `);
-                $(".finishProject").append(`
-                    <button value=""  name="" class="btn btn-success btn-flat float-right btnFinish">Finish Project</button>
-                `)
+                let status = '<?=$projectDetail[0]['project_status']?>';
+                if(status ==2){
+                    $(".finishProject").append(`
+                        <button value=""  name="" class="disabled btn btn-success btn-flat float-right btnFinish">Finish Project</button>
+                    `)
+                }else{
+                    $(".finishProject").append(`
+                        <button value=""  name="" class="btn btn-success btn-flat float-right btnFinish">Finish Project</button>
+                    `)
+                }
+                
             }
             $(".btnFinish").click(function() {
                 let tdId = '<?=$projectDetail[0]['project_id']?>';
