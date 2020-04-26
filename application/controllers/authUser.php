@@ -334,7 +334,7 @@ class AuthUser extends CI_Controller{
             }else if($this->input->post('sbm') == 'auth_user'){
                 if($res[0]["user_status"] != -1){
                     $this->session->set_userdata(array('userAktif' => $res));
-                    if($res[0]["user_cv"] == null) $this->session->set_flashdata('cv_upload', 'no');
+                    if($res[0]["user_cv"] == '-1') $this->session->set_flashdata('cv_upload', 'no');
                     $this->load->view('tpl/headerComp');
                     $this->load->view('user/landingUser');
                     $this->load->view('tpl/footerComp');

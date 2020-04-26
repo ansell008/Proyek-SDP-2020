@@ -110,7 +110,14 @@
                     <h4 class="title">
                         <?= $_SESSION['userAktif'][0]['user_firstname'] ?> <?= $_SESSION['userAktif'][0]['user_lastname'] ?>
                         <br>
-                        <small><?= $_SESSION['userAktif'][0]['user_username'] ?></small>
+                        <small><?= $_SESSION['userAktif'][0]['user_username'] ?> <br>
+                        <?php
+                            if($_SESSION['userAktif'][0]['user_status'] == '0'){
+                                echo "<div class='badge badge-success'>Active</div>";
+                            }else{
+                                echo "<div class='badge badge-danger'>Banned</div>";
+                            }
+                        ?></small>
                     </h4>
                 </div>
                 <div class="description text-center">
@@ -158,20 +165,29 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>KTP</label>
-                        <button class="btn btn-flat btn-info" type="button" id="btnViewKtp"><i class='fa fa-eye'></i></button>
+                        <button class="btn btn-flat btn-info btn-sm" type="button" id="btnViewKtp"><i class='fa fa-eye'></i></button>
                         <img style="display:none" id="imgKtp" src="<?= base_url() . $_SESSION['userAktif'][0]['user_ktp']; ?>" alt="">
                       </div>
                     </div>
                     
+                    
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Status</label><br>
+                        <label>CV</label>
+                        <button class="btn btn-flat btn-info btn-sm" type="button" id="btnViewCv"><i class='fa fa-eye'></i></button>
                         <?php
-                            if($_SESSION['userAktif'][0]['user_status'] == '0'){
-                                echo "<div class='badge badge-success'>Not Banned</div>";
-                            }else{
-                                echo "<div class='badge badge-danger'>Banned</div>";
-                            }
+                          if($_SESSION['userAktif'][0]['user_cv'] == "-1"){
+                            echo form_open_multipart('user/uploadCv');
+                        ?>
+                            <div class="form-group">
+                                <input type="file" class="form-control" name="cv">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-sm">Upload</button>
+                          </form>
+                        <?php
+                          }else{
+                            
+                          }
                         ?>
                       </div>
                     </div>
