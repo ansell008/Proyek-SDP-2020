@@ -322,7 +322,7 @@
     $.ajax({
       method: 'post',
       url: '<?= base_url()."admin/companyListing/getAllProjectById" ?>',
-      data : {"perusahaan_id" : <?= $_SESSION['comView'][0]['perusahaan_id'] ?>},
+      data : {"perusahaan_id" : '<?= $_SESSION['comView'][0]['perusahaan_id'] ?>'},
       success: function(res){
         data = JSON.parse(res);
         let ctr = 0;
@@ -377,6 +377,9 @@
                 
               </div></div>
               `);
+              $(".viewDetail").click(function(){
+                $("#myModal"+$(this).val()).modal();
+              });
               
             }else if(item.project_status=='1'){
               $("#ProjectOnGoing").append(`

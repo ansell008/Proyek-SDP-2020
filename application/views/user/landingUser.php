@@ -31,14 +31,12 @@
                 <p>Profile</p>
                 </a>
             </li>
-            <div class="dropdown">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="nc-icon nc-ruler-pencil"></i>Projects</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="<?=base_url().'user/projects' ?>">Search</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<?=base_url().'user/myprojects' ?>">My Project</a>
-                </div>
+            <li class="">
+                <a><i class="nc-icon nc-ruler-pencil"></i>Projects</a>
+                <ul class="">
+                  <li> <a class="dropdown-item" href="<?=base_url().'user/projects' ?>">Search</a></li>
+                  <li><a class="dropdown-item" href="<?=base_url().'user/myprojects' ?>">My Project</a></li>
+                </ul>
             </li>
             
         </ul>

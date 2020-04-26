@@ -5,6 +5,8 @@ class ProjectModel extends Ci_Model{
         $query = "SELECT p.perusahaan_id, p.project_id, p.project_nama, p.project_deskripsi, p.project_status, p.project_mulai, p.project_deadline, p.created_at, ap.perusahaan_nama
                   FROM project p
                   JOIN auth_perusahaan ap ON ap.perusahaan_id = p.perusahaan_id
+                  WHERE P.PROJECT_STATUS != 2
+                  ORDER BY p.project_mulai ASC
                   ";
         return $this->db->query($query)->result_array();
     }
@@ -73,7 +75,7 @@ class ProjectModel extends Ci_Model{
         $query = "SELECT *
                 FROM AUTH_USER AU, PROJECT_PEKERJA PP, PROJECT P
                 WHERE AU.USER_ID = PP.USER_ID AND P.PROJECT_ID = PP.PROJECT_ID
-                AND PP.USER_ID = '$idUser'
+                AND PP.USER_ID = '$idUser' AND PP.PROJECT_PEKERJA_STATUS = 1 
                 ";
         return $this->db->query($query)->result_array();
     }

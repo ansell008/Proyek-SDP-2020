@@ -32,10 +32,11 @@
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url().'user/projects' ?>">
-                <i class="nc-icon nc-ruler-pencil"></i>
-                <p>Projects</p>
-                </a>
+                <a><i class="nc-icon nc-ruler-pencil"></i>Projects</a>
+                <ul class="">
+                  <li> <a class="dropdown-item" href="<?=base_url().'user/projects' ?>">Search</a></li>
+                  <li><a class="dropdown-item" href="<?=base_url().'user/myprojects' ?>">My Project</a></li>
+                </ul>
             </li>
           
         </ul>

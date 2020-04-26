@@ -31,11 +31,12 @@
                 <p>Profile</p>
                 </a>
             </li>
-            <li class="active">
-                <a href="<?=base_url().'user/projects' ?>">
-                <i class="nc-icon nc-ruler-pencil"></i>
-                <p>Projects</p>
-                </a>
+            <li class="">
+                <a><i class="nc-icon nc-ruler-pencil"></i>Projects</a>
+                <ul class="">
+                  <li> <a class="dropdown-item" href="<?=base_url().'user/projects' ?>">Search</a></li>
+                  <li><a class="dropdown-item" href="<?=base_url().'user/myprojects' ?>">My Project</a></li>
+                </ul>
             </li>
         </ul>
       </div>
