@@ -116,7 +116,7 @@
                         <?php
                             if($projectDetail[0]['project_status']=='0'){
                         ?>
-                            <li class="list-group-item"><b>Status : </b> <small class='badge badge-success'>OPEN</small></li>
+                            <li class="list-group-item"><b>Status : </b> <small class='badge badge-success'>OPEN</small> <button class="btn float-right" value="<?= $projectDetail[0]['project_id'] ?>" id="startProject">Start Project</button></li>
                         <?php
                             }else if($projectDetail[0]['project_status']=='1'){
                         ?>
@@ -336,6 +336,17 @@
         showPendingDetail();
         updateTableSub();
 
+        $("#startProject").click(function () {
+            $.ajax({
+                method:"post",
+                url:"<?= base_url().'company/company/updateProjectOnGoing'?>",
+                data:{id:$(this).val()},
+                success: function () {
+                    window.location.href="<?= base_url().'company/company/projectsCompany'?>";
+                }
+            });
+        })
+
         $(".btnInsertSub").click(function () {
             $("#insertSub").modal();
         });
@@ -508,7 +519,13 @@
                 let ctr = 0;
                 data.forEach(
                 item => {
-                    
+                    const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+                    var x = new Date(item.joined);
+                    var tanggal_x = x.getDate(); 
+                    var bulan_x = monthNames[x.getMonth()]; 
+                    var tahun_x = x.getFullYear(); 
+                    let join_at = tanggal_x + " "+ bulan_x + ' '+ tahun_x ;
                     if(item.STATUS == 1){
                         ctr++;
                         $('#par').append(`
@@ -525,8 +542,7 @@
                                         <ul class="list-group detailCompany">
                                             <li class="list-group-item "><b>ID</b> : ${item.ID}</li>
                                             <li class="list-group-item "><b>Name </b> : ${item.NAMA} </li>
-                                            <li class="list-group-item "><b>Pendidikan </b> : ${item.PENDIDIKAN} </li>
-                                            <li class="list-group-item "><b>Pengalaman</b> : ${item.PENGALAMAN} </li>
+                                            <li class="list-group-item "><b>Join At </b> : ${join_at} </li>
                                             
                                         </ul>
                                     </div>
@@ -547,8 +563,10 @@
             $("#exampleModal1"+ctr).modal();
         });
     }
+    
     function showPendingDetail(){
         let tdId = '<?=$projectDetail[0]['project_id']?>';
+        let baseUrl = '<?= base_url()?>'
         $.ajax({
             method: 'post',
             url: '<?= base_url()."company/company/getAllUserByProject" ?>',
@@ -575,14 +593,13 @@
                                     <ul class="list-group detailCompany">
                                         <li class="list-group-item "><b>ID</b> : ${item.ID}</li>
                                         <li class="list-group-item "><b>Name </b> : ${item.NAMA} </li>
-                                        <li class="list-group-item "><b>Pendidikan </b> : ${item.PENDIDIKAN} </li>
-                                        <li class="list-group-item "><b>Pengalaman</b> : ${item.PENGALAMAN} </li>
-                                        
+                                        <li class="list-group-item "><b>CV </b> : Done </li>
+                                        <a href="${baseUrl+item.USER_CV}"><img src="${baseUrl+item.USER_CV}" alt=""></a>
                                     </ul>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" value="${item.ppid}" class="btn btn-success btn-flat btnAccept">Accept</button>
-                                        <button type="submit" class="btn btn-danger btn-flat btnIgnore">Ignore</button>
+                                        <button type="submit" value="${item.ppid}" class="btn btn-danger btn-flat btnIgnore">Ignore</button>
                                     </div>
                                 </div>
                             </div>
@@ -602,6 +619,17 @@
                     $.ajax({
                         method: "post",
                         url: "<?= base_url().'company/company/acceptParticipant' ?>",
+                        data : {id : $(this).val()},
+                        success : function(){
+                            window.location.reload();
+                        }
+                    });
+
+                });
+                $('.btnIgnore').click(function () {
+                    $.ajax({
+                        method: "post",
+                        url: "<?= base_url().'company/company/ignoreParticipant' ?>",
                         data : {id : $(this).val()},
                         success : function(){
                             window.location.reload();
