@@ -81,8 +81,10 @@ $route['admin/skills'] = 'admin/skillAdmin';
 
 
 $route['company/project'] = 'company/company/projectsCompany';
-$route['company/detailProject'] = 'company/company/projectsDetail';
 
+$route['company/transaction'] = 'company/company/loadTransaction';
+$route['company/proceedTransaction/(:any)'] = 'company/company/proceedTransaction/$1';
+$route['company/getTransactionDetail/(:any)'] = 'company/company/getTransactionDetail/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

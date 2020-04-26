@@ -236,6 +236,35 @@ Class Company extends CI_Controller
         $this->load->view('company/profileCompany',$data);
         $this->load->view('tpl/footerComp');
     }
+
+    public function loadTransaction(){
+        $this->load->view("tpl/headerComp.php");
+        $this->load->view("company/companyTransaction");
+        $this->load->view("tpl/footerComp.php");
+    }
+
+    public function proceedTransaction($idProject){
+        $id = urldecode($idProject);
+
+        $this->cm->updateStatusToTransaction($id);
+        $this->cm->insertTransaction($id);
+
+        redirect('company/transaction');
+    }
+
+    public function getAllTransaction(){
+        $idP = $this->input->post("id");
+        $res = $this->cm->getAllProjectTrans($idP);
+
+        echo json_encode($res);
+    }
+
+    public function getTransactionDetail($idProject){
+        $data['project'] = $this->cm->getProject(urldecode($idProject));
+        $this->load->view("tpl/headerComp.php");
+        $this->load->view("company/companyTransactionDetail", $data);
+        $this->load->view("tpl/footerComp.php");
+    }
     
 
 }

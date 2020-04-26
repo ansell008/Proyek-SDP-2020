@@ -209,7 +209,7 @@
                   <td>${item.project_anggaran}</td>
                   <td>${durasi}</td>
                   <td>${deadline_dates}</td>
-                  <td> <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
+                  <td> <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form> <a class="btn btn-success" href='<?= base_url() ?>company/proceedTransaction/${item.project_id}'>Proceed to Transaction</a></td>
                   </tr>
               `);
             }
@@ -220,6 +220,7 @@
         }
         });
     }
+
     function updateTableProject(){
         $("#tbProject").html('');
 
