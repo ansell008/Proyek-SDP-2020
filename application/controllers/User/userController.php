@@ -152,6 +152,32 @@ class UserController extends Ci_Controller{
         $this->db->update('auth_user', array('user_cv' => $cv, 'updated_at' => $time), array('user_id' => $id));
         redirect('user/profile');
     }
+    public function myProject(){
+        $this->load->view('tpl/headerComp');
+        $this->load->view('user/myproject');
+        $this->load->view('tpl/footerComp');
+    }
+    public function getMyProjectsById(){
+        $this->load->model("user/projectModel");
+        echo json_encode($this->projectModel->getMyProjects($_SESSION['userAktif'][0]['user_id']));
+    }
+    public function myProjectDetail(){
+        $this->load->model("user/projectModel");
+        $id = $this->input->post('btnView');
+        $res = $this->projectModel->getProject($id);
+        $data['projectDetail'] = $res;
+        $this->load->view('tpl/headerComp');
+        $this->load->view('user/myprojectDetail',$data);
+        $this->load->view('tpl/footerComp');
+    }
+    public function showMySubProject($id){
+        $this->load->model("user/projectModel");
+        echo json_encode($this->projectModel->getSubById($id));
+    }
+    public function updateSub(){
+        $id = $this->input->post('id');
+        $this->db->update('sub_project', array('sub_project_status' => 1), array('sub_project_id' => $id));
+    }
 
     // 7c4a8d09ca3762af61e59520943dc26494f8941b
 }
