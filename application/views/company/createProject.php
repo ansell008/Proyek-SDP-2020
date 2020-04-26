@@ -148,7 +148,9 @@
                                 <div class="col-md-8 pr-1">
                                 <div class="form-group">
                                     <label>Project Budget</label>
-                                    <textarea name="budget" class="form-control" placeholder="contoh: 200000/jam"></textarea>
+                                    <input type="number" class="form-control" name="budget" id="" placeholder="Budget per day">
+                                    <label for="">*) make assumptions per day</label>
+                                    <!-- <textarea name="budget" class="form-control" placeholder="contoh: 200000/jam"></textarea> -->
                                 </div>
                                 </div>
                             </div>

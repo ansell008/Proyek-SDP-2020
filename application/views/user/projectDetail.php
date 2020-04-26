@@ -19,7 +19,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="active ">
+            <li class="">
                 <a href="<?=base_url().'user/dash' ?>">
                 <i class="nc-icon nc-diamond"></i>
                 <p>Dashboard</p>
@@ -31,7 +31,7 @@
                 <p>Profile</p>
                 </a>
             </li>
-            <li class="">
+            <li class="active">
                 <a href="<?=base_url().'user/projects' ?>">
                 <i class="nc-icon nc-ruler-pencil"></i>
                 <p>Projects</p>
@@ -131,8 +131,20 @@
                             }else if($data[0]['project_status'] == "2"){
                                 echo "<div class='badge badge-info'>DONE</div>";
                             }
-                        ?>
-                    <button class="btn btn-success pull-right" value="<?= $data[0]["project_id"] ?>" id="btnApply">Apply</button>
+                            $isApply = false;
+                            foreach($user as $key => $value){
+                            if($_SESSION['userAktif'][0]['user_id'] == $value['user_id']){
+                              $isApply=true;
+                            }
+                          }
+                          if($isApply){
+                            ?>
+                            <button class=" btn btn-success pull-right disabled" value="<?= $data[0]["project_id"] ?>" >Apply</button>
+                            <?php
+                          }else{
+                            ?>
+                            <button class="btn btn-success pull-right" value="<?= $data[0]["project_id"] ?>" id="btnApply">Apply</button>
+                          <?php } ?>
                 </div>
             </div>
           </div>
@@ -185,6 +197,7 @@
 <script>
 
 $(document).ready(function(){
+  
     $("#btnApply").click(function(){
         $.ajax({
             url: '<?= base_url() ?>user/takeProject',

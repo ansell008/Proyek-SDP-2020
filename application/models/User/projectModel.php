@@ -61,11 +61,27 @@ class ProjectModel extends Ci_Model{
     }
 
     public function searchUserByProject($idProject){
-        $query = "SELECT au.user_firstname, au.user_lastname, au.user_profile, au.user_email, au.user_alamat, pp.created_at
+        $query = "SELECT au.user_id, au.user_firstname, au.user_lastname, au.user_profile, au.user_email, au.user_alamat, pp.created_at
                   FROM project_pekerja pp
                   JOIN auth_user au ON au.user_id = pp.user_id
+                  WHERE PP.PROJECT_ID = '$idProject'
                   ";
         return $this->db->query($query)->result_array();
+    }
+
+    public function getMyProjects($idUser){
+        $query = "SELECT *
+                FROM AUTH_USER AU, PROJECT_PEKERJA PP, PROJECT P
+                WHERE AU.USER_ID = PP.USER_ID AND P.PROJECT_ID = PP.PROJECT_ID
+                AND PP.USER_ID = '$idUser'
+                ";
+        return $this->db->query($query)->result_array();
+    }
+    public function getProject($id){
+        return $this->db->get_where('project',array('project_id' => $id))->result_array();
+    }
+    public function getSubById($idProject){
+        return $this->db->get_where('sub_project',array('project_id' => $idProject))->result_array();
     }
 }
 

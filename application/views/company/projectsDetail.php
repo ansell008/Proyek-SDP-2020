@@ -142,16 +142,95 @@
                                 ?>
                                 <li class="list-group-item"><b>Participant : </b> -</li>
                                 <?php
+
                             }else {
+                                $participantAktif=0;
+                                for ($i=0; $i < count($participant); $i++) { 
+                                    if($participant[$i]['STATUS'] == 1){
+                                        $participantAktif++;
+                                        ?>
+                                    <li class="list-group-item"><b>Participant : </b> <?=$participantAktif ?> </li>
+                                    <?php
+                                    }
+                                }
+                            }
                                 ?>
-                                    <li class="list-group-item"><b>Participant : </b> <?=count($participant) ?> </li>
-                                    <div class="col-md-7">
-                                        
-                                    </div>
+                                    
                     </ul>
                 </div>
                 </div>
           </div>
+          <div class="col-md-12">
+                <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Sub - Project</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Deadline</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody id="tbSubProject">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-info float-right btnInsertSub" data-toggle="modal" data-target="insertSub" type="submit" id="createSub">Create Sub Project</button>
+                </div>
+                </div>
+          </div>
+          <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Progress Your Project</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress">
+                        </div>
+                        <div class="finishProject">
+
+                        </div>
+                    </div>
+                </div>
+          </div>
+          <!-- modal insert sub project -->
+          <form id="insertSubProject" method="post">
+              <div class="modal fade bd-example-modal-lg" id="insertSub" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">New Sub Project</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="nameNewCategory">Nama</label>
+                          <input type="text" class="form-control" name="nameNewSub" id="subName" placeholder="Enter Sub Project Name">
+                        </div>
+                        <div class="form-group">
+                          <label for="nameNewCategory">Deadline Date</label>
+                          <input type="date" class="form-control" name="deadlineSub" id="subDeadline">
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" value="<?= $projectDetail[0]['project_id']?>" name="btnProjectID">    
+                        <button type="submit" value="" name="" class="btn btn-success btn-flat">Add</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        <!-- end -->
           <div class="col-md-6">
                 <div class="card">
                 <div class="card-header">
@@ -170,20 +249,19 @@
                             </thead>
                             <tbody id="tbProject">
                             <?php
-                            $ctr =0;
+                            $ctrp =0;
                             for ($i=0; $i < count($participant) ; $i++) {
                                 if($participant[$i]['STATUS']==1){
-                                    $ctr++;
+                                    $ctrp++;
                                     ?>
                                     <tr>
                                         <td ><?=$participant[$i]['NAMA'] ?></td>
                                         <td ><small class='badge badge-success'>IN</small></td>
-                                        <td><button value='<?=$participant[$i]['ID'] ?>' class="btn btn-info btn-flat" data-toggle="modal" data-target="#exampleModal" id="<?='btnPar'.$ctr?>"><i class="fas fa-eye"></i></button></td>
+                                        <td><button value='<?=$participant[$i]['ID'] ?>' class="btn btn-info btn-flat btnPar" data-toggle="modal" data-target="#exampleModal1<?=$ctrp?>" ctr= "<?=$ctrp?>" id=""><i class="fas fa-eye"></i></button></td>
                                     </tr>
                                     <?php
                                 }
                             }
-                        }
                             ?> 
                             </tbody>
                         </table>
@@ -217,7 +295,7 @@
                                     <tr>
                                         <td ><?=$participant[$i]['NAMA'] ?></td>
                                         <td ><small class='badge badge-danger'>PENDING</small></td>
-                                        <td><button value='<?=$participant[$i]['ID'] ?>' class="btn btn-info btn-flat" data-toggle="modal" data-target="#exampleModal2" id="<?='btnPending'.$ctrs?>"><i class="fas fa-eye"></i></button></td>
+                                        <td><button value='<?=$participant[$i]['ID'] ?>' class="btnPending btn btn-info btn-flat" data-toggle="modal" data-target="#exampleModal2<?=$ctrs?>" ctr = "<?=$ctrs?>" id=""><i class="fas fa-eye"></i></button></td>
                                     </tr>
                                     <?php
                                 }
@@ -256,19 +334,185 @@
     $(document).ready(function () {
         showDetail();
         showPendingDetail();
+        updateTableSub();
+
+        $(".btnInsertSub").click(function () {
+            $("#insertSub").modal();
+        });
+        let status = '<?=$projectDetail[0]['project_status']?>';
+        if(status==2){
+            $('.btnFinish').addClass('disabled');
+            $('#createSub').addClass('disabled');
+        }
+
+        $("#insertSubProject").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                method : "post",
+                url : '<?= base_url()."/company/company/insertSubProject" ?>',
+                data : $("#insertSubProject").serialize(),
+                success : function(){
+                toastr.success('Insert Success');
+                    $("#tbSubProject").html('');
+                    updateTableSub();
+                    $("#subName").val("");
+                    $("#subDeadline").val("");
+                }
+            });
+        });
+        
+        
     });
+
+    function updateTableSub(){
+        $("#tbSubProject").html('');
+        $('.progress').html('');
+        $.ajax({
+        method: "post",
+        url: "<?= base_url().'company/company/getAllSubProject' ?>",
+        data : {idProject : '<?= $projectDetail[0]['project_id']?>'},
+        success: function(res){
+            let subPorjectData = JSON.parse(res);
+            let ctrTotal =0,ctrDone =0;
+            subPorjectData.forEach(data => {
+                let stat = '';
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+                var x = new Date(data.sub_project_deadline);
+                var tanggal_x = x.getDate(); 
+                var bulan_x = monthNames[x.getMonth()]; 
+                var tahun_x = x.getFullYear(); 
+                let deadline_dates = tanggal_x + " "+ bulan_x + ' '+ tahun_x ;
+                ctrTotal++;
+                if(data.sub_project_status == 0){
+                    stat = 'Belum Dikerjakan';
+                }else{
+                    stat = "Sudah Dikerjakan";
+                    ctrDone++;
+                }
+                $("#tbSubProject").append(`
+                    <tr id="row-${data.sub_project_id}">
+                    <td>${data.sub_project_name}</td>
+                    <td>${stat}</td>
+                    <td>${deadline_dates}</td>
+                    <td><button value='${data.sub_project_id}' name='${data.sub_project_name}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${data.sub_project_id}' name='${data.sub_project_name}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button></td>
+                    </tr>
+                `);
+                
+            });
+            let valueProgressBar = (ctrDone/ctrTotal)*100;
+            $(".progress").append(`
+                <div class="progress-bar bg-warning" role="progressbar" style="width:${valueProgressBar}%" aria-valuenow="${valueProgressBar}" aria-valuemin="0" aria-valuemax="100"></div>        
+            `);
+            
+            if(valueProgressBar==100){
+                $(".progress").html('');
+                $(".progress").append(`
+                    <div class="progress-bar bg-success" role="progressbar" style="width:${valueProgressBar}%" aria-valuenow="${valueProgressBar}" aria-valuemin="0" aria-valuemax="100">100%</div>        
+                `);
+                let status = '<?=$projectDetail[0]['project_status']?>';
+                if(status ==2){
+                    $(".finishProject").append(`
+                        <button value=""  name="" class="disabled btn btn-success btn-flat float-right btnFinish">Finish Project</button>
+                    `)
+                }else{
+                    $(".finishProject").append(`
+                        <button value=""  name="" class="btn btn-success btn-flat float-right btnFinish">Finish Project</button>
+                    `)
+                }
+                
+            }
+            $(".btnFinish").click(function() {
+                let tdId = '<?=$projectDetail[0]['project_id']?>';
+                $.ajax({
+                    method: "post",
+                    url: "<?= base_url().'/company/company/updateProjectFinish'?>",
+                    data: {id : tdId},
+                    success: function () {
+                        toastr.success('Project Success');
+                        $('.btnFinish').addClass('disabled');
+                        $('#createSub').addClass('disabled');
+                    }
+                });
+            });
+            $(".btnEdit").click(function () {
+                let tdId = $(this).val();
+                $.ajax({
+                    method: 'post',
+                    url: '<?= base_url()."company/company/getSubProjectById" ?>',
+                    data: {id : tdId},
+                    success: function(data){
+                    let item = JSON.parse(data);
+                    let status = '';
+                    if(item[0].sub_project_status == 0){
+                        status = 'Belum Dikerjakan';
+                    }else{
+                        status = "Sudah Dikerjakan";
+                    }
+                    $(`#row-${tdId}`).html(`
+                        <td><input type='text' id='sub_project_name-${item[0].sub_project_id}' class='form-control' name='sub_project_name' value='${item[0].sub_project_name}' /></td>
+                        <td>${status}</td>
+                        <td><input type='date' id='sub_project_deadline-${item[0].sub_project_id}' class='form-control' name='sub_project_deadline' value='${item[0].sub_project_deadline}' /></td>
+                        <td><button type='submit' class="btn btn-flat btn-success btnDone" id="${item[0].sub_project_id}"><i class="fa fa-check"></i></button></td>
+                    `);
+                    $(".btnDone").click(function () {
+                        let trId = $(this).attr("id");
+                        let name = $(`#sub_project_name-${trId}`).val();
+                        let deadline = $(`#sub_project_deadline-${trId}`).val();
+                        $.ajax({
+                            method: 'post',
+                            url: '<?= base_url()."company/company/updateSubProjectById" ?>',
+                            data: {id: trId, name: name, deadline: deadline},
+                            success: function(res){
+                            if(res == 'success'){
+                                toastr.success('Update Success');
+                                updateTableSub();
+                            }
+                            }
+                        });
+                    })
+
+                    }
+                })
+            });
+            $(".btnDelete").click(function(){
+            var conf = confirm("Are you sure ?");
+            if(conf){
+                $.ajax({
+                method: "post",
+                url: "<?= base_url().'/company/company/deleteSubProject'?>",
+                data: {"id" : $(this).val()},
+                success: function () {
+                    toastr.success('Delete Success');
+                    $("#tbSubProject").html("");
+                    updateTableSub();
+                }
+                });
+            }
+            
+            });
+            $("#db1").DataTable();
+        }
+        }); 
+    }
+
+
     function showDetail(){
+        let tdId = '<?=$projectDetail[0]['project_id']?>';
         $.ajax({
             method: 'post',
             url: '<?= base_url()."company/company/getAllUserByProject" ?>',
+            data: {id : tdId},
             success: function(res){
                 data = JSON.parse(res);
                 let ctr = 0;
                 data.forEach(
                 item => {
+                    
                     if(item.STATUS == 1){
+                        ctr++;
                         $('#par').append(`
-                        <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal fade bd-example-modal-lg" id="exampleModal1${ctr}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -297,23 +541,28 @@
                 });
             }
         });
-        $('#btnPar').click(function () {
-            $("exampleModal1").modal();
+        $('.btnPar').click(function () {
+            let ctr = $(this).attr('ctr');
+            alert(ctr)
+            $("#exampleModal1"+ctr).modal();
         });
     }
     function showPendingDetail(){
+        let tdId = '<?=$projectDetail[0]['project_id']?>';
         $.ajax({
             method: 'post',
             url: '<?= base_url()."company/company/getAllUserByProject" ?>',
+            data: {id : tdId},
             success: function(res){
                 data = JSON.parse(res);
                 let ctr = 0;
                 data.forEach(
                 item => {
-                    ctr++;
+                    
                     if(item.STATUS == 0){
+                        ctr++;
                         $('#pendingPar').append(`
-                        <div class="modal fade bd-example-modal-lg" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal fade bd-example-modal-lg" id="exampleModal2${ctr}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -341,11 +590,12 @@
                         `);
                         
                     }
-                    $('#btnPending').click(function () {
-                        $("exampleModal2").modal();
-                    });
                     
-                    
+                });
+                $('.btnPending').click(function () {
+                    let ctr = $(this).attr('ctr');
+                    alert(ctr);
+                    $("#exampleModal2"+ctr).modal();
                 });
                 
                 $('.btnAccept').click(function () {
@@ -361,6 +611,7 @@
                 });
             }
         });
+        
         
     }
 

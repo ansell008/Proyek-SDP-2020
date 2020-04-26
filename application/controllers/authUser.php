@@ -324,8 +324,11 @@ class AuthUser extends CI_Controller{
             if($this->input->post('sbm') == 'auth_perusahaan'){
                 if($res[0]["perusahaan_status"] != -1){
                     $this->session->set_userdata(array('compAktif' => array("data" => $res)));
+                    $idPerusahaan = $_SESSION['compAktif']['data'][0]['perusahaan_id'];
+                    $projectCount = $this->db->query("SELECT COUNT(*) as jumProj FROM PROJECT P WHERE P.PERUSAHAAN_ID = '$idPerusahaan'")->result_array();
+                    $data['jumlahProject'] = $projectCount;
                     $this->load->view('tpl/headerComp');
-                    $this->load->view('company/landingCompany', array("data" => $res));
+                    $this->load->view('company/landingCompany', $data);
                     $this->load->view('tpl/footerComp');
                 }else{
                     $this->session->set_flashdata('err', 'Your account has not been verified yet, go check your email for verification.');

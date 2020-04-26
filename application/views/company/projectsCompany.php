@@ -115,19 +115,48 @@
                 <div class="card-body">
                     <div class="table-responsive">
                     <table class="table">
-                    <col width="10">
+                    <col width="200">
                     <col width="150">
                     <col width="180">
                         <thead>
                             <th>Project ID</th>
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Budget</th>
+                            <th>Budget/day</th>
                             <th>Deadline</th>
                             <th>Status</th>
                             <th>Action</th>
                         </thead>
                         <tbody id="tbProject">
+                            
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div>
+          </div>
+      </div>
+      <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Projects Done</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table class="table">
+                    <col width="200">
+                    <col width="150">
+                    <col width="180">
+                        <thead>
+                            <th>Project ID</th>
+                            <th>Name</th>
+                            <th>Budget/day</th>
+                            <th>Date Finish</th>
+                            <th>Total Employees</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody id="projectsDone">
                             
                         </tbody>
                     </table>
@@ -152,7 +181,45 @@
 <script>
     $(document).ready(function () {
         updateTableProject();
+        updateTableProjectDone();
     });
+    function updateTableProjectDone(){
+        $("#projectsDone").html('');
+
+        $.ajax({
+        method: 'post',
+        url: '<?= base_url()."company/company/getAllProjectById" ?>',
+        success: function(res){
+            data = JSON.parse(res);
+            data.forEach(item => {
+            if(item.project_status=='2'){
+              const monthNames = ["January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"];
+              var x = new Date(item.project_deadline);
+              var y = new Date(item.project_mulai);
+              var tanggal_x = x.getDate(); 
+              var bulan_x = monthNames[x.getMonth()]; 
+              var tahun_x = x.getFullYear(); 
+              let deadline_dates = tanggal_x + " "+ bulan_x + ' '+ tahun_x ;
+              let durasi = x - y;
+              $("#projectsDone").append(`
+                  <tr id="row-${item.project_id}">
+                  <td>${item.project_id}</td>
+                  <td>${item.project_nama}</td>
+                  <td>${item.project_anggaran}</td>
+                  <td>${durasi}</td>
+                  <td>${deadline_dates}</td>
+                  <td> <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
+                  </tr>
+              `);
+            }
+            
+            });
+            
+            $("#tableCompany").DataTable();
+        }
+        });
+    }
     function updateTableProject(){
         $("#tbProject").html('');
 
@@ -183,8 +250,7 @@
                 <td>${item.project_anggaran}</td>
                 <td>${deadline_dates}</td>
                 <td>${status}</td>
-                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button>  &nbsp;  <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i></button></form></td>
-                
+                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i><b> EDIT</b></button> &nbsp;<br> <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i><b> DELETE</b></button>  &nbsp;  <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
                 </tr>
             `);
             });

@@ -121,7 +121,48 @@
                     </h4>
                 </div>
                 <div class="description text-center">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, cumque reiciendis vero laboriosam nobis optio nisi ducimus necessitatibus eligendi quasi eaque dignissimos dolorum dolores officia sit consequuntur dolor? Labore, ad?
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4>CV</h4>
+              </div>
+              <div class="card-body">
+                <div class="body-cv">
+                  <?php 
+                  echo form_open_multipart('user/userController/uploadCV');
+                  if($_SESSION['userAktif'][0]['user_cv'] == ''){
+                      echo "<div class='alert alert-danger'> You have not completed your CV, please upload CV below this.</div>";
+                  ?>
+                  <div class="row">
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <input type="file" id="customFile" class="form-control" name="cv">
+                            <label class="btn" for="customFile">Choose a file [png/jpg]</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="hidden" name="idUser" value="<?=$_SESSION['userAktif'][0]['user_id']?>">
+                        <button type="submit" class="btn btn-warning ">Upload CV</button>
+                    </div>
+                  </div>
+                  <?php
+                  }else{
+                    echo "<div class='alert alert-success'> CV already uploaded </div>";
+                  ?>
+                      <div class="form-group">
+                          <input type="file" id="customFile" class="form-control" name="cv">
+                          <label class="btn" for="customFile">Choose a file [png/jpg]</label>
+                      </div>
+                      <input type="hidden" name="idUser" value="<?=$_SESSION['userAktif'][0]['user_id']?>">
+                      <button type="submit" class="btn btn-warning ">Re-upload CV</button>
+                      <button class="btn btn-flat btn-info" type="button" id="btnViewCV">View <i class='fa fa-eye'></i></button>
+                      <img style="display:none" id="imgCV" src="<?= base_url() . $_SESSION['userAktif'][0]['user_cv']; ?>" alt="">
+                  <?php
+                  }
+                  ?>
+                  </form>
                 </div>
               </div>
             </div>
@@ -255,6 +296,10 @@
           $("#btnViewKtp").click(function(){
             $("#imgKtp").removeAttr("style");
             $("#imgKtp").attr("style", "display: block");
+          });
+          $("#btnViewCV").click(function(){
+            $("#imgCV").removeAttr("style");
+            $("#imgCV").attr("style", "display: block");
           });
       });
   </script>
