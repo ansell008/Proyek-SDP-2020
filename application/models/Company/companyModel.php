@@ -42,5 +42,23 @@ class CompanyModel extends CI_Model{
         $res = $this->db->query($query);
         return $res->result_array();
     }
+
+    public function updateStatusToTransaction($idProject){
+        $query = "UPDATE project p SET project_status = 3 WHERE project_id = '$idProject'";
+        $res = $this->db->query($query);
+        return $res;
+    }
+
+    public function insertTransaction($idProject){
+        $id = uniqid('TR_');
+        $query = "INSERT INTO htrans (transaksi_id, project_id) VALUES('$id', '$idProject')";
+        return $this->db->query($query);
+    }
+
+    public function getAllProjectTrans($idPerusahaan){
+        $query = "SELECT * FROM project WHERE perusahaan_id = '$idPerusahaan'";
+        $res = $this->db->query($query);
+        return $res->result_array();
+    }
 }
 ?>
