@@ -169,9 +169,17 @@ Class Company extends CI_Controller
         $id = $this->input->post('id');
         $res = $this->db->update('project_pekerja', array('project_pekerja_status' => 1), array('project_pekerja_id' => $id));   
     }
+    public function ignoreParticipant(){
+        $id = $this->input->post('id');
+        $res = $this->db->update('project_pekerja', array('project_pekerja_status' => -1), array('project_pekerja_id' => $id));   
+    }
     public function updateProjectFinish(){
         $id = $this->input->post('id');
         $this->db->update('project', array('project_status' => 2), array('project_id' => $id));
+    }
+    public function updateProjectOnGoing(){
+        $id = $this->input->post('id');
+        $this->db->update('project', array('project_status' => 1), array('project_id' => $id));
     }
 
     public function updateProfile(){

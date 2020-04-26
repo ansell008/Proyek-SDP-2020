@@ -78,7 +78,11 @@ $route['admin/companyListing'] = 'admin/userListing/loadCompany';
 $route['admin/ratings'] = 'admin/ratingController';
 $route['admin/skills'] = 'admin/skillAdmin';
 
+
+
 $route['company/project'] = 'company/company/projectsCompany';
+$route['company/detailProject'] = 'company/company/projectsDetail';
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -146,7 +146,10 @@
                 </div>
                 </div>
           </div>
-          <div class="col-md-12">
+          <?php
+            if($projectDetail[0]['project_status']=='1'){
+                ?>
+            <div class="col-md-12">
                 <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Check List Progress</h5>
@@ -174,6 +177,10 @@
                 </div>
                 </div>
           </div>
+           <?php
+            }
+          ?>
+          
           
       </div>
       <footer class="main-footer">
