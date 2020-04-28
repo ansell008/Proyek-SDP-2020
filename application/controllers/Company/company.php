@@ -260,7 +260,9 @@ Class Company extends CI_Controller
     }
 
     public function getTransactionDetail($idProject){
-        $data['project'] = $this->cm->getProject(urldecode($idProject));
+        $data['project'] = $this->cm->getDetailTransaction(urldecode($idProject));
+        $data['count'] = $this->cm->getParticipantCount($idProject);
+        $data['pekerja'] = $this->cm->getPekerjaByProject($idProject);
         $this->load->view("tpl/headerComp.php");
         $this->load->view("company/companyTransactionDetail", $data);
         $this->load->view("tpl/footerComp.php");

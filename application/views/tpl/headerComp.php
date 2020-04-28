@@ -14,6 +14,7 @@
   <!-- CSS Files -->
   <link href="<?= base_url().'asset/paper-dashboard-master' ?>/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="<?= base_url().'asset/paper-dashboard-master' ?>/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-eYaolrhzAHhtLCh5"></script>
   <script src="<?= base_url().'asset/admin' ?>/plugins/jquery/jquery.min.js"></script>
   <script src="<?= base_url().'asset/admin' ?>/plugins/toastr/toastr.min.js"></script>
 </head>

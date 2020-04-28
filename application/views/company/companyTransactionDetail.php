@@ -106,12 +106,48 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-
         <div class="card">
             <div class="card-header">
                 <div class="card-title">
                     <h2>Transaction Detail</h2>
                 </div>
+            </div>
+            <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Project Name : </b> <?= $project[0]['project_nama'] ?></li>
+                <li class="list-group-item"><b>Description : </b> <?= $project[0]['project_deskripsi'] ?></li>
+                <li class="list-group-item"><b>Project Created By : </b> <?= $project[0]['perusahaan_nama'] ?>
+                </li>
+                <?php 
+                    $date = date_diff(date_create($project[0]['project_mulai']), date_create($project[0]['project_deadline']));
+                    $amount = $project[0]['project_anggaran'] * $date->days * $count[0]['jumlah'];
+
+                    $formated_amount = "Rp " . number_format($amount,2,',','.');
+                ?>
+                <li class="list-group-item"><b>Amount to Pay: </b> <?= $formated_amount ?></li>
+            </ul>
+            <br>
+            <table class="table table-bordered">
+                <thead>
+                    <th>Participant Name</th>
+                    <th>Amount To Pay</th>
+                </thead>
+                <tbody>
+                    <?php
+                        foreach($pekerja as $key => $value){
+                            echo "<tr>";
+                            echo "<td>$value[user_firstname] $value[user_lastname]</td>";
+                            echo "<td>Rp ".number_format($project[0]['project_anggaran'] * $date->days,2,',','.')."</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                    <tr>
+                        <th>TOTAL</th>
+                        <th><?= $formated_amount ?></th>
+                    </tr>
+                </tbody>
+            </table>
+            <button id='pay-button'>Pay</button>
             </div>
         </div>
       
@@ -128,6 +164,29 @@
   <script>
       $(document).ready(function(){
         
+        $("#pay-button").click(function(event){
+          event.preventDefault();
+          $(this).attr("disabled", "disabled");
+          $.ajax({
+            method: "post",
+            url: '<?= base_url() ?>payment/paymentController/token',
+            data: {idProject : "<?= $project[0]['project_id'] ?>"},
+            success: function(res){
+              snap.pay(res, {
+                onSuccess: function(result){
+                  console.log(result.status_message);
+                  console.log(result);
+                },
+                onPending: function(result){
+                  console.log(result.status_message);
+                },
+                onError: function(result){
+                  console.log(result.status_message);
+                }
+              });
+            }
+          });
+        }); 
       });
   </script>
 </body>

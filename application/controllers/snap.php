@@ -62,35 +62,33 @@ class Snap extends CI_Controller {
 		$item_details = array ($item1_details, $item2_details);
 
 		// Optional
-		$billing_address = array(
-		  'first_name'    => "Andri",
-		  'last_name'     => "Litani",
-		  'address'       => "Mangga 20",
-		  'city'          => "Jakarta",
-		  'postal_code'   => "16602",
-		  'phone'         => "081122334455",
-		  'country_code'  => 'IDN'
-		);
+		// $billing_address = array(
+		//   'first_name'    => "Andri",
+		//   'last_name'     => "Litani",
+		//   'address'       => "Mangga 20",
+		//   'city'          => "Jakarta",
+		//   'postal_code'   => "16602",
+		//   'phone'         => "081122334455",
+		//   'country_code'  => 'IDN'
+		// );
 
-		// Optional
-		$shipping_address = array(
-		  'first_name'    => "Obet",
-		  'last_name'     => "Supriadi",
-		  'address'       => "Manggis 90",
-		  'city'          => "Jakarta",
-		  'postal_code'   => "16601",
-		  'phone'         => "08113366345",
-		  'country_code'  => 'IDN'
-		);
+		// // Optional
+		// $shipping_address = array(
+		//   'first_name'    => "Obet",
+		//   'last_name'     => "Supriadi",
+		//   'address'       => "Manggis 90",
+		//   'city'          => "Jakarta",
+		//   'postal_code'   => "16601",
+		//   'phone'         => "08113366345",
+		//   'country_code'  => 'IDN'
+		// );
 
 		// Optional
 		$customer_details = array(
 		  'first_name'    => "Andri",
 		  'last_name'     => "Litani",
 		  'email'         => "andri@litani.com",
-		  'phone'         => "081122334455",
-		  'billing_address'  => $billing_address,
-		  'shipping_address' => $shipping_address
+		  'phone'         => "081122334455"
 		);
 
 		// Data yang akan dikirim untuk request redirect_url.

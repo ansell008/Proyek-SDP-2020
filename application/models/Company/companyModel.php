@@ -53,14 +53,35 @@ class CompanyModel extends CI_Model{
 
     public function insertTransaction($idProject){
         $id = uniqid('TR_');
-        $query = "INSERT INTO htrans (transaksi_id, project_id) VALUES('$id', '$idProject')";
+        $query = "INSERT INTO htrans (transaksi_id, project_id, status_code) VALUES('$id', '$idProject', '-1')";
         return $this->db->query($query);
     }
 
     public function getAllProjectTrans($idPerusahaan){
-        $query = "SELECT * FROM project WHERE perusahaan_id = '$idPerusahaan'";
+        $query = "SELECT * FROM project p WHERE p.perusahaan_id = '$idPerusahaan'";
         $res = $this->db->query($query);
         return $res->result_array();
+    }
+
+    public function getDetailTransaction($idProject){
+        $this->db->select('*');
+        $this->db->from('project');
+        $this->db->join('auth_perusahaan', 'project.perusahaan_id = auth_perusahaan.perusahaan_id');
+        $this->db->where('project.project_id', $idProject);
+        return $this->db->get()->result_array();
+        // $query = "SELECT * FROM project WHERE perusahaan_id = '$idPerusahaan'";
+        // $res = $this->db->query($query);
+        // return $res->result_array();
+    }
+
+    public function getParticipantCount($idProject){
+        $query = "SELECT COUNT(*) as jumlah FROM project_pekerja WHERE project_id = '$idProject'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getPekerjaByProject($idProject){
+        $query = "SELECT * FROM project_pekerja pp JOIN auth_user au ON au.user_id = pp.user_id WHERE pp.project_id = '$idProject'";
+        return $this->db->query($query)->result_array();
     }
 }
 ?>
