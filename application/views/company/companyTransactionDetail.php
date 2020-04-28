@@ -147,8 +147,19 @@
                     </tr>
                 </tbody>
             </table>
-            <button id='pay-button'>Pay</button>
+            <button id='pay-button' class='btn btn-success'>Pay</button>
+            <button id='sync-button' class='btn btn-info'><i class="fa fa-sync"></i></button>
             </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <h2>Payment Details</h2>
+            </div>
+          </div>
+          <div class="card-body" id="containerPayment">
+              
+          </div>
         </div>
       
       <footer class="main-footer">
@@ -162,8 +173,9 @@
   </div>
 
   <script>
+      let orderid;
       $(document).ready(function(){
-        
+        load();
         $("#pay-button").click(function(event){
           event.preventDefault();
           $(this).attr("disabled", "disabled");
@@ -179,15 +191,127 @@
                 },
                 onPending: function(result){
                   console.log(result.status_message);
+                  console.log(result);
+                  sendToDb(result);
                 },
                 onError: function(result){
                   console.log(result.status_message);
+                  console.log(result);
                 }
               });
             }
           });
-        }); 
+        });
+
+        $("#sync-button").click(function(event){
+          event.preventDefault();
+          $.ajax({
+            method: 'post',
+            url: "<?= base_url() ?>payment/refreshStatus",
+            data: {ord_id: orderid},
+            success: function(res){
+              let dataTrans = JSON.parse(res);
+              isiPayment(dataTrans[0]);
+            }
+          });
+        })
       });
+
+      function load() {
+        $.ajax({
+          method: "post",
+          url: "<?= base_url() ?>payment/getTransDetail",
+          data: {
+            prj_id: "<?= $project[0]['project_id'] ?>"
+          },
+          success: function (res) {
+            let dataTrans = JSON.parse(res);
+            if (dataTrans[0].status_code == -1) {
+              $("#containerPayment").append(`
+                  <div class="alert alert-danger">Please complete your payment process</div>
+                `);
+              $("#sync-button").addClass("disabled");
+            } else {
+              isiPayment(dataTrans[0]);
+              $("#pay-button").addClass("disabled");
+            }
+          }
+        });
+      }
+
+      function isiPayment(dataHtrans) {
+        $("#containerPayment").html('');
+        let cl = '';
+        if (dataHtrans.transaction_status == 'pending') {
+          cl = 'warning';
+        }
+        if (dataHtrans.transaction_status == 'settlement') {
+          cl = 'success';
+        }
+
+        if (dataHtrans.payment_type == 'bank_transfer') {
+          $("#containerPayment").append(`
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><b>Transaction Status : </b> <span class='badge badge-${cl}'>${dataHtrans.transaction_status}</span></li>
+                  <li class="list-group-item"><b>Order Id : </b> ${dataHtrans.order_id}</li>
+                  <li class="list-group-item"><b>Grand Total : </b> ${dataHtrans.grand_total}</li>
+                  <li class="list-group-item"><b>Transaction Time : </b> ${dataHtrans.transaction_time}</li>
+                  <li class="list-group-item"><b>Bank : </b> ${dataHtrans.bank}</li>
+                  <li class="list-group-item"><b>Virtual Account Number : </b> ${dataHtrans.bca_va_number}</li>
+                  <li class="list-group-item"><a class='btn btn-success' target="_blank" href='${dataHtrans.pdf_url}'>Download Instruction</a></li>
+                  </ul>
+                `);
+        } else if (dataHtrans.payment_type == 'echannel') {
+          $("#containerPayment").append(`
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><b>Transaction Status : </b> <span class='badge badge-${cl}'>${dataHtrans.transaction_status}</span></li>
+                  <li class="list-group-item"><b>Order Id : </b> ${dataHtrans.order_id}</li>
+                  <li class="list-group-item"><b>Grand Total : </b> ${dataHtrans.grand_total}</li>
+                  <li class="list-group-item"><b>Transaction Time : </b> ${dataHtrans.transaction_time}</li>
+                  <li class="list-group-item"><b>Bank : </b> Mandiri</li>
+                  <li class="list-group-item"><b>Bill Code : </b> ${dataHtrans.bill_key}</li>
+                  <li class="list-group-item"><b>Biller Key : </b> ${dataHtrans.biller_code}</li>
+                  <li class="list-group-item"><a class='btn btn-success' target="_blank" href='${dataHtrans.pdf_url}'>Download Instruction</a></li>
+                  </ul>
+                `);
+        } else if (dataHtrans.payment_type == 'cstore') {
+          $("#containerPayment").append(`
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><b>Transaction Status : </b> <span class='badge badge-${cl}'>${dataHtrans.transaction_status}</span></li>
+                  <li class="list-group-item"><b>Order Id : </b> ${dataHtrans.order_id}</li>
+                  <li class="list-group-item"><b>Grand Total : </b> ${dataHtrans.grand_total}</li>
+                  <li class="list-group-item"><b>Transaction Time : </b> ${dataHtrans.transaction_time}</li>
+                  <li class="list-group-item"><b>Payment Code : </b> ${dataHtrans.payment_code}</li>
+                  <li class="list-group-item"><a class='btn btn-success' target="_blank" href='${dataHtrans.pdf_url}'>Download Instruction</a></li>
+                  </ul>
+                `);
+        } else if (dataHtrans.payment_type == 'gopay') {
+          $("#containerPayment").append(`
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><b>Transaction Status : </b> <span class='badge badge-${cl}'>${dataHtrans.transaction_status}</span></li>
+                  <li class="list-group-item"><b>Order Id : </b> ${dataHtrans.order_id}</li>
+                  <li class="list-group-item"><b>Grand Total : </b> ${dataHtrans.grand_total}</li>
+                  <li class="list-group-item"><b>Transaction Time : </b> ${dataHtrans.transaction_time}</li>
+                  <li class="list-group-item"><b>QR Code</b><br> <img src='${dataHtrans.gopay_qr_code}' width='200' /></li>
+                  </ul>
+                `);
+        }
+        orderid = dataHtrans.order_id;
+      }
+
+      function sendToDb(data) {
+        let fdata = JSON.stringify(data);
+        $.ajax({
+          method: "post",
+          url: "<?= base_url() ?>payment/paymentController/insertDataPayment",
+          data: {obj: fdata,prj_id: "<?= $project[0]['project_id'] ?>"},
+          success: function (res) {
+            let dataHtrans = JSON.parse(res);
+            isiPayment(dataHtrans);
+            $("#sync-button").removeClass("disabled");
+          }
+        });
+      }
   </script>
 </body>
 

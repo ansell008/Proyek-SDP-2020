@@ -78,13 +78,14 @@ $route['admin/companyListing'] = 'admin/userListing/loadCompany';
 $route['admin/ratings'] = 'admin/ratingController';
 $route['admin/skills'] = 'admin/skillAdmin';
 
-
-
 $route['company/project'] = 'company/company/projectsCompany';
 $route['company/payProject'] = 'payment/paymentController';
 $route['company/transaction'] = 'company/company/loadTransaction';
 $route['company/proceedTransaction/(:any)'] = 'company/company/proceedTransaction/$1';
 $route['company/getTransactionDetail/(:any)'] = 'company/company/getTransactionDetail/$1';
+
+$route['payment/getTransDetail'] = 'payment/paymentController/getTransDetail';
+$route['payment/refreshStatus'] = 'payment/paymentController/process';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

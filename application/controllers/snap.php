@@ -105,7 +105,7 @@ class Snap extends CI_Controller {
 		
 		//payment methods
 		$enable_payments = array('cstore','gopay','bank_transfer','echannel');
-        
+
         $transaction_data = array(
 			'enabled_payments' => $enable_payments,
             'transaction_details'=> $transaction_details,
