@@ -107,7 +107,15 @@
               </div>
               <div class="card-body">
                 <div class="author">
-                    <img class="avatar border-gray" src="<?=base_url().'asset/img/profile/back.jfif' ?>" alt="Profile Picture">
+                    <?php echo form_open_multipart('user/userController/updatePP'); ?>
+                    <div class="form-group">
+                      <button style="background: none;border:none; " for="customFile"><img style=" cursor:pointer;" class="avatar border-gray" src="<?=base_url().$_SESSION['userAktif'][0]['user_profile'] ?>" alt="Profile Picture"></button>
+                      <input type="file" class="custom-file-input" id="customFile" name="profile_pic">
+                    </div>
+                    <div class="form-gorup">
+                      <input type="hidden" name="idUser" value="<?=$_SESSION['userAktif'][0]['user_id']?>">
+                      <button type="submit" class="btn btn-info">Change Profile Picture</button>
+                    </div>
                     <h4 class="title">
                         <?= $_SESSION['userAktif'][0]['user_firstname'] ?> <?= $_SESSION['userAktif'][0]['user_lastname'] ?>
                         <br>
@@ -120,6 +128,7 @@
                             }
                         ?></small>
                     </h4>
+                    </form>
                 </div>
                 <div class="description text-center">
                 </div>
