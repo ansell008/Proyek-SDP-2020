@@ -198,12 +198,19 @@ Class Company extends CI_Controller
                 if($f==''){
                 
                 }else{
+                    $path_parts = pathinfo($_FILES["profile_pic"]["name"]);
+                    $filen = $_FILES['profile_pic']['name'];
+                    $extension = $path_parts['extension'];
+                    $foto = md5($h.$filen).'.'.$extension;
                     $config['upload_path']      = './asset/img/profile/';
                     $config['allowed_types']    = 'jpg|png';
+                    $config['max_size']         = 2048;
+                    $config['file_name']        = $foto;
                     $this->load->library('upload',$config);
         
                     if($this->upload->do_upload('profile_pic')){
                         $foto = $this->upload->data('file_name');
+                        
                     }else{
                         var_dump($_FILES['profile_pic']);
                         var_dump($this->upload->display_errors()); die();

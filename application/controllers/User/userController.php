@@ -134,6 +134,11 @@ class UserController extends Ci_Controller{
         $cvInput = $_FILES['cv'];
         if($cvInput==''){
         }else{
+            $path_parts = pathinfo($_FILES["cv"]["name"]);
+            $filen = $_FILES['cv']['name'];
+            $extension = $path_parts['extension'];
+            $foto = md5($filen).'.'.$extension;
+            $config['file_name']        = $foto;
             $config['upload_path']      = './asset/upload/cv-user/';
             $config['allowed_types']    = 'jpg|png';
             $config['max_size']         = 2048;
@@ -150,6 +155,34 @@ class UserController extends Ci_Controller{
         }
         $time = date("Y-m-d H:i:s");
         $this->db->update('auth_user', array('user_cv' => $cv, 'updated_at' => $time), array('user_id' => $id));
+        redirect('user/profile');
+    }
+    public function updatePP(){
+        $id= $this->input->post("idUser");
+        $cvInput = $_FILES['profile_pic'];
+        if($cvInput==''){
+        }else{
+            $path_parts = pathinfo($_FILES["profile_pic"]["name"]);
+            $filen = $_FILES['profile_pic']['name'];
+            $extension = $path_parts['extension'];
+            $foto = md5($filen).'.'.$extension;
+            $config['file_name']        = $foto;
+            $config['upload_path']      = './asset/upload/pp-user/';
+            $config['allowed_types']    = 'jpg|png';
+            $config['max_size']         = 2048;
+            $this->load->library('upload',$config);
+
+            if($this->upload->do_upload('profile_pic')){
+                $foto = $this->upload->data('file_name');
+            }else{
+                var_dump($_FILES['profile_pic']);
+                var_dump($this->upload->display_errors()); die();
+            }
+            $cv = 'asset/upload/pp-user/'.$foto;
+            $_SESSION['userAktif'][0]['user_profile'] = $cv;
+        }
+        $time = date("Y-m-d H:i:s");
+        $this->db->update('auth_user', array('user_profile' => $cv, 'updated_at' => $time), array('user_id' => $id));
         redirect('user/profile');
     }
     public function myProject(){
