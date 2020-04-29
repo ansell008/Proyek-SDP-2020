@@ -83,5 +83,12 @@ class CompanyModel extends CI_Model{
         $query = "SELECT * FROM project_pekerja pp JOIN auth_user au ON au.user_id = pp.user_id WHERE pp.project_id = '$idProject'";
         return $this->db->query($query)->result_array();
     }
+    public function notifNewParticipant($idPerusahaan){
+        $query = "SELECT count(ap.user_firstname) as jumlah
+        FROM auth_user ap, project_pekerja pp, project p, auth_perusahaan au 
+        where ap.user_id = pp.user_id and pp.project_id = p.project_id and p.perusahaan_id = au.perusahaan_id and 
+        au.perusahaan_id = '$idPerusahaan' and pp.project_pekerja_status = 0";
+        return $this->db->query($query)->result_array();
+    }
 }
 ?>

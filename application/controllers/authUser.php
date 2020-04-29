@@ -327,6 +327,8 @@ class AuthUser extends CI_Controller{
                     $idPerusahaan = $_SESSION['compAktif']['data'][0]['perusahaan_id'];
                     $projectCount = $this->db->query("SELECT COUNT(*) as jumProj FROM PROJECT P WHERE P.PERUSAHAAN_ID = '$idPerusahaan'")->result_array();
                     $data['jumlahProject'] = $projectCount;
+                    $this->load->model('company/companyModel', 'cm');
+                    $data['newParticipant'] = $this->cm->notifNewParticipant($_SESSION['compAktif']['data'][0]['perusahaan_id']);
                     $this->load->view('tpl/headerComp');
                     $this->load->view('company/landingCompany', $data);
                     $this->load->view('tpl/footerComp');

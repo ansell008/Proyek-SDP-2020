@@ -12,6 +12,7 @@ Class Company extends CI_Controller
         $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
         $idPerusahaan = $_SESSION['compAktif']['data'][0]['perusahaan_id'];
         $projectCount = $this->db->query("SELECT COUNT(*) as jumProj FROM PROJECT P WHERE P.PERUSAHAAN_ID = '$idPerusahaan'")->result_array();
+        $data['newParticipant'] = $this->cm->notifNewParticipant($_SESSION['compAktif']['data'][0]['perusahaan_id']);
         $data['jumlahProject'] = $projectCount;
         $this->load->view('tpl/headerComp');
         $this->load->view('company/landingCompany',$data);
@@ -85,7 +86,6 @@ Class Company extends CI_Controller
                 "updated_at" => date("now")
             );
         }
-        
         $res = $this->cm->insertProject($newProject);
         redirect('company/project');
     }

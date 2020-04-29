@@ -1,0 +1,35 @@
+Algoritma Create Project
+01:    IdPerusahaan ← session
+02:    ListCategory ← getCategory()
+03:    If buttonCreate is clicked then
+04:    Project_Nama ← input
+05:    Project_Deskripsi ← input
+06:    Project_category ← input
+07:    Project_budget ← input
+08:    Project_mulai ← input
+09:    Project_deadline ← input
+10:    Insert new project to sql
+11:    End if
+
+Algoritma Accept Participant
+01:    DataParticipant ← getAllUserByProject()
+02:    If buttonView is clicked then
+03:    Show data participant 
+04:    If buttonAccept is clicked then
+05:    UpdateStatusParticipant(1)
+06:    Else
+07:    UpdateStatusParticipant(-1)
+08:    End if
+09:    End if
+
+Algoritma Edit Profile
+01:    IdUser ← session
+02:    if btnUpdate is clicked then
+03:    Nama ← input
+05:    Email ← input
+06:    Address ← input
+07:    City ← input
+08:    ProfilePic ← input
+09:    Update session 
+10:    Update data to sql
+11:    End if
