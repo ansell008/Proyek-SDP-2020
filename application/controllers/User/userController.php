@@ -19,8 +19,18 @@ class UserController extends Ci_Controller{
         $this->load->view('tpl/footerComp');
     }
     public function loadSummary(){
+       
+
+        $this->load->model("user/userReport");
+        $jumlahproyek=[];
+        for ($i=1; $i <13 ; $i++) { 
+            $res = $this->userReport->getCountProject($_SESSION['userAktif'][0]['user_id'],$i);
+            array_push($jumlahproyek,$res);
+        }
+        
+        
         $this->load->view('tpl/headerComp');
-        $this->load->view('user/summaryUser');
+        $this->load->view('user/summaryUser', array("data"=>$jumlahproyek));
         $this->load->view('tpl/footerComp');
     }
 
