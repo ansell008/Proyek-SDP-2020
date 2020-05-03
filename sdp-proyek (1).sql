@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2020 at 09:50 PM
+-- Generation Time: May 03, 2020 at 10:11 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -182,7 +182,7 @@ INSERT INTO `auth_perusahaan` (`perusahaan_id`, `perusahaan_nama`, `perusahaan_e
 ('99', 'Diam Institute', 'nibh.Donec.est@Mauris.co.uk', 'PUZ63SIT0VE', 'P.O. Box 353, 3157 Auctor Stre', '', '', '(05) 9564 7481', 'pt', '15', 1, 0, 'base_url().\'asset/img/profile/profile.png', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 ('PE_5e8d703c468a2', 'Toko Komputer Surabaya', 'ansell1@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Surabaya', '', '', '123456', 'CV', '123456789', 0, 0, 'asset/img/profile/493f5bba-81a4-11e9-bf79-066b49664af6_cm_1440w3.png', '', '2020-04-08 08:33:32', '2020-04-08 08:33:32'),
 ('PE_5e95bdb22c9e0', 'Toko Dua', 'ansell24.es@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Pondok Tjandra Indah', '', '62156', '123123', 'CV', 'asset/upload/npwp-company/2638222.jpg', 0, 0, 'asset/img/profile/profile.png', '', '2020-04-14 15:42:10', '2020-04-14 15:42:10'),
-('PE_5e9f04e904760', 'Toko Emas', 'ansell08.es@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Pondok Tjandra Indah', 'Surabaya Utara', '62156', '0812121122321', 'CV', 'asset/upload/npwp-company/26382218.jpg', 0, 0, 'asset/img/profile/profile.png', '6bcf42f8942de7c25e6bcd0b87c15154', '2020-04-21 16:36:25', '2020-04-21 16:36:25');
+('PE_5e9f04e904760', 'Toko Emas', 'ansell08.es@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Pondok Tjandra Indah', 'Surabaya Utara', '62156', '0812121122321', 'CV', 'asset/upload/npwp-company/26382218.jpg', 0, 0, 'asset/img/profile/e3e0eb907db76a66a64cbd3005f9e1b7.jpg', '6bcf42f8942de7c25e6bcd0b87c15154', '2020-04-21 16:36:25', '2020-04-21 16:36:25');
 
 -- --------------------------------------------------------
 
@@ -198,8 +198,14 @@ CREATE TABLE `auth_user` (
   `user_email` varchar(30) NOT NULL,
   `user_username` varchar(30) NOT NULL,
   `user_password` varchar(50) NOT NULL,
-  `user_ktp` varchar(16) NOT NULL,
-  `user_status` int(1) NOT NULL,
+  `user_alamat` varchar(50) NOT NULL,
+  `user_kota` varchar(50) NOT NULL,
+  `user_kodepos` varchar(5) NOT NULL,
+  `user_ktp` varchar(100) NOT NULL,
+  `user_status` int(1) NOT NULL DEFAULT -1,
+  `user_verification_code` varchar(255) NOT NULL,
+  `user_cv` varchar(255) NOT NULL,
+  `user_profile` varchar(255) NOT NULL DEFAULT 'asset/img/profile/profile.png',
   `updated_at` datetime NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -208,13 +214,10 @@ CREATE TABLE `auth_user` (
 -- Dumping data for table `auth_user`
 --
 
-INSERT INTO `auth_user` (`user_id`, `user_firstname`, `user_lastname`, `user_email`, `user_username`, `user_password`, `user_ktp`, `user_status`, `updated_at`, `created_at`) VALUES
-('user_001', 'rommy', 'abcd', 'dominatorranger@gmail.com', 'dominator', '2c09dab6b4cf9258ad39969498db14', '1234567891234567', 1, '2020-03-18 20:35:18', '2020-03-18 20:35:18'),
-('user_002', 'marvella', 'lingadi', 'marvela@gmail.com', 'lgc', 'a0ab54f1401a40ef883d0574307465', '9876543212345678', 1, '2018-01-01 01:51:43', '2020-03-18 20:36:16'),
-('user_003', 'ansell', 'benedy', 'ansel008@gmail.com', 'angde', 'a05a3bd932832746451ec1d85e50ba', '1357986421245678', 1, '2018-01-01 02:44:55', '2020-03-18 20:37:09'),
-('user_004', 'jenny', 'chandra', 'jenn@gmail.com', 'jennychan', '8c84bbf4f643d6b8c4c188935eb1196d8cdcf10b', '1245789631357987', 0, '2020-03-18 20:38:11', '2020-03-18 20:38:11'),
-('US_5e872129da4e4', 'Ansell', 'Benedy', 'ansell08.es@gmail.com', 'ansell008', '123456', '2138208302183021', 0, '2020-04-03 13:42:33', '2020-04-03 13:42:33'),
-('US_5e8d7140dc6da', 'Rommy', 'abcd', 'rommy1@gmail.com', 'rommy', '7c4a8d09ca3762af61e59520943dc26494f8941b', '1234567891012345', 0, '2020-04-08 08:37:52', '2020-04-08 08:37:52');
+INSERT INTO `auth_user` (`user_id`, `user_firstname`, `user_lastname`, `user_email`, `user_username`, `user_password`, `user_alamat`, `user_kota`, `user_kodepos`, `user_ktp`, `user_status`, `user_verification_code`, `user_cv`, `user_profile`, `updated_at`, `created_at`) VALUES
+('US_5ea433934c885', 'Ansell', 'Benedy', 'ansell08.es@gmail.com', 'ansells', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Pondok Tjandra Indah', 'surabaya-selatan', '62156', 'asset/upload/ktp-user/c393993e4a75ad18d10fb4ad39dd15d9.png', 0, '6bcf42f8942de7c25e6bcd0b87c15154', 'asset/upload/cv-user/f542233689a7d8cbe63bcfeaf8a7b896.png', 'asset/upload/pp-user/7440fcb057c80f75b59eda736e29e1a0.jpg', '2020-04-28 09:34:01', '2020-04-25 14:56:51'),
+('US_5eac604329d96', 'Robby', 'Giovanni', 'abudlajdkjask', 'robbyg', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Kediri Gresik', 'surabaya-barat', '62156', 'asset/upload/ktp-user/d488f98527a294e039e088cd91e5d428.png', 0, 'c7d7c75890ca85a46d585e8df2eaef6b', '', 'asset/upload/pp-user/067c1a3d1aa6674c262774fbfb4742b6.png', '2020-05-01 19:48:18', '2020-05-01 19:45:39'),
+('US_5eac690c0ee92', 'User ', 'Joe', 'ansell08.es@gmail.com', 'joes', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Pondok Tjandra Indah', 'surabaya-timur', '62156', 'asset/upload/ktp-user/f4c129dcbe552a0515c6da47d58f5676.png', 0, '6bcf42f8942de7c25e6bcd0b87c15154', 'asset/upload/cv-user/067c1a3d1aa6674c262774fbfb4742b6.png', 'asset/img/profile/profile.png', '2020-05-01 20:31:43', '2020-05-01 20:23:08');
 
 -- --------------------------------------------------------
 
@@ -236,7 +239,9 @@ CREATE TABLE `category_admin` (
 
 INSERT INTO `category_admin` (`category_id`, `category_name`, `created_at`, `updated_at`) VALUES
 ('jasa5e68fc00dbf9f', 'jasa', '2032-02-03 00:00:00', '2032-02-03 00:00:00'),
+('masakan5eac61d17bf0e', 'masakan', '2052-02-05 00:00:00', '2052-02-05 00:00:00'),
 ('pendidikan5e6891103daee', 'pendidikan', '2032-02-03 00:00:00', '2032-02-03 00:00:00'),
+('rebahan5eac6a4e2e80b', 'rebahan', '2052-02-05 00:00:00', '2052-02-05 00:00:00'),
 ('teknologi informatika5e69a63ba', 'teknologi informatika', '2032-02-03 00:00:00', '2032-02-03 00:00:00');
 
 -- --------------------------------------------------------
@@ -262,7 +267,7 @@ CREATE TABLE `cv_user` (
 INSERT INTO `cv_user` (`cv_id`, `cv_user_id`, `cv_education`, `cv_experience`, `created_at`, `updated_at`) VALUES
 ('cv_001', 'user_001', 'SD : SDK KARITAS 3\r\nSMP : SMPK KARITAS 3\r\nSMA : SMKK ST LOUIS\r\n\r\nPERGURUAN TINGGI : ISTTS', 'BANYAK BOSS', '2020-03-19 18:22:52', '2020-03-19 18:22:52'),
 ('CV_002', 'US_5e8d7140dc6da', 'SD : SD CITAHATI\r\nSMP : SMP CITAHATI\r\nSMA : SMA CITAHATI\r\n', 'KERJA DI LAB ISTTS', '2020-04-21 23:50:12', '2020-04-21 23:50:12'),
-('CV_003', 'US_5e872129da4e4', 'SD : SD PETRA\r\nSMP : SMP PETRA\r\nSMA : SMA PETRA', 'KERJA DI LAB KIMIA', '2020-04-21 23:50:12', '2020-04-21 23:50:12');
+('CV_003', 'US_5ea433934c885', 'SD : SD PETRA\r\nSMP : SMP PETRA\r\nSMA : SMA PETRA', 'KERJA DI LAB KIMIA', '2020-04-21 23:50:12', '2020-04-21 23:50:12');
 
 -- --------------------------------------------------------
 
@@ -278,7 +283,7 @@ CREATE TABLE `project` (
   `kategori_id` varchar(50) NOT NULL,
   `project_nama` varchar(50) NOT NULL,
   `project_deskripsi` text NOT NULL,
-  `project_anggaran` text NOT NULL,
+  `project_anggaran` int(11) NOT NULL,
   `project_status` varchar(1) NOT NULL,
   `project_mulai` datetime NOT NULL,
   `project_deadline` datetime NOT NULL,
@@ -291,9 +296,12 @@ CREATE TABLE `project` (
 --
 
 INSERT INTO `project` (`project_id`, `perusahaan_id`, `transaksi_id`, `kategori_id`, `project_nama`, `project_deskripsi`, `project_anggaran`, `project_status`, `project_mulai`, `project_deadline`, `created_at`, `updated_at`) VALUES
-('jaga toko emas5e9f0906d9bfc', 'PE_5e9f04e904760', '1', 'jasa5e68fc00dbf9f', 'jaga toko emas', 'Bisa dipercaya dan bisa bekerja di bawah tekanan', '50000/jam', '0', '2020-04-21 00:00:00', '2020-04-24 00:00:00', '2042-02-02 00:00:00', '2042-02-02 00:00:00'),
-('pr_001', '1', '1', 'jasa5e68fc00dbf9f', 'jaga toko', 'Menjaga toko selama 6 jam/hari untuk 2 hari', '1540000 / 2 hari', '0', '2020-03-23 00:00:00', '2020-03-27 00:00:00', '2020-03-22 00:00:00', '2020-03-22 00:00:00'),
-('pr_002', 'PE_5e95bdb22c9e0', '2', 'jasa5e68fc00dbf9f', 'kasir', 'Menjaga keuangan toko selama 6 jam/hari untuk 2 hari', '1540000 / 2 hari', '1', '2020-03-23 00:00:00', '2020-03-27 00:00:00', '2020-03-22 00:00:00', '2020-03-22 00:00:00');
+('buat5ea2e72eb4246', 'PE_5e9f04e904760', '1', 'teknologi informatika5e69a63ba', 'buat web toko', 'bisa framework dan ada transaksi nya', 100000, '3', '2020-05-02 00:00:00', '2020-05-20 00:00:00', '2042-02-05 00:00:00', '2020-05-01 19:54:31'),
+('Jadi5eac61f95e519', 'PE_5e9f04e904760', '1', 'masakan5eac61d17bf0e', 'Jadi koki', 'Bisa masak chinese food ', 200000, '0', '2020-05-18 00:00:00', '2020-06-05 00:00:00', '2052-02-05 00:00:00', '2052-02-05 00:00:00'),
+('pr_001', '1', '1', 'jasa5e68fc00dbf9f', 'jaga toko', 'Menjaga toko selama 6 jam/hari untuk 2 hari', 1540000, '0', '2020-03-23 00:00:00', '2020-03-27 00:00:00', '2020-03-22 00:00:00', '2020-03-22 00:00:00'),
+('pr_002', 'PE_5e95bdb22c9e0', '2', 'jasa5e68fc00dbf9f', 'kasir', 'Menjaga keuangan toko selama 6 jam/hari untuk 2 hari', 1540000, '1', '2020-03-23 00:00:00', '2020-05-30 00:00:00', '2020-03-22 00:00:00', '2020-04-24 15:08:04'),
+('pr_003', 'PE_5e9f04e904760', '1', 'jasa5e68fc00dbf9f', 'jaga toko emas', 'Bisa dipercaya dan bisa bekerja di bawah tekanan', 50000, '1', '2020-04-21 00:00:00', '2020-05-27 00:00:00', '2042-02-02 00:00:00', '2020-05-01 19:54:39'),
+('pr_004', 'PE_5e9f04e904760', '1', 'jasa5e68fc00dbf9f', 'Bersih - bersih', 'Bisa dipercaya dan rajin', 100000, '0', '2020-04-27 00:00:00', '2020-05-02 00:00:00', '2042-02-05 00:00:00', '2042-02-05 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -316,8 +324,13 @@ CREATE TABLE `project_pekerja` (
 --
 
 INSERT INTO `project_pekerja` (`project_pekerja_id`, `user_id`, `project_id`, `project_pekerja_status`, `created_at`, `updated_at`) VALUES
-('PP_001', 'US_5e8d7140dc6da', 'jaga toko emas5e9f0906d9bfc', 0, '2020-04-21 23:11:13', '2020-04-21 23:11:13'),
-('PP_002', 'US_5e872129da4e4', 'jaga toko emas5e9f0906d9bfc', 0, '2020-04-21 23:12:27', '2020-04-21 23:12:27');
+('PP_002', 'US_5ea433934c885', 'buat5ea2e72eb4246', 1, '2020-04-21 23:12:27', '2020-04-21 23:12:27'),
+('PP_5ea47c15e1874', 'US_5ea433934c885', 'pr_003', 1, '2020-04-25 20:06:13', '2020-04-25 20:06:13'),
+('PP_5ea5ba0572490', 'US_5ea433934c885', 'pr_001', 0, '2020-04-26 18:42:45', '2020-04-26 18:42:45'),
+('PP_5ea5ba78b59f2', 'US_5ea433934c885', 'pr_002', 0, '2020-04-26 18:44:40', '2020-04-26 18:44:40'),
+('PP_5ea5c3ec1a7b3', 'US_5ea433934c885', 'pr_004', 1, '2020-04-26 19:25:00', '2020-04-26 19:25:00'),
+('PP_5eac60f46fcde', 'US_5eac604329d96', 'pr_001', 0, '2020-05-01 19:48:36', '2020-05-01 19:48:36'),
+('PP_5eac61381e4f2', 'US_5eac604329d96', 'pr_003', 1, '2020-05-01 19:49:44', '2020-05-01 19:49:44');
 
 -- --------------------------------------------------------
 
@@ -385,8 +398,8 @@ CREATE TABLE `skill_admin` (
 --
 
 INSERT INTO `skill_admin` (`skill_id`, `skill_name`, `created_at`, `updated_at`) VALUES
-('bootstrap5e72ede439c71', 'bootstrap', '2020-03-19 03:58:28', '2020-03-27 08:05:13'),
-('codeigniter5e7221c0529dc', 'codeigniter 4', '2020-03-18 13:27:28', '2018-01-01 02:44:41');
+('bootstrap5e72ede439c71', 'bootstrap4', '2020-03-19 03:58:28', '2020-05-01 20:28:56'),
+('codeigniter5e7221c0529dc', 'codeigniter 3', '2020-03-18 13:27:28', '2020-05-01 20:29:05');
 
 -- --------------------------------------------------------
 
@@ -430,6 +443,33 @@ CREATE TABLE `sub_kategori` (
 
 INSERT INTO `sub_kategori` (`sub_kategori_id`, `kategori_id`, `sub_kategori_nama`, `created_at`, `updated_at`) VALUES
 ('jaga toko5e77207f499eb', 'jasa5e68fc00dbf9f', 'jaga toko', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sub_project`
+--
+
+DROP TABLE IF EXISTS `sub_project`;
+CREATE TABLE `sub_project` (
+  `sub_project_id` varchar(255) NOT NULL,
+  `project_id` varchar(255) NOT NULL,
+  `sub_project_name` varchar(255) NOT NULL,
+  `sub_project_deadline` datetime NOT NULL,
+  `sub_project_status` int(11) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sub_project`
+--
+
+INSERT INTO `sub_project` (`sub_project_id`, `project_id`, `sub_project_name`, `sub_project_deadline`, `sub_project_status`, `created_at`, `updated_at`) VALUES
+('buat5ea2fefce4f1c', 'buat5ea2e72eb4246', 'buat mock up', '2020-05-01 00:00:00', 1, '2042-02-05 00:00:00', '2020-04-24 17:28:03'),
+('buat5ea2ff7cba03b', 'buat5ea2e72eb4246', 'buat tampilan dan design', '2020-05-15 00:00:00', 1, '2042-02-05 00:00:00', '2020-04-24 17:32:04'),
+('buat5ea4885ed9607', 'pr_003', 'buat laporan penjualan', '2020-04-28 00:00:00', 1, '2042-02-06 00:00:00', '2042-02-06 00:00:00'),
+('Buat5ea488779a929', 'pr_003', 'Buat Laporan stok', '2020-04-29 00:00:00', 0, '2042-02-06 00:00:00', '2042-02-06 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -523,6 +563,12 @@ ALTER TABLE `skill_admin`
 --
 ALTER TABLE `sub_kategori`
   ADD PRIMARY KEY (`sub_kategori_id`);
+
+--
+-- Indexes for table `sub_project`
+--
+ALTER TABLE `sub_project`
+  ADD PRIMARY KEY (`sub_project_id`);
 
 --
 -- Indexes for table `transaksi`

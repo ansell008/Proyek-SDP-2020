@@ -18,6 +18,11 @@ class UserController extends Ci_Controller{
         $this->load->view('user/profileUser');
         $this->load->view('tpl/footerComp');
     }
+    public function loadSummary(){
+        $this->load->view('tpl/headerComp');
+        $this->load->view('user/summaryUser');
+        $this->load->view('tpl/footerComp');
+    }
 
     public function changePass(){
         if($_SESSION['userAktif'][0]['user_password'] == sha1($this->input->post('oldPassword'))){
