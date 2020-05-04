@@ -42,6 +42,12 @@
               <p>Transaction</p>
             </a>
           </li>
+          <li>
+            <a href="<?= base_url().'company/summary' ?>">
+              <i class="nc-icon nc-diamond"></i>
+              <p>Summary</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>

@@ -83,6 +83,8 @@ $route['company/payProject'] = 'payment/paymentController';
 $route['company/transaction'] = 'company/company/loadTransaction';
 $route['company/proceedTransaction/(:any)'] = 'company/company/proceedTransaction/$1';
 $route['company/getTransactionDetail/(:any)'] = 'company/company/getTransactionDetail/$1';
+$route['company/summary'] = 'company/company/showSummary';
+$route['company/getSummary'] = 'company/company/getSummary';
 
 $route['payment/getTransDetail'] = 'payment/paymentController/getTransDetail';
 $route['payment/refreshStatus'] = 'payment/paymentController/process';
