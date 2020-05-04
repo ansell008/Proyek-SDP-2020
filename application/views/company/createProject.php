@@ -37,6 +37,12 @@
                 <p>Projects</p>
                 </a>
             </li>
+            <li>
+              <a href="<?= base_url().'company/transaction' ?>">
+                <i class="nc-icon nc-credit-card"></i>
+                <p>Transaction</p>
+              </a>
+            </li>
           
         </ul>
       </div>

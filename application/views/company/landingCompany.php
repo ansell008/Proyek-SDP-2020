@@ -107,20 +107,8 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <?php
-        if(($newParticipant[0]['jumlah'])!='0'){
-          ?>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="alert alert-info" role="alert">
-              <?= $newParticipant[0]['jumlah'] ?> New Participant on your projects, check it out!
-            </div>
-          </div>
-        </div>
-
-        <?php
-        }
-        ?>
+       
+        
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
@@ -252,6 +240,20 @@
               <div class="card-header ">
                 <h5 class="card-title">Activity</h5>
                 <p>Welcome to Kerja.In ! Now, You can create some projects and update your profile </p>
+                <?php
+                if(($newParticipant[0]['jumlah'])!='0'){
+                  ?>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="alert alert-info" role="alert">
+                        <?= $newParticipant[0]['jumlah'] ?> New Participant on your projects, check it out!
+                      </div>
+                    </div>
+                  </div>
+
+                  <?php
+                  }
+                  ?>
               </div>
               <div class="card-body ">
 

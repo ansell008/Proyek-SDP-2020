@@ -214,10 +214,11 @@
                 </dl>
                 <h3>CV Data</h3>
                 <dl class="row">
-                  <dt class="col-sm-4">Education</dt>
-                  <dd class="col-sm-8"><?= $dataUser[0]['cv_education']; ?></dd>
+                  <!-- <dt class="col-sm-4">Education</dt>
+                  <dd class="col-sm-8"><?//= $dataUser[0]['cv_education']; ?></dd>
                   <dt class="col-sm-4">Experience</dt>
-                  <dd class="col-sm-8"><?= $dataUser[0]['cv_experience']; ?></dd>
+                  <dd class="col-sm-8"><?//= $dataUser[0]['cv_experience']; ?></dd> -->
+                  <a target="_blank" href="<?=base_url().$dataUser[0]['user_cv']?>"><img width="300" src="<?=base_url().$dataUser[0]['user_cv']?>" alt="load cv picture"></a>
                 </dl>
 
                 <?php

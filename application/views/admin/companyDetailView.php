@@ -188,7 +188,8 @@
                   <li class="list-group-item list-group-item-warning"><b>Email </b> : <?= $_SESSION['comView'][0]['perusahaan_email']?></li>
                   <li class="list-group-item list-group-item-warning"><b>Address</b> : <?= $_SESSION['comView'][0]['perusahaan_alamat']?></li>
                   <li class="list-group-item list-group-item-warning"><b>Phone Number</b> : <?= $_SESSION['comView'][0]['perusahaan_telp']?></li>
-                  <li class="list-group-item list-group-item-warning"><b>NPWP Number</b> : <?= $_SESSION['comView'][0]['perusahaan_npwp']?></li>
+                  <li class="list-group-item list-group-item-warning"><b>NPWP Company</b> : <a target="_blank" href="<?=base_url().$_SESSION['comView'][0]['perusahaan_npwp']?>"><img width="300" src="<?=base_url().$_SESSION['comView'][0]['perusahaan_npwp']?>" alt="load npwp picture"></a>
+                </li>
                   <li class="list-group-item list-group-item-warning"> <b>Company Status</b> : <?php
                    if($_SESSION['comView'][0]['perusahaan_status'] == 0) {
                      echo "Active";
@@ -260,6 +261,20 @@
               </div>
               <div class="card-body">
                 <ul class="list-group" id="ProjectDone">
+                </ul>
+              </div>
+              <div class="card-header">
+                <h2 class="card-title">Project Done Transaction</h2>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <ul class="list-group" id="ProjectTransaction">
                 </ul>
               </div>
               <!-- /.card-body -->
@@ -417,6 +432,40 @@
               
             }else if(item.project_status=='2'){
               $("#ProjectDone").append(`
+              <li class="list-group-item">${item.project_nama} <button value="${ctr}" class="btn btn-primary float-right viewDetail">View</button> </li>
+              `);
+              $("#detailViewProject").append(`
+              <div class="modal fade bd-example-modal-lg" id="myModal${ctr}" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Detail Project</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                  <ul class="list-group detailCompany">
+                    <li class="list-group-item "><b>ID</b> : ${item.project_id}</li>
+                    <li class="list-group-item "><b>Name </b> : ${item.project_nama} </li>
+                    <li class="list-group-item "><b>Description </b> : ${item.project_deskripsi} </li>
+                    <li class="list-group-item "><b>Budget Detail</b> : ${item.project_anggaran} </li>
+                    <li class="list-group-item "><b>Start Date</b> : ${start_dates} </li>
+                    <li class="list-group-item "><b>Deadline</b> : ${deadline_dates} </li>
+                    
+                  </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div></div>
+              `);
+              $(".viewDetail").click(function(){
+                $("#myModal"+$(this).val()).modal();
+              });
+              
+            }else if(item.project_status=='3'){
+              $("#ProjectTransaction").append(`
               <li class="list-group-item">${item.project_nama} <button value="${ctr}" class="btn btn-primary float-right viewDetail">View</button> </li>
               `);
               $("#detailViewProject").append(`

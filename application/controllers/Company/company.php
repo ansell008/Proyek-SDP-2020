@@ -213,7 +213,8 @@ Class Company extends CI_Controller
                         
                     }else{
                         var_dump($_FILES['profile_pic']);
-                        var_dump($this->upload->display_errors()); die();
+                        var_dump($this->upload->display_errors()); 
+                        redirect('Company/company/profileCompany');
                     }
                     $finalF = 'asset/img/profile/'.$foto;
                     $res = $this->cm->updateProfile($id, $a,$b,$c,$d,$e,$finalF,$g,$h);

@@ -138,9 +138,9 @@ class AuthUser extends CI_Controller{
                     if($this->upload->do_upload('ktp')){
                         $foto = $this->upload->data('file_name');
                     }else{
-                        echo $extension;
-                        var_dump($_FILES['ktp']);
-                        var_dump($this->upload->display_errors()); die();
+                        $this->load->view('tpl/_header');
+                        $this->load->view('registerPage3', $data);
+                        $this->load->view('tpl/_footer');
                     }
                     $finalF = 'asset/upload/ktp-user/'.$filename;
                     $data['user']['user_ktp'] = $finalF;
@@ -252,7 +252,10 @@ class AuthUser extends CI_Controller{
                         $foto = $this->upload->data('file_name');
                     }else{
                         var_dump($_FILES['npwp']);
-                        var_dump($this->upload->display_errors()); die();
+                        var_dump($this->upload->display_errors()); 
+                        $this->load->view('tpl/_header');
+                        $this->load->view('registerPage4', $data);
+                        $this->load->view('tpl/_footer');
                     }
                     $finalF = 'asset/upload/npwp-company/'.$foto;
                     $data['user']['perusahaan_npwp'] = $finalF;

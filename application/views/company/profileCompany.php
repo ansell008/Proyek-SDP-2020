@@ -37,6 +37,12 @@
                 <p>Projects</p>
                 </a>
             </li>
+            <li>
+              <a href="<?= base_url().'company/transaction' ?>">
+                <i class="nc-icon nc-credit-card"></i>
+                <p>Transaction</p>
+              </a>
+            </li>
           
         </ul>
       </div>
@@ -105,7 +111,7 @@
           <div class="col-md-4">
             <div class="card card-user">
               <div class="image">
-                <img src="<?= base_url().'asset/img/profile/back.jfif' ?>" alt="...">
+                <img src="<?= base_url().'asset/img/profile/back.jpg' ?>" alt="...">
               </div>
               <div class="card-body">
                 <div class="author">

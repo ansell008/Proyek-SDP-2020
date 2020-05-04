@@ -27,8 +27,6 @@ class UserController extends Ci_Controller{
             $res = $this->userReport->getCountProject($_SESSION['userAktif'][0]['user_id'],$i);
             array_push($jumlahproyek,$res);
         }
-        
-        
         $this->load->view('tpl/headerComp');
         $this->load->view('user/summaryUser', array("data"=>$jumlahproyek));
         $this->load->view('tpl/footerComp');
@@ -163,7 +161,8 @@ class UserController extends Ci_Controller{
                 $foto = $this->upload->data('file_name');
             }else{
                 var_dump($_FILES['cv']);
-                var_dump($this->upload->display_errors()); die();
+                var_dump($this->upload->display_errors());
+                redirect('user/profile');
             }
             $cv = 'asset/upload/cv-user/'.$foto;
             $_SESSION['userAktif'][0]['user_cv'] = $cv;
@@ -191,7 +190,8 @@ class UserController extends Ci_Controller{
                 $foto = $this->upload->data('file_name');
             }else{
                 var_dump($_FILES['profile_pic']);
-                var_dump($this->upload->display_errors()); die();
+                var_dump($this->upload->display_errors());
+                redirect('user/profile');
             }
             $cv = 'asset/upload/pp-user/'.$foto;
             $_SESSION['userAktif'][0]['user_profile'] = $cv;

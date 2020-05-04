@@ -154,7 +154,6 @@
   </style>
 
 <script>
-
     $(document).ready(function(){
         loadProjects();
         loadCategory();

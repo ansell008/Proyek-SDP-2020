@@ -19,7 +19,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class=" ">
+            <li class="">
                 <a href="<?=base_url().'user/dash' ?>">
                 <i class="nc-icon nc-diamond"></i>
                 <p>Dashboard</p>

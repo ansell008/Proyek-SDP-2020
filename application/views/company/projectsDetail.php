@@ -37,6 +37,12 @@
                 <p>Projects</p>
                 </a>
             </li>
+            <li>
+                <a href="<?= base_url().'company/transaction' ?>">
+                <i class="nc-icon nc-credit-card"></i>
+                <p>Transaction</p>
+                </a>
+            </li>
           
         </ul>
       </div>
@@ -566,7 +572,7 @@
     
     function showPendingDetail(){
         let tdId = '<?=$projectDetail[0]['project_id']?>';
-        let baseUrl = '<?= base_url()?>'
+        let baseUrl = '<?= base_url()?>'; let hrfcv;
         $.ajax({
             method: 'post',
             url: '<?= base_url()."company/company/getAllUserByProject" ?>',
@@ -594,7 +600,7 @@
                                         <li class="list-group-item "><b>ID</b> : ${item.ID}</li>
                                         <li class="list-group-item "><b>Name </b> : ${item.NAMA} </li>
                                         <li class="list-group-item "><b>CV </b> : Done </li>
-                                        <a href="${baseUrl+item.USER_CV}"><img src="${baseUrl+item.USER_CV}" alt=""></a>
+                                        <a target="_blank" href="${baseUrl+item.USER_CV}"><img src="${baseUrl+item.USER_CV}" alt=""></a>
                                     </ul>
                                     </div>
                                     <div class="modal-footer">
@@ -605,13 +611,14 @@
                             </div>
                         </div>
                         `);
-                        
+                        hrfcv = item.USER_CV;
                     }
                     
                 });
                 $('.btnPending').click(function () {
                     let ctr = $(this).attr('ctr');
-                    alert(ctr);
+                    //alert(ctr);
+                    alert(baseUrl+hrfcv);
                     $("#exampleModal2"+ctr).modal();
                 });
                 

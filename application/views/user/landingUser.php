@@ -38,9 +38,9 @@
                   <li><a class="dropdown-item" href="<?=base_url().'user/myprojects' ?>">My Project</a></li>
                 </ul>
             </li>
-            <li class="active ">
+            <li class="">
                 <a href="<?=base_url().'User/UserController/loadSummary' ?>">
-                <i class="nc-icon nc-diamond"></i>
+                <i class="fas fa-window-restore"></i>
                 <p>Summary</p>
                 </a>
             </li>

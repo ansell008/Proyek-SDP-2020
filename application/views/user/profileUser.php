@@ -38,6 +38,12 @@
                   <li><a class="dropdown-item" href="<?=base_url().'user/myprojects' ?>">My Project</a></li>
                 </ul>
             </li>
+            <li class="">
+                <a href="<?=base_url().'User/UserController/loadSummary' ?>">
+                <i class="fas fa-window-restore"></i>
+                <p>Summary</p>
+                </a>
+            </li>
           
         </ul>
       </div>
@@ -103,7 +109,7 @@
           <div class="col-md-4">
             <div class="card card-user">
               <div class="image">
-                <img src="<?= base_url().'asset/img/profile/back.jfif' ?>" alt="...">
+                <img src="<?= base_url().'asset/img/profile/back.jpg' ?>" alt="...">
               </div>
               <div class="card-body">
                 <div class="author">
