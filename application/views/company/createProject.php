@@ -1,4 +1,3 @@
-
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
@@ -19,31 +18,37 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class=" ">
-                <a href="<?=base_url().'/company/company' ?>">
-                <i class="nc-icon nc-diamond"></i>
-                <p>Dashboard</p>
-                </a>
-            </li>
-            <li class="">
-                <a href="<?=base_url().'/company/company/profileCompany' ?>">
-                <i class="nc-icon nc-single-02"></i>
-                <p>Profile</p>
-                </a>
-            </li>
-            <li class="active">
-                <a href="<?=base_url().'/company/company/projectsCompany' ?>">
-                <i class="nc-icon nc-ruler-pencil"></i>
-                <p>Projects</p>
-                </a>
-            </li>
-            <li>
-              <a href="<?= base_url().'company/transaction' ?>">
-                <i class="nc-icon nc-credit-card"></i>
-                <p>Transaction</p>
-              </a>
-            </li>
-          
+          <li class=" ">
+            <a href="<?=base_url().'/company/company' ?>">
+              <i class="nc-icon nc-diamond"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="">
+            <a href="<?=base_url().'/company/company/profileCompany' ?>">
+              <i class="nc-icon nc-single-02"></i>
+              <p>Profile</p>
+            </a>
+          </li>
+          <li class="active">
+            <a href="<?=base_url().'/company/company/projectsCompany' ?>">
+              <i class="nc-icon nc-ruler-pencil"></i>
+              <p>Projects</p>
+            </a>
+          </li>
+          <li>
+            <a href="<?= base_url().'company/transaction' ?>">
+              <i class="nc-icon nc-credit-card"></i>
+              <p>Transaction</p>
+            </a>
+          </li>
+          <li>
+            <a href="<?= base_url().'company/summary' ?>">
+              <i class="nc-icon nc-diamond"></i>
+              <p>Summary</p>
+            </a>
+          </li>
+
         </ul>
       </div>
     </div>
@@ -65,7 +70,8 @@
             }
              ?></a>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -91,14 +97,15 @@
                 </a>
               </li>
               <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-settings-gear-65 "></i>
                   <p>
                     <span class="d-lg-none d-md-block">Some Actions</span>
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="<?= base_url().'/authUser/logout' ?>">Logout</a>
+                  <a class="dropdown-item" href="<?= base_url().'/authUser/logout' ?>">Logout</a>
                 </div>
               </li>
             </ul>
@@ -107,100 +114,130 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Create New Project</h4>
-                            <p><b>Tell Us What You Want To Do</b></p>
-                        </div>
-                        
-                        <div class="card-body">
-                            <form action="<?=base_url().'/company/company/insertProject'?>" method="post">
-                            <div class="row">
-                                <div class="col-md-8 pr-1">
-                                <div class="form-group">
-                                    <label>Project Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="cth: Buatkan saya web">
-                                </div>
-                                </div>
-                                
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8 pr-1">
-                                <div class="form-group">
-                                    <label>Project Description</label>
-                                    <textarea name="desc" class="form-control" placeholder="Jelaskan Projek Anda Disini"></textarea>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 pr-1">
-                                <div class="form-group">
-                                    <label for="categoryName">Project Category</label>
-                                    <select name="categoryName" id="categoryName" class="form-control">
-                                        <?php
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Create New Project</h4>
+                <p><b>Tell Us What You Want To Do</b></p>
+              </div>
+
+              <div class="card-body">
+                <form action="<?=base_url().'/company/company/insertProject'?>" method="post">
+                  <div class="row">
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Project Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="cth: Buatkan saya web">
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Project Description</label>
+                        <textarea name="desc" class="form-control" placeholder="Jelaskan Projek Anda Disini"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label for="categoryName">Project Category</label>
+                        <select name="categoryName" id="categoryName" class="form-control">
+                          <?php
                                         foreach ($category as $row) {
                                             ?>
-                                            <option value="<?=$row->category_id?>"><?=$row->category_name?></option>
-                                        <?php
+                          <option value="<?=$row->category_id?>"><?=$row->category_name?></option>
+                          <?php
                                         }
                                         ?>
-                                    </select>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8 pr-1">
-                                <div class="form-group">
-                                    <label>Project Budget</label>
-                                    <input type="number" class="form-control" name="budget" id="" placeholder="Budget per day">
-                                    <label for="">*) make assumptions per day</label>
-                                    <!-- <textarea name="budget" class="form-control" placeholder="contoh: 200000/jam"></textarea> -->
-                                </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-md-4 pr-1">
-                                <div class="form-group">
-                                    <label>Project Start</label>
-                                    <input type="date" name="start" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4 pr-1">
-                                <div class="form-group">
-                                    <label>Project Deadline</label>
-                                    <input type="date" name="deadline" class="form-control">
-                                </div>
-                            </div>
-                            </div>
-                            <div class="row">
-                                <div class="update ml-auto mr-auto">
-                                <button type="submit" name="" class="btn btn-danger btn-round" value="">Create Project</button>
-                                </div>
-                            </div>
-                            </form>
-                        </div>
-                        
+                        </select>
+                      </div>
                     </div>
-                </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label for="subCategoryName">Project Sub Category</label>
+                        <select name="subCategoryName" id="subCategoryName" class="form-control">
+                          
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Project Budget</label>
+                        <input type="number" class="form-control" name="budget" id="" placeholder="Budget per day">
+                        <label for="">*) make assumptions per day</label>
+                        <!-- <textarea name="budget" class="form-control" placeholder="contoh: 200000/jam"></textarea> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 pr-1">
+                      <div class="form-group">
+                        <label>Project Start</label>
+                        <input type="date" name="start" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-4 pr-1">
+                      <div class="form-group">
+                        <label>Project Deadline</label>
+                        <input type="date" name="deadline" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="update ml-auto mr-auto">
+                      <button type="submit" name="" class="btn btn-danger btn-round" value="">Create Project</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
             </div>
-      
+          </div>
+        </div>
+
         <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
+          <div class="float-right d-none d-sm-block">
             <b>Version</b> 0.0.1
-            </div>
-            <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
-            reserved.
+          </div>
+          <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
+          reserved.
         </footer>
+      </div>
     </div>
-  </div>
 </body>
 <script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
 <script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <script>
-    $(document).ready(function () {
+  $(document).ready(function () {
+      $("#categoryName").change(function () {
+        $.ajax({
+          method:"post",
+          url:'<?=base_url() ?>company/company/getSubKategoriById',
+          data:{idKat: $(this).val()},
+          success: function (res) {
+            let subKat = JSON.parse(res);
+            $("#subCategoryName").html('');
+            subKat.forEach(data => {
 
-    });
-    
+              console.log(data.sub_kategori_nama);
+              $("#subCategoryName").append(
+                `<option value='${data.sub_kategori_id}'>${data.sub_kategori_nama}</option>`
+              )
+            });
+            
+          }
+        });
+      });
+      // $("#categoryName").click(function () {
+      //   alert("lala")
+      // })
+  });
 </script>

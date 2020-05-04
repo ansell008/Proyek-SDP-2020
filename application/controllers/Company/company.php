@@ -55,6 +55,7 @@ Class Company extends CI_Controller
     public function insertProject(){
         $newData = $this->input->post();
         $nama = $newData['name'];
+        $subKatId = $newData['subCategoryName'];
         if(strstr($nama,' ')){
             $newProject = array(
                 "project_id" => uniqid(substr($newData['name'],0,strpos($newData['name'],' '))),
@@ -86,6 +87,14 @@ Class Company extends CI_Controller
                 "updated_at" => date("now")
             );
         }
+        $new = array(
+            "project_subkategori_id" => uniqid($subKatId),
+            "sub_kategori_id" => $subKatId,
+            "project_id" => uniqid($nama),
+            "created_at" => date("now"),
+            "updated_at" => date("now")
+        );
+        $projSub = $this->db->insert('project_subkategori', $new);
         $res = $this->cm->insertProject($newProject);
         redirect('company/project');
     }
@@ -180,6 +189,11 @@ Class Company extends CI_Controller
     public function updateProjectOnGoing(){
         $id = $this->input->post('id');
         $this->db->update('project', array('project_status' => 1), array('project_id' => $id));
+    }
+    public function getSubKategoriById(){
+        $id = $this->input->post('idKat');
+        $query = "SELECT * FROM SUB_KATEGORI WHERE KATEGORI_ID = '$id'";
+        echo json_encode($this->db->query($query)->result_array());
     }
 
     public function updateProfile(){

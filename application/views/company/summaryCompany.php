@@ -18,7 +18,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
+          <li class=>
             <a href="<?=base_url().'company/company' ?>">
               <i class="nc-icon nc-diamond"></i>
               <p>Dashboard</p>
@@ -42,7 +42,7 @@
               <p>Transaction</p>
             </a>
           </li>
-          <li>
+          <li class="active ">
             <a href="<?= base_url().'company/summary' ?>">
               <i class="nc-icon nc-diamond"></i>
               <p>Summary</p>
