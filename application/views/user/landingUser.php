@@ -38,6 +38,13 @@
                   <li><a class="dropdown-item" href="<?=base_url().'user/myprojects' ?>">My Project</a></li>
                 </ul>
             </li>
+            <li class="active ">
+                <a href="<?=base_url().'User/UserController/loadSummary' ?>">
+                <i class="nc-icon nc-diamond"></i>
+                <p>Summary</p>
+                </a>
+            </li>
+            
             
         </ul>
       </div>

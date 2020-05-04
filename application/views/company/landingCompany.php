@@ -1,4 +1,3 @@
-
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
@@ -19,30 +18,30 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="active ">
-                <a href="<?=base_url().'company/company' ?>">
-                <i class="nc-icon nc-diamond"></i>
-                <p>Dashboard</p>
-                </a>
-            </li>
-            <li class="">
-                <a href="<?=base_url().'company/company/profileCompany' ?>">
-                <i class="nc-icon nc-single-02"></i>
-                <p>Profile</p>
-                </a>
-            </li>
-            <li class="">
-                <a href="<?=base_url().'company/company/projectsCompany' ?>">
-                <i class="nc-icon nc-ruler-pencil"></i>
-                <p>Projects</p>
-                </a>
-            </li>
-            <li>
-                <a href="<?= base_url().'company/transaction' ?>">
-                  <i class="nc-icon nc-credit-card"></i>
-                  <p>Transaction</p>
-                </a>
-            </li>
+          <li class="active ">
+            <a href="<?=base_url().'company/company' ?>">
+              <i class="nc-icon nc-diamond"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="">
+            <a href="<?=base_url().'company/company/profileCompany' ?>">
+              <i class="nc-icon nc-single-02"></i>
+              <p>Profile</p>
+            </a>
+          </li>
+          <li class="">
+            <a href="<?=base_url().'company/company/projectsCompany' ?>">
+              <i class="nc-icon nc-ruler-pencil"></i>
+              <p>Projects</p>
+            </a>
+          </li>
+          <li>
+            <a href="<?= base_url().'company/transaction' ?>">
+              <i class="nc-icon nc-credit-card"></i>
+              <p>Transaction</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -64,7 +63,8 @@
             }
              ?></a>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -90,7 +90,8 @@
                 </a>
               </li>
               <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-settings-gear-65"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Some Actions</span>
@@ -106,6 +107,20 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
+        <?php
+        if(($newParticipant[0]['jumlah'])!='0'){
+          ?>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-info" role="alert">
+              <?= $newParticipant[0]['jumlah'] ?> New Participant on your projects, check it out!
+            </div>
+          </div>
+        </div>
+
+        <?php
+        }
+        ?>
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
@@ -239,12 +254,12 @@
                 <p>Welcome to Kerja.In ! Now, You can create some projects and update your profile </p>
               </div>
               <div class="card-body ">
-                
+
               </div>
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-history"></i> 
+                  <i class="fa fa-history"></i>
                 </div>
               </div>
             </div>
@@ -297,16 +312,16 @@
           </div>
         </div>
       </div> -->
-      
-      <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-        <b>Version</b> 0.0.1
-        </div>
-        <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
-        reserved.
-    </footer>
+
+        <footer class="main-footer">
+          <div class="float-right d-none d-sm-block">
+            <b>Version</b> 0.0.1
+          </div>
+          <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
+          reserved.
+        </footer>
+      </div>
     </div>
-  </div>
 </body>
 
 </html>
