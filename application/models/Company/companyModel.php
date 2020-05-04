@@ -90,5 +90,19 @@ class CompanyModel extends CI_Model{
         au.perusahaan_id = '$idPerusahaan' and pp.project_pekerja_status = 0";
         return $this->db->query($query)->result_array();
     }
+
+    public function getProjectsDone($idPerusahaan){
+        $query = "SELECT COUNT(*) as j FROM project WHERE project_status = 2 AND perusahaan_id = '$idPerusahaan'";
+
+        $res = $this->db->query($query);
+        return $res->result_array();
+    }
+
+    public function getProjectsOnGoing($idPerusahaan){
+        $query = "SELECT COUNT(*) as j FROM project WHERE project_status = 1 AND perusahaan_id = '$idPerusahaan'";
+
+        $res = $this->db->query($query);
+        return $res->result_array();
+    }
 }
 ?>

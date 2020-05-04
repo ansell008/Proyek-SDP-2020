@@ -276,6 +276,23 @@ Class Company extends CI_Controller
         $this->load->view("tpl/footerComp.php");
     }
     
+    public function showSummary(){
+        $this->load->view("tpl/headerComp");
+        $this->load->view("company/summaryCompany");
+        $this->load->view("tpl/footerComp");
+    }
+
+    public function getSummary(){
+        $this->load->model("company/companyModel");
+        $idPerusahaan = $this->input->post("id");
+        $projectDone = $this->companyModel->getProjectsDone($idPerusahaan);
+        $projectOnGoing = $this->companyModel->getProjectsOnGoing($idPerusahaan);
+        $data = array(
+            'done' => $projectDone[0]['j'],
+            'ongoing' => $projectOnGoing[0]['j']
+        );
+        echo json_encode($data);
+    }
 
 }
 
