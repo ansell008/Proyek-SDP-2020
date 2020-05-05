@@ -214,6 +214,7 @@ class UserController extends Ci_Controller{
         $id = $this->input->post('btnView');
         $res = $this->projectModel->getProject($id);
         $data['projectDetail'] = $res;
+        $data['comp_id'] = $this->projectModel->getCompId($id);
         $this->load->view('tpl/headerComp');
         $this->load->view('user/myprojectDetail',$data);
         $this->load->view('tpl/footerComp');
@@ -224,7 +225,28 @@ class UserController extends Ci_Controller{
     }
     public function updateSub(){
         $id = $this->input->post('id');
-        $this->db->update('sub_project', array('sub_project_status' => 1), array('sub_project_id' => $id));
+        $this->db->update('sub_project', array('sub_project_status' => 1,'sub_project_finished_by' => $_SESSION['userAktif'][0]['user_id']), array('sub_project_id' => $id));
+    }
+    public function giveRatingCompany(){
+        $dataComp = $this->input->post();
+        $idComp = $dataComp['compName'];
+        $rate = $dataComp['ratingComp'];
+        $desc = $dataComp['descComp'];
+        $newRatingUser = array(
+            "review_perusahaan_id" => uniqid('RT'.$idComp),
+            "perusahaan_id" => $idComp,
+            "review_perusahaan_deskripsi" => $desc,
+            "review_perusahaan_rating" => $rate,
+            "review_perusahaan_by" => $_SESSION['userAktif'][0]['user_id'],
+            "created_at" => date("now"),
+            "updated_at" => date("now")
+        );
+        $this->userModel->rateComp($newRatingUser);
+        $query = "SELECT SUM(REVIEW_PERUSAHAAN_RATING)/COUNT(REVIEW_PERUSAHAAN_RATING) as AVGR FROM REVIEW_PERUSAHAAN WHERE PERUSAHAAN_ID = '$idComp'";
+        $count = $this->db->query($query)->result_array();
+        $res = $this->db->update('auth_perusahaan', array('perusahaan_rate' => $count[0]['AVGR']), array('perusahaan_id' => $idComp));   
+        //echo ;
+        redirect('user/myprojectdetail');
     }
 
     // 7c4a8d09ca3762af61e59520943dc26494f8941b

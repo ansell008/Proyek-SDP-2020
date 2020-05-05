@@ -135,6 +135,18 @@
                         ?></small>
                     </h4>
                     </form>
+                    <p class="description text-center">
+                      <?php
+                        for ($i=0; $i < 5-$_SESSION['userAktif'][0]['user_rate']; $i++) { 
+                            echo "✰";
+                        }
+                        if($_SESSION['userAktif'][0]['user_rate']>0){
+                            for ($i=0; $i < $_SESSION['userAktif'][0]['user_rate']; $i++) { 
+                                echo "⭐";
+                            }
+                        }    
+                      ?>
+                    </p>
                 </div>
                 <div class="description text-center">
                 </div>

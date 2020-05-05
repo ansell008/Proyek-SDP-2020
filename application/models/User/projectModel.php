@@ -62,6 +62,11 @@ class ProjectModel extends Ci_Model{
         else return false;
     }
 
+    public function getCompId($idProj){
+        $query = "SELECT perusahaan_id from project where project_id = '$idProj'";
+        return $this->db->query($query)->result_array();
+    }
+
     public function searchUserByProject($idProject){
         $query = "SELECT au.user_id, au.user_firstname, au.user_lastname, au.user_profile, au.user_email, au.user_alamat, pp.created_at
                   FROM project_pekerja pp

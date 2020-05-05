@@ -180,6 +180,32 @@
           
           
       </div>
+      <div class="row">
+      <div class="col-md-12">
+                <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Give Your Rating</h5>
+                </div>
+                <div class="card-body">
+                    <form method='post' action="<?= base_url().'user/userController/giveRatingCompany'?>" style='margin:10px;'>
+                        <div class="form-group">
+                            <label for="compName">Company ID</label>
+                            <input class="form-control" type="text" name="compName" id="compName" value="<?=$comp_id[0]['perusahaan_id']?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="ratingComp">Rating [1-5]</label>
+                            <input type="number" class="form-control" name="ratingComp" id="ratingComp" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="descComp">Describe</label>
+                            <textarea class="form-control" name="descComp" id="descComp" placeholder="Describe"></textarea>
+                        </div>
+                        <button class="btn btn-info btn-flat float-right btnRate">Rate</button>
+                    </form>
+                </div>
+                </div>
+          </div>
+      </div>
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
         <b>Version</b> 0.0.1
@@ -244,6 +270,7 @@
                         success: function () {
                             alert("success update");
                             $(this).addClass('disabled');
+                            location.reload();
                         }
                     })
                 }

@@ -20,19 +20,19 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
             <li class=" ">
-                <a href="<?=base_url().'/company/company' ?>">
+                <a href="<?=base_url().'company/dashComp' ?>">
                 <i class="nc-icon nc-diamond"></i>
                 <p>Dashboard</p>
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url().'/company/company/profileCompany' ?>">
+                <a href="<?=base_url().'/company/myprofile' ?>">
                 <i class="nc-icon nc-single-02"></i>
                 <p>Profile</p>
                 </a>
             </li>
             <li class="active">
-                <a href="<?=base_url().'/company/company/projectsCompany' ?>">
+                <a href="<?=base_url().'company/myprojects' ?>">
                 <i class="nc-icon nc-ruler-pencil"></i>
                 <p>Projects</p>
                 </a>
@@ -263,7 +263,7 @@
                 <td>${item.project_anggaran}</td>
                 <td>${deadline_dates}</td>
                 <td>${status}</td>
-                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i><b> EDIT</b></button> &nbsp;<br> <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i><b> DELETE</b></button>  &nbsp;  <form method='post' action='<?= base_url().'/company/company/projectsDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
+                <td><button value='${item.project_id}' name='${item.project_nama}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i><b> EDIT</b></button> &nbsp;<br> <button value='${item.project_id}' name='${item.project_nama}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i><b> DELETE</b></button>  &nbsp;  <form method='post' action='<?= base_url().'company/detailproject' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
                 </tr>
             `);
             });

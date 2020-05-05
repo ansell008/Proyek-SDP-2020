@@ -20,19 +20,19 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
             <li class=" ">
-                <a href="<?=base_url().'/company/company' ?>">
+                <a href="<?=base_url().'company/dashComp' ?>">
                 <i class="nc-icon nc-diamond"></i>
                 <p>Dashboard</p>
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url().'/company/company/profileCompany' ?>">
+                <a href="<?=base_url().'company/myprofile' ?>">
                 <i class="nc-icon nc-single-02"></i>
                 <p>Profile</p>
                 </a>
             </li>
             <li class="active">
-                <a href="<?=base_url().'/company/company/projectsCompany' ?>">
+                <a href="<?=base_url().'company/myprojects' ?>">
                 <i class="nc-icon nc-ruler-pencil"></i>
                 <p>Projects</p>
                 </a>
@@ -161,10 +161,13 @@
                                     if($participant[$i]['STATUS'] == 1){
                                         $participantAktif++;
                                         ?>
-                                    <li class="list-group-item"><b>Participant : </b> <?=$participantAktif ?> </li>
+                                    
                                     <?php
                                     }
                                 }
+                                ?>
+                                <li class="list-group-item"><b>Participant : </b> <?=$participantAktif ?> </li>
+                            <?php
                             }
                                 ?>
                                     
@@ -183,6 +186,7 @@
                             <thead>
                                 <th>Name</th>
                                 <th>Status</th>
+                                <th>Finished By</th>
                                 <th>Deadline</th>
                                 <th>Action</th>
                             </thead>
@@ -319,6 +323,31 @@
                 </div>
                 </div>
           </div>
+          <div class="col-md-12">
+                <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Give Your Rating</h5>
+                </div>
+                <div class="card-body">
+                    <form method='post' action="<?= base_url().'company/company/giveRatingUser'?>" style='margin:10px;'>
+                        <div class="form-group">
+                            <label for="nameParti">Name Participant</label>
+                            <select name="nameParti" id="nameParti" class="form-control">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ratingUser">Rating [1-5]</label>
+                            <input type="number" class="form-control" name="ratingUser" id="ratingUser" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="descUser">Describe</label>
+                            <textarea class="form-control" name="descUser" id="descUser" placeholder="Describe"></textarea>
+                        </div>
+                        <button class="btn btn-info btn-flat float-right btnRate" ctr='${ctr}'>Rate</button>
+                    </form>
+                </div>
+                </div>
+          </div>
       </div>
       <!-- modal pop up  -->
         <!-- modal active participant -->
@@ -363,7 +392,7 @@
             $("#insertSub").modal();
         });
         let status = '<?=$projectDetail[0]['project_status']?>';
-        if(status==2){
+        if(status>1){
             $('.btnFinish').addClass('disabled');
             $('#createSub').addClass('disabled');
         }
@@ -383,9 +412,26 @@
                 }
             });
         });
-        
-        
+        getParticipantRating();
     });
+    function getParticipantRating(){
+        let tdId = '<?=$projectDetail[0]['project_id']?>';
+        $.ajax({
+          method:"post",
+          url:'<?=base_url() ?>company/company/getAllUserByProject',
+          data: {id: tdId},
+          success: function (res) {
+            let user = JSON.parse(res);
+            $("#nameParti").html('');
+            user.forEach(data => {
+              $("#nameParti").append(
+                `<option value='${data.ID}'>${data.NAMA}</option>`
+              )
+            });
+            
+          }
+        });
+    }
 
     function updateTableSub(){
         $("#tbSubProject").html('');
@@ -413,10 +459,14 @@
                     stat = "Sudah Dikerjakan";
                     ctrDone++;
                 }
+                let userKerja;
+                if(data.sub_project_finished_by == null)userKerja= '-';
+                else userKerja = data.user_firstname+" "+data.user_lastname;
                 $("#tbSubProject").append(`
                     <tr id="row-${data.sub_project_id}">
                     <td>${data.sub_project_name}</td>
                     <td>${stat}</td>
+                    <td>${userKerja}</td>
                     <td>${deadline_dates}</td>
                     <td><button value='${data.sub_project_id}' name='${data.sub_project_name}' class='btnEdit btn btn-primary'><i class="fas fa-edit"></i></button> &nbsp; <button value='${data.sub_project_id}' name='${data.sub_project_name}' class=' btnDelete btn btn-danger'><i class="fas fa-trash"></i></button></td>
                     </tr>
@@ -555,11 +605,9 @@
                                             <li class="list-group-item "><b>ID</b> : ${item.ID}</li>
                                             <li class="list-group-item "><b>Name </b> : ${item.NAMA} </li>
                                             <li class="list-group-item "><b>Join At </b> : ${join_at} </li>
-                                            
                                         </ul>
                                     </div>
                                     <div class="modal-footer">
-
                                     </div>
                                 </div>
                             </div>
@@ -571,7 +619,6 @@
         });
         $('.btnPar').click(function () {
             let ctr = $(this).attr('ctr');
-            alert(ctr)
             $("#exampleModal1"+ctr).modal();
         });
     }
@@ -624,7 +671,6 @@
                 $('.btnPending').click(function () {
                     let ctr = $(this).attr('ctr');
                     //alert(ctr);
-                    alert(baseUrl+hrfcv);
                     $("#exampleModal2"+ctr).modal();
                 });
                 

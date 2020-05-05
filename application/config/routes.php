@@ -69,6 +69,7 @@ $route['user/searchByCategory'] = 'user/userController/searchCat';
 $route['user/searchFilterCategory'] = 'user/userController/searchByCat';
 $route['user/takeProject'] = 'user/userController/takeProject';
 $route['user/MySubProject/(:any)'] = 'user/userController/showMySubProject/$1';
+$route['user/myprojectdetail'] = 'user/userController/myProjectDetail';
 
 $route['admin'] = 'admin/authAdmin';
 $route['admin/authAdmin'] = 'admin/authAdmin/adminView';
@@ -78,6 +79,7 @@ $route['admin/companyListing'] = 'admin/userListing/loadCompany';
 $route['admin/ratings'] = 'admin/ratingController';
 $route['admin/skills'] = 'admin/skillAdmin';
 
+$route['company/dashComp'] = 'company/company';
 $route['company/project'] = 'company/company/projectsCompany';
 $route['company/payProject'] = 'payment/paymentController';
 $route['company/transaction'] = 'company/company/loadTransaction';
@@ -85,6 +87,9 @@ $route['company/proceedTransaction/(:any)'] = 'company/company/proceedTransactio
 $route['company/getTransactionDetail/(:any)'] = 'company/company/getTransactionDetail/$1';
 $route['company/summary'] = 'company/company/showSummary';
 $route['company/getSummary'] = 'company/company/getSummary';
+$route['company/myprofile'] = 'company/company/profileCompany';
+$route['company/myprojects'] = 'company/company/projectsCompany';
+$route['company/detailproject'] = 'company/company/projectsDetail';
 
 $route['payment/getTransDetail'] = 'payment/paymentController/getTransDetail';
 $route['payment/refreshStatus'] = 'payment/paymentController/process';

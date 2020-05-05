@@ -9,6 +9,9 @@ class UserModel extends CI_Model{
     public function getUserById($id){
         return $this->db->get('auth_user', array('user_id' => $id))->result_array();
     }
+    public function rateComp($new){
+        $this->db->insert('review_perusahaan', $new);
+    }
 }
 
 ?>

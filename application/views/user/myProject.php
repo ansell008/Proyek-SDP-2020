@@ -182,7 +182,7 @@
                   <td>${item.project_nama}</td>
                   <td>${deadline_dates}</td>
                   <td>${status}</td>
-                  <td> <form method='post' action='<?= base_url().'/user/userController/myProjectDetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
+                  <td> <form method='post' action='<?= base_url().'user/myprojectdetail' ?>'> <button type='submit' value='${item.project_id}' name='btnView' class='btnView btn btn-info'><i class="fas fa-eye"></i><b> VIEW</b></button></form></td>
                   </tr>
               `);
             

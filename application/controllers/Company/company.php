@@ -96,7 +96,7 @@ Class Company extends CI_Controller
         );
         $projSub = $this->db->insert('project_subkategori', $new);
         $res = $this->cm->insertProject($newProject);
-        redirect('company/project');
+        redirect('company/myprojects');
     }
     public function deleteProject(){
         $id = $this->input->post('id');
@@ -148,7 +148,7 @@ Class Company extends CI_Controller
             );
         }
         $res = $this->db->insert('sub_project',$newSubProject);
-        redirect('company/company/projectsDetail');
+        redirect('company/detailproject');
     }
     public function deleteSubProject(){
         $id = $this->input->post('id');
@@ -165,9 +165,31 @@ Class Company extends CI_Controller
         $this->load->view('company/projectsDetail',$data);
         $this->load->view('tpl/footerComp',$data);
     }
+
+    public function giveRatingUser(){
+        $dataUser = $this->input->post();
+        $idUser = $dataUser['nameParti'];
+        $rate = $dataUser['ratingUser'];
+        $desc = $dataUser['descUser'];
+        $newRatingUser = array(
+            "review_user_id" => uniqid('RT'.$idUser),
+            "user_id" => $idUser,
+            "review_user_deskripsi" => $desc,
+            "review_user_rating" => $rate,
+            "review_user_by" => $_SESSION['compAktif']['data'][0]['perusahaan_id'],
+            "created_at" => date("now"),
+            "updated_at" => date("now")
+        );
+        $this->cm->rateUser($newRatingUser);
+        $query = "SELECT SUM(REVIEW_USER_RATING)/COUNT(REVIEW_USER_RATING) as AVGR FROM REVIEW_USER WHERE USER_ID = '$idUser'";
+        $count = $this->db->query($query)->result_array();
+        $res = $this->db->update('auth_user', array('user_rate' => $count[0]['AVGR']), array('user_id' => $idUser));   
+        //echo ;
+        redirect('company/detailproject');
+    }
     public function getAllSubProject(){
         $id = $this->input->post('idProject');
-        $query = "SELECT * FROM SUB_PROJECT WHERE PROJECT_ID = '$id'";
+        $query = "SELECT * FROM SUB_PROJECT SP LEFT JOIN AUTH_USER A ON A.USER_ID = SP.SUB_PROJECT_FINISHED_BY WHERE SP.PROJECT_ID = '$id' ";
         echo json_encode($this->db->query($query)->result_array());
     }
     public function getAllUserByProject(){
@@ -228,7 +250,7 @@ Class Company extends CI_Controller
                     }else{
                         var_dump($_FILES['profile_pic']);
                         var_dump($this->upload->display_errors()); 
-                        redirect('Company/company/profileCompany');
+                        redirect('company/myprofile');
                     }
                     $finalF = 'asset/img/profile/'.$foto;
                     $res = $this->cm->updateProfile($id, $a,$b,$c,$d,$e,$finalF,$g,$h);
@@ -254,9 +276,7 @@ Class Company extends CI_Controller
             }
         }
         $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
-        $this->load->view('tpl/headerComp');
-        $this->load->view('company/profileCompany',$data);
-        $this->load->view('tpl/footerComp');
+        redirect('company/myprofile');
     }
 
     public function loadTransaction(){

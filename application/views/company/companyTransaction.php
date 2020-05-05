@@ -20,19 +20,19 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="">
-                <a href="<?=base_url().'company/company' ?>">
+                <a href="<?=base_url().'company/dashComp' ?>">
                 <i class="nc-icon nc-diamond"></i>
                 <p>Dashboard</p>
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url().'company/company/profileCompany' ?>">
+                <a href="<?=base_url().'company/myprofile' ?>">
                 <i class="nc-icon nc-single-02"></i>
                 <p>Profile</p>
                 </a>
             </li>
             <li class="">
-                <a href="<?=base_url().'company/company/projectsCompany' ?>">
+                <a href="<?=base_url().'company/myprojects' ?>">
                 <i class="nc-icon nc-ruler-pencil"></i>
                 <p>Projects</p>
                 </a>
@@ -42,6 +42,12 @@
                   <i class="nc-icon nc-credit-card"></i>
                   <p>Transaction</p>
                 </a>
+            </li>
+            <li>
+              <a href="<?= base_url().'company/summary' ?>">
+                <i class="nc-icon nc-diamond"></i>
+                <p>Summary</p>
+              </a>
             </li>
         </ul>
       </div>

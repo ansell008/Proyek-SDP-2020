@@ -104,5 +104,9 @@ class CompanyModel extends CI_Model{
         $res = $this->db->query($query);
         return $res->result_array();
     }
+
+    public function rateUser($new){
+        $this->db->insert('review_user', $new);
+    }
 }
 ?>
