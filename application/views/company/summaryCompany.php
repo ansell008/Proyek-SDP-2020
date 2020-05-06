@@ -118,9 +118,12 @@
         <div class="col-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Summary Projects</h3>
+              <h3 class="card-title">All Projects Created</h3>
             </div>
             <div class="card-body">
+              <div class="form-group">
+                Filter By Year <select class="form-control col-md-2" id="years"></select>
+              </div>
               <div class="chart">
                 <div class="chartjs-size-monitor">
                   <div class="chartjs-size-monitor-expand">
@@ -131,6 +134,65 @@
                   </div>
                 </div>
                 <canvas id="areaChart"
+                  style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 328px;"
+                  width="328" height="250" class="chartjs-render-monitor"></canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">All Transaction</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                Filter By Year <select class="form-control col-md-2" id="years2"></select>
+              </div>
+              <div class="chart">
+                <div class="chartjs-size-monitor">
+                  <div class="chartjs-size-monitor-expand">
+                    <div class=""></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink">
+                    <div class=""></div>
+                  </div>
+                </div>
+                <canvas id="areaChart2"
+                  style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 328px;"
+                  width="328" height="250" class="chartjs-render-monitor"></canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Expenses</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                Filter By Year <select class="form-control col-md-2" id="years3"></select>
+              </div>
+              <div class="chart">
+                <div class="chartjs-size-monitor">
+                  <div class="chartjs-size-monitor-expand">
+                    <div class=""></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink">
+                    <div class=""></div>
+                  </div>
+                </div>
+                <canvas id="areaChart3"
                   style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 328px;"
                   width="328" height="250" class="chartjs-render-monitor"></canvas>
               </div>
@@ -155,26 +217,88 @@
         <script>
 
           $(document).ready(function(){
+            for(let i = 1970; i < 2025; i++){
+              let sel = "";
+              if(i == 2020) sel = "selected";
+              $("#years").append(`
+                <option value=${i} ${sel}>${i}</option>
+              `);
+              $("#years2").append(`
+                <option value=${i} ${sel}>${i}</option>
+              `);
+              $("#years3").append(`
+                <option value=${i} ${sel}>${i}</option>
+              `);
+            }
+
             showChart();
+            showChart2();
+            showChart3();
+
+            $("#years").on("change", function(){
+              showChart();
+            });
+
+            $("#years2").on("change", function(){
+              showChart2();
+            });
+
+            $("#years3").on("change", function(){
+              showChart3();
+            });
           });
 
           function showChart(){
+              $("#areaChart").html("");
               $.ajax({
                 method: 'post',
                 url: '<?= base_url() ?>company/getSummary',
                 data: {id : '<?= $_SESSION['compAktif']['data'][0]['perusahaan_id'] ?>'},
                 success: function(res){
                   let data = JSON.parse(res);
+                  let year = parseInt($("#years").val());
 
-                  let countprj = [data['done'], data['ongoing']];
+                  console.log(data);
+
+                  let months = ['January', 'Februari', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
+                  let monthsData = [0,0,0,0,0,0,0,0,0,0,0,0];
+                  let projectDone = [0,0,0,0,0,0,0,0,0,0,0,0];
+                  let projectProgress = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+                  data.all.forEach(item => {
+                    let mNumber = new Date(item.project_mulai).getMonth();
+                    let mYear = new Date(item.project_mulai).getFullYear();
+
+                    if(year == mYear){
+                      monthsData[mNumber] += parseInt(item.j);
+                    }
+                  });
+
+                  data.done.forEach(item => {
+                    let mNumber = new Date(item.project_mulai).getMonth();
+                    let mYear = new Date(item.project_mulai).getFullYear();
+
+                    if(year == mYear){
+                      projectDone[mNumber] += parseInt(item.j);
+                    }
+                  });
+
+                  data.ongoing.forEach(item => {
+                    let mNumber = new Date(item.project_mulai).getMonth();
+                    let mYear = new Date(item.project_mulai).getFullYear();
+
+                    if(year == mYear){
+                      projectProgress[mNumber] += parseInt(item.j);
+                    }
+                  });
 
                   var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
                   var areaChartData = {
-                    labels  : ['Project'],
+                    labels  : months,
                     datasets: [
                       {
-                        label               : 'Done',
+                        label               : 'All Projects',
                         backgroundColor     : '#17a2b8',
                         borderColor         : '#17a2a0',
                         pointRadius         : false,
@@ -182,19 +306,30 @@
                         pointStrokeColor    : '#c1c7d1',
                         pointHighlightFill  : '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data                : data['done']
+                        data                : monthsData
                       },
                       {
-                        label               : 'OnGoing',
-                        backgroundColor     : '#20c997',
-                        borderColor         : '#20c700',
+                        label               : 'Projects Done',
+                        backgroundColor     : '#00cc00',
+                        borderColor         : '#00cc00',
                         pointRadius         : false,
-                        pointColor          : 'rgba(210, 214, 222, 1)',
+                        pointColor          : ['rgba(210, 214, 222, 1)'],
                         pointStrokeColor    : '#c1c7d1',
                         pointHighlightFill  : '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data                : data['ongoing']
+                        data                : projectDone
                       },
+                      {
+                        label               : 'Projects On Going',
+                        backgroundColor     : '#e6e600',
+                        borderColor         : '#e6e600',
+                        pointRadius         : false,
+                        pointColor          : ['rgba(210, 214, 222, 1)'],
+                        pointStrokeColor    : '#c1c7d1',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        data                : projectProgress
+                      }
                     ]
                   }
 
@@ -202,7 +337,7 @@
                     maintainAspectRatio : false,
                     responsive : true,
                     legend: {
-                      display: false
+                      display: true
                     },
                     scales: {
                       xAxes: [{
@@ -213,6 +348,10 @@
                       yAxes: [{
                         gridLines : {
                           display : false,
+                        },
+                        scaleLabel : {
+                          display : true,
+                          labelString : 'Number of Projects'
                         }
                       }]
                     }
@@ -221,6 +360,206 @@
                   // This will get the first returned node in the jQuery collection.
                   var areaChart       = new Chart(areaChartCanvas, { 
                     type: 'bar',
+                    data: areaChartData, 
+                    options: areaChartOptions
+                  })
+                }
+              });
+          }
+
+          function showChart2(){
+              $("#areaChart").html("");
+              $.ajax({
+                method: 'post',
+                url: '<?= base_url() ?>company/getSummary',
+                data: {id : '<?= $_SESSION['compAktif']['data'][0]['perusahaan_id'] ?>'},
+                success: function(res){
+                  let data = JSON.parse(res);
+                  let year = parseInt($("#years2").val());
+
+                  let months = ['January', 'Februari', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
+                  let unpayed = [0,0,0,0,0,0,0,0,0,0,0,0];
+                  let pending = [0,0,0,0,0,0,0,0,0,0,0,0];
+                  let settlement = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+                  if(data.notPayed.length != 0){
+                    data.notPayed.forEach(item => {
+                      let mNumber = new Date(item.project_mulai).getMonth();
+                      let mYear = new Date(item.project_mulai).getFullYear();
+
+                      if(year == mYear){
+                        unpayed[mNumber] += 1;
+                      }
+                    });
+                  }
+
+                  if(data.pending.length != 0){
+                    data.pending.forEach(item => {
+                      let mNumber = new Date(item.project_mulai).getMonth();
+                      let mYear = new Date(item.project_mulai).getFullYear();
+
+                      if(year == mYear){
+                        pending[mNumber] += 1;
+                      }
+                    });
+                  }
+
+                  if(data.transDone.length != 0){
+                    data.transDone.forEach(item => {
+                      let mNumber = new Date(item.project_mulai).getMonth();
+                      let mYear = new Date(item.project_mulai).getFullYear();
+
+                      if(year == mYear){
+                        settlement[mNumber] += 1;
+                      }
+                    });
+                  }
+
+                  var areaChartCanvas = $('#areaChart2').get(0).getContext('2d')
+
+                  var areaChartData = {
+                    labels  : months,
+                    datasets: [
+                      {
+                        label               : 'Unpayed',
+                        backgroundColor     : '#ff4d4d',
+                        borderColor         : '#ff4d4d',
+                        pointRadius         : false,
+                        pointColor          : ['rgba(210, 214, 222, 1)'],
+                        pointStrokeColor    : '#c1c7d1',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        data                : unpayed
+                      },
+                      {
+                        label               : 'Pending',
+                        backgroundColor     : '#e6e600',
+                        borderColor         : '#e6e600',
+                        pointRadius         : false,
+                        pointColor          : ['rgba(210, 214, 222, 1)'],
+                        pointStrokeColor    : '#c1c7d1',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        data                : pending
+                      },
+                      {
+                        label               : 'Settlement',
+                        backgroundColor     : '#00cc00',
+                        borderColor         : '#00cc00',
+                        pointRadius         : false,
+                        pointColor          : ['rgba(210, 214, 222, 1)'],
+                        pointStrokeColor    : '#c1c7d1',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        data                : settlement
+                      }
+                    ]
+                  }
+
+                  var areaChartOptions = {
+                    maintainAspectRatio : false,
+                    responsive : true,
+                    legend: {
+                      display: true
+                    },
+                    scales: {
+                      xAxes: [{
+                        gridLines : {
+                          display : false,
+                        }
+                      }],
+                      yAxes: [{
+                        gridLines : {
+                          display : false,
+                        },
+                        scaleLabel : {
+                          display : true,
+                          labelString : 'Number of Projects'
+                        }
+                      }]
+                    }
+                  }
+
+                  // This will get the first returned node in the jQuery collection.
+                  var areaChart       = new Chart(areaChartCanvas, { 
+                    type: 'bar',
+                    data: areaChartData, 
+                    options: areaChartOptions
+                  })
+                }
+              });
+          }
+
+          function showChart3(){
+              $("#areaChart").html("");
+              $.ajax({
+                method: 'post',
+                url: '<?= base_url() ?>company/getSummary',
+                data: {id : '<?= $_SESSION['compAktif']['data'][0]['perusahaan_id'] ?>'},
+                success: function(res){
+                  let data = JSON.parse(res);
+                  let year = parseInt($("#years3").val());
+
+                  let months = ['January', 'Februari', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
+                  let done = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+                  if(data.transDone.length != 0){
+                    data.transDone.forEach(item => {
+                      let mNumber = new Date(item.project_mulai).getMonth();
+                      let mYear = new Date(item.project_mulai).getFullYear();
+
+                      if(year == mYear){
+                        done[mNumber] += parseInt(item.grand_total);
+                      }
+                    });
+                  }
+
+                  var areaChartCanvas = $('#areaChart3').get(0).getContext('2d')
+
+                  var areaChartData = {
+                    labels  : months,
+                    datasets: [
+                      {
+                        label               : 'Amount',
+                        backgroundColor     : '#ff4d4d',
+                        borderColor         : '#ff4d4d',
+                        pointRadius         : false,
+                        pointColor          : ['rgba(210, 214, 222, 1)'],
+                        pointStrokeColor    : '#c1c7d1',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        data                : done
+                      }
+                    ]
+                  }
+
+                  var areaChartOptions = {
+                    maintainAspectRatio : false,
+                    responsive : true,
+                    legend: {
+                      display: true
+                    },
+                    scales: {
+                      xAxes: [{
+                        gridLines : {
+                          display : false,
+                        }
+                      }],
+                      yAxes: [{
+                        gridLines : {
+                          display : false,
+                        },
+                        scaleLabel : {
+                          display : true,
+                          labelString : 'Spent (IDR)'
+                        }
+                      }]
+                    }
+                  }
+
+                  // This will get the first returned node in the jQuery collection.
+                  var areaChart       = new Chart(areaChartCanvas, { 
+                    type: 'line',
                     data: areaChartData, 
                     options: areaChartOptions
                   })

@@ -2,7 +2,7 @@
 class SubCategoryAdmin extends CI_Controller{
     public function __construct(){
         parent::__construct();
-        $this->load->model('admin/subCategoryModel');
+        $this->load->model('admin/SubCategoryModel', 'subCategoryModel');
     }
     public function index(){
         $data['category'] = $this->subCategoryModel->getCategory();

@@ -3,7 +3,7 @@
 class SummaryAdmin extends CI_Controller{
     public function __construct(){
         parent::__construct();
-        $this->load->model("admin/summaryModel", 'sm');
+        $this->load->model("admin/SummaryModel", 'sm');
     }
 
     public function getSummary(){

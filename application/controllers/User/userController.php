@@ -4,7 +4,7 @@ class UserController extends Ci_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('user/userModel');
+        $this->load->model('user/UserModel', 'userModel');
     }
 
     public function showDash(){
@@ -21,7 +21,7 @@ class UserController extends Ci_Controller{
     public function loadSummary(){
        
 
-        $this->load->model("user/userReport");
+        $this->load->model("user/UserReport", 'userReport');
         $jumlahproyek=[];
         for ($i=1; $i <13 ; $i++) { 
             $res = $this->userReport->getCountProject($_SESSION['userAktif'][0]['user_id'],$i);
@@ -76,7 +76,7 @@ class UserController extends Ci_Controller{
     }
 
     public function detailProject($idProject){
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
         $res = $this->projectModel->searchProjectById(urldecode($idProject));
         $pekerja = $this->projectModel->searchUserByProject($idProject);
         
@@ -86,7 +86,7 @@ class UserController extends Ci_Controller{
     }
 
     public function searchProject(){
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
         $query = $this->input->post('query');
         $res = $this->projectModel->searchProject($query);
 
@@ -99,7 +99,7 @@ class UserController extends Ci_Controller{
     }
 
     public function takeProject(){
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
         $idProject = $this->input->post("idProject");
         $idUser = $_SESSION['userAktif'][0]['user_id'];
 
@@ -110,7 +110,7 @@ class UserController extends Ci_Controller{
     }
 
     public function loadProjects(){
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
         $res = $this->projectModel->loadAllProjects();
         
         foreach($res as $key => &$value){
@@ -122,7 +122,7 @@ class UserController extends Ci_Controller{
     }
 
     public function searchCat(){
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
         $res = $this->projectModel->searchCategory();
 
         echo json_encode($res);
@@ -130,7 +130,7 @@ class UserController extends Ci_Controller{
 
     public function searchByCat(){
         $id = $this->input->post("id");
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
 
         $res = $this->projectModel->searchCategory($id);
 
@@ -206,11 +206,11 @@ class UserController extends Ci_Controller{
         $this->load->view('tpl/footerComp');
     }
     public function getMyProjectsById(){
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
         echo json_encode($this->projectModel->getMyProjects($_SESSION['userAktif'][0]['user_id']));
     }
     public function myProjectDetail(){
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
         $id = $this->input->post('btnView');
         $res = $this->projectModel->getProject($id);
         $data['projectDetail'] = $res;
@@ -220,7 +220,7 @@ class UserController extends Ci_Controller{
         $this->load->view('tpl/footerComp');
     }
     public function showMySubProject($id){
-        $this->load->model("user/projectModel");
+        $this->load->model("user/ProjectModel", 'projectModel');
         echo json_encode($this->projectModel->getSubById($id));
     }
     public function updateSub(){
@@ -242,7 +242,7 @@ class UserController extends Ci_Controller{
             "updated_at" => date("now")
         );
         $this->userModel->rateComp($newRatingUser);
-        $query = "SELECT SUM(REVIEW_PERUSAHAAN_RATING)/COUNT(REVIEW_PERUSAHAAN_RATING) as AVGR FROM REVIEW_PERUSAHAAN WHERE PERUSAHAAN_ID = '$idComp'";
+        $query = "SELECT SUM(review_perusahaan_rating)/COUNT(review_perusahaan_rating) as AVGR FROM review_perusahaan WHERE perusahaan_id = '$idComp'";
         $count = $this->db->query($query)->result_array();
         $res = $this->db->update('auth_perusahaan', array('perusahaan_rate' => $count[0]['AVGR']), array('perusahaan_id' => $idComp));   
         //echo ;
