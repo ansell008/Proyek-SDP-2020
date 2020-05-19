@@ -248,6 +248,18 @@ class UserController extends Ci_Controller{
         //echo ;
         redirect('user/myprojectdetail');
     }
+    function getSummaryData(){
+        $date = $this->input->post('date');
+        $id_user = $_SESSION['userAktif'][0]['user_id'];
+        $query = "SELECT pr.project_id,p.perusahaan_nama,pr.project_nama,pr.project_anggaran,pr.project_mulai,pr.project_deadline, timestampdiff(day,pr.project_mulai,pr.project_deadline) as durasi, pr.project_status FROM project pr 
+        join auth_perusahaan p on pr.perusahaan_id = p.perusahaan_id 
+        join project_pekerja pp on pp.project_id = pr.project_id 
+        join auth_user au on au.user_id = pp.user_id 
+        join htrans tr on tr.project_id = pr.project_id
+        where TIMESTAMP('$date') BETWEEN pr.project_mulai and pr.project_deadline and au.user_id = '$id_user'";
+        $res = $this->db->query($query)->result_array();
+        echo json_encode($res);
+    }
 
     // 7c4a8d09ca3762af61e59520943dc26494f8941b
 }

@@ -107,14 +107,128 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-         
-      <div id="box" >
-      <script src="<?= base_url().'asset/admin' ?>/plugins/chart.js/Chart.js"></script>
-    <canvas id="myChart"></canvas>
-   
-    <script>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3>Generate Report Income By Date</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="">Date</label>
+                  <input class="form-control" type="date" name="" id="dateGenerate">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-info" id="btnGenerate">Generate</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table" id="tableSum">
+                        <thead>
+                            <th>Project ID</th>
+                            <th>Company Name</th>
+                            <th>Project Name</th>
+                            <th>Project Budget</th>
+                            <th>Duration</th>
+                            <th>Project Status</th>
+                            <th>Total Income</th>
+                        </thead>
+                        <tbody id="tbProject">
+                            
+                        </tbody>
+                    </table>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
         
-        var ctx = document.getElementById('myChart').getContext('2d');
+         
+        <div id="box" style="display: none">
+          <script src="<?= base_url().'asset/admin' ?>/plugins/chart.js/Chart.js"></script>
+          <canvas id="myChart"></canvas>
+   
+    
+        </div>
+
+      
+      <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+        <b>Version</b> 0.0.1
+        </div>
+        <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
+        reserved.
+      </footer>
+    </div>
+  </div>
+
+  <style>
+    a:hover{
+      text-decoration: none;
+      color: black;
+      box-shadow: 5px 5px;
+    }
+    #box {
+        border: 2px solid black;
+        padding: 20px;
+        width: 600px;
+        height: auto;
+        }
+  </style>
+
+<script>
+$(window).ready(function(){
+  
+  $("#btnGenerate").click(function () {
+    summaryUser();
+  })
+});
+
+function summaryUser(){
+        $("#tbProject").html('');
+
+        $.ajax({
+          method: 'post',
+          url: '<?= base_url()."user/userController/getSummaryData" ?>',
+          data: {date:$("#dateGenerate").val()},
+          success: function(res){
+              data = JSON.parse(res);
+              data.forEach(item => {
+                // const monthNames = ["January", "February", "March", "April", "May", "June",
+                // "July", "August", "September", "October", "November", "December"];
+                // var x = new Date(item.project_deadline);
+                // var y = new Date(item.project_mulai);
+                // var tanggal_x = x.getDate(); 
+                // var bulan_x = monthNames[x.getMonth()]; 
+                // var tahun_x = x.getFullYear(); 
+                // let deadline_dates = tanggal_x + " "+ bulan_x + ' '+ tahun_x ;
+                // let durasi = x - y;
+                // let status='';
+                if(item.project_status=='0')status = `<small class='badge badge-success'>OPEN</small>`;
+                else if(item.project_status=='1')status = `<small class='badge badge-warning'>ON GOING</small>`;
+                else status = `<small class='badge badge-danger'>DONE</small>`;
+                let subtotal = (item.durasi*item.project_anggaran);
+                $("#tbProject").append(`
+                    <tr id="row-${item.project_id}">
+                    <td>${item.project_id}</td>
+                    <td>${item.perusahaan_nama}</td>
+                    <td>${item.project_nama}</td>
+                    <td>${item.project_anggaran}</td>
+                    <td>${item.durasi} days</td>
+                    <td>${status}</td>
+                    <td>${subtotal}</td>
+                    </tr>
+                `);
+              
+              });
+              
+              $("#tableSum").DataTable();
+          }
+        });
+    }
+        
+function chartLama(){
+  var ctx = document.getElementById('myChart').getContext('2d');
         var tahunawal=new Date();
         var tahun= tahunawal.getFullYear();
         var tahunakhir=2020;
@@ -174,35 +288,5 @@
                 }
             }
         });
-        </script>
-        </div>
-
-      
-      <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-        <b>Version</b> 0.0.1
-        </div>
-        <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
-        reserved.
-      </footer>
-    </div>
-  </div>
-
-  <style>
-    a:hover{
-      text-decoration: none;
-      color: black;
-      box-shadow: 5px 5px;
-    }
-    #box {
-        border: 2px solid black;
-        padding: 20px;
-        width: 600px;
-        height: auto;
-        }
-  </style>
-
-<script>
-
-
+}        
 </script>
