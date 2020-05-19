@@ -11,7 +11,7 @@ class PaymentController extends Ci_Controller{
     }
 
     public function token(){
-        $this->load->model('company/companyModel');
+        $this->load->model('company/CompanyModel', 'companyModel');
         $idProject = $this->input->post('idProject');
 
         $res = $this->companyModel->getProject($idProject);
@@ -87,7 +87,7 @@ class PaymentController extends Ci_Controller{
     }
 
     public function insertDataPayment(){
-        $this->load->model("payment/paymentModel");
+        $this->load->model("payment/PaymentModel", 'paymentModel');
         $data = json_decode($this->input->post("obj"),true);
 
         $dataHtrans = array(
@@ -124,7 +124,7 @@ class PaymentController extends Ci_Controller{
     }
 
     public function getTransDetail(){
-        $this->load->model("payment/paymentModel");
+        $this->load->model("payment/PaymentModel", 'paymentModel');
         $id_prj = $this->input->post("prj_id");
         $id_transaksi = $this->paymentModel->getTransaksiId($id_prj)[0]['transaksi_id'];
         $res = $this->paymentModel->getDataTrans($id_transaksi);
@@ -155,7 +155,7 @@ class PaymentController extends Ci_Controller{
     }
 
     public function changeStatus($data){
-        $this->load->model("payment/paymentModel");
+        $this->load->model("payment/PaymentModel", 'paymentModel');
         $updateData = array(
             'transaction_status' => $data->transaction_status,
             'settlement_time' => $data->settlement_time

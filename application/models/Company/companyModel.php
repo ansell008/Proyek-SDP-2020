@@ -38,9 +38,9 @@ class CompanyModel extends CI_Model{
     }
 
     public function getUserByProjectId($id, $idproject){
-        $query = "SELECT PP.created_at as joined, A.USER_CV, A.USER_ID AS ID, concat(A.USER_FIRSTNAME,' ',A.USER_LASTNAME) AS NAMA, A.USER_EMAIL AS EMAIL, PP.PROJECT_PEKERJA_STATUS AS STATUS, PP.PROJECT_PEKERJA_ID AS ppid 
-        FROM AUTH_USER A, PROJECT_PEKERJA PP, PROJECT P
-        WHERE A.USER_ID = PP.USER_ID AND PP.PROJECT_ID = P.PROJECT_ID AND P.PERUSAHAAN_ID ='$id' AND P.PROJECT_ID ='$idproject'";
+        $query = "SELECT PP.created_at as joined, A.user_cv, A.user_id AS ID, concat(A.user_firstname,' ',A.user_lastname) AS NAMA, A.user_email AS EMAIL, PP.project_pekerja_status AS STATUS, PP.project_pekerja_id AS ppid 
+        FROM auth_user A, project_pekerja PP, project P
+        WHERE A.user_id = PP.uesr_id AND PP.project_id = P.project_id AND P.perusahaan_id ='$id' AND P.project_id ='$idproject'";
         $res = $this->db->query($query);
         return $res->result_array();
     }
@@ -91,18 +91,60 @@ class CompanyModel extends CI_Model{
         return $this->db->query($query)->result_array();
     }
 
+    public function getAllProjects($idPerusahaan){
+        $query = "SELECT COUNT(*) as j, project_mulai, project_deadline FROM project WHERE perusahaan_id = '$idPerusahaan' GROUP BY project_id";
+
+        $res = $this->db->query($query);
+        return $res->result_array();
+    }
+
     public function getProjectsDone($idPerusahaan){
-        $query = "SELECT COUNT(*) as j FROM project WHERE project_status = 2 AND perusahaan_id = '$idPerusahaan'";
+        $query = "SELECT COUNT(*) as j, project_mulai, project_deadline FROM project WHERE project_status = 2 AND perusahaan_id = '$idPerusahaan' GROUP BY project_id";
 
         $res = $this->db->query($query);
         return $res->result_array();
     }
 
     public function getProjectsOnGoing($idPerusahaan){
-        $query = "SELECT COUNT(*) as j FROM project WHERE project_status = 1 AND perusahaan_id = '$idPerusahaan'";
+        $query = "SELECT COUNT(*) as j, project_mulai, project_deadline FROM project WHERE project_status = 1 AND perusahaan_id = '$idPerusahaan' GROUP BY project_id";
 
         $res = $this->db->query($query);
         return $res->result_array();
+    }
+
+    public function getProjectNotPayed($idPerusahaan){
+        $query = "SELECT p.project_mulai, p.project_deadline FROM project p JOIN htrans h ON h.project_id = p.project_id WHERE h.status_code = -1 AND p.perusahaan_id = '$idPerusahaan'";
+
+        $res = $this->db->query($query)->result_array();
+
+        // $query = "SELECT COUNT(p.project_id) as j FROM project p JOIN htrans h ON h.project_id = p.project_id WHERE h.status_code = -1 AND p.perusahaan_id = '$idPerusahaan'";
+        
+        // $res['count'] = $this->db->query($query)->result_array();
+
+        return $res;
+    }
+
+    public function getProjectTransactionPending($idPerusahaan){
+        $query = "SELECT p.project_mulai, p.project_deadline FROM project p JOIN htrans h ON h.project_id = p.project_id WHERE h.transaction_status = 'pending' AND p.perusahaan_id = '$idPerusahaan'";
+
+        $res = $this->db->query($query)->result_array();
+
+        // $query = "SELECT COUNT(*) as j FROM project p JOIN htrans h ON h.project_id = p.project_id WHERE h.transaction_status = 'pending' AND p.perusahaan_id = '$idPerusahaan'";
+
+        // $res['count'] = $this->db->query($query)->result_array();
+
+        return $res;
+    }
+
+    public function getProjectTransactionDone($idPerusahaan){
+        $query = "SELECT p.project_mulai, p.project_deadline, h.settlement_time, h.grand_total FROM project p JOIN htrans h ON h.project_id = p.project_id WHERE h.transaction_status = 'settlement' AND p.perusahaan_id = '$idPerusahaan'";
+
+        $res = $this->db->query($query)->result_array();
+
+        // $query = "SELECT COUNT(*) as j FROM project p JOIN htrans h ON h.project_id = p.project_id WHERE h.transaction_status = 'settlement' AND p.perusahaan_id = '$idPerusahaan'";
+
+        // $res['count'] = $this->db->query($query)->result_array();
+        return $res;
     }
 
     public function rateUser($new){

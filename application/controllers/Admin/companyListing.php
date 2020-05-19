@@ -3,7 +3,7 @@ Class companyListing extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('admin/companyModel');
+        $this->load->model('admin/CompanyModel', 'companyModel');
     }
 
     public function index(){

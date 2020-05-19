@@ -5,7 +5,7 @@ class ProjectModel extends Ci_Model{
         $query = "SELECT p.perusahaan_id, p.project_id, p.project_nama, p.project_deskripsi, p.project_status, p.project_mulai, p.project_deadline, p.created_at, ap.perusahaan_nama
                   FROM project p
                   JOIN auth_perusahaan ap ON ap.perusahaan_id = p.perusahaan_id
-                  WHERE P.PROJECT_STATUS != 2 AND P.PROJECT_STATUS !=3
+                  WHERE P.project_status != 2 AND P.project_status !=3
                   ORDER BY p.project_mulai ASC
                   ";
         return $this->db->query($query)->result_array();
@@ -71,16 +71,16 @@ class ProjectModel extends Ci_Model{
         $query = "SELECT au.user_id, au.user_firstname, au.user_lastname, au.user_profile, au.user_email, au.user_alamat, pp.created_at
                   FROM project_pekerja pp
                   JOIN auth_user au ON au.user_id = pp.user_id
-                  WHERE PP.PROJECT_ID = '$idProject'
+                  WHERE PP.project_id = '$idProject'
                   ";
         return $this->db->query($query)->result_array();
     }
 
     public function getMyProjects($idUser){
         $query = "SELECT *
-                FROM AUTH_USER AU, PROJECT_PEKERJA PP, PROJECT P
-                WHERE AU.USER_ID = PP.USER_ID AND P.PROJECT_ID = PP.PROJECT_ID
-                AND PP.USER_ID = '$idUser' AND PP.PROJECT_PEKERJA_STATUS = 1 
+                FROM auth_user AU, project_pekerja PP, project P
+                WHERE AU.user_id = PP.user_id AND P.project_id = PP.project_id
+                AND PP.user_id = '$idUser' AND PP.project_pekerja_status = 1 
                 ";
         return $this->db->query($query)->result_array();
     }

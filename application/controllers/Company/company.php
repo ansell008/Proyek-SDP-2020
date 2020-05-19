@@ -5,7 +5,7 @@ Class Company extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('company/companyModel', 'cm');
+        $this->load->model('company/CompanyModel', 'cm');
         $this->load->helper(array('form', 'url'));
     }
     public function index(){
@@ -31,7 +31,7 @@ Class Company extends CI_Controller
         $this->load->view('tpl/footerComp');
     }
     public function createProject(){
-        $this->load->model('admin/subCategoryModel');
+        $this->load->model('admin/SubCategoryModel', 'subCategoryModel');
         $data['profil'] = $this->cm->getCompanyById($_SESSION['compAktif']['data'][0]['perusahaan_id']);
         $data['category'] = $this->subCategoryModel->getCategory();
         $this->load->view('tpl/headerComp');
@@ -181,7 +181,7 @@ Class Company extends CI_Controller
             "updated_at" => date("now")
         );
         $this->cm->rateUser($newRatingUser);
-        $query = "SELECT SUM(REVIEW_USER_RATING)/COUNT(REVIEW_USER_RATING) as AVGR FROM REVIEW_USER WHERE USER_ID = '$idUser'";
+        $query = "SELECT SUM(review_user_rating)/COUNT(review_user_rating) as AVGR FROM review_user WHERE user_id = '$idUser'";
         $count = $this->db->query($query)->result_array();
         $res = $this->db->update('auth_user', array('user_rate' => $count[0]['AVGR']), array('user_id' => $idUser));   
         //echo ;
@@ -189,7 +189,7 @@ Class Company extends CI_Controller
     }
     public function getAllSubProject(){
         $id = $this->input->post('idProject');
-        $query = "SELECT * FROM SUB_PROJECT SP LEFT JOIN AUTH_USER A ON A.USER_ID = SP.SUB_PROJECT_FINISHED_BY WHERE SP.PROJECT_ID = '$id' ";
+        $query = "SELECT * FROM sub_project SP LEFT JOIN auth_user A ON A.user_id = SP.sub_project_finished_by WHERE SP.project_id = '$id' ";
         echo json_encode($this->db->query($query)->result_array());
     }
     public function getAllUserByProject(){
@@ -214,7 +214,7 @@ Class Company extends CI_Controller
     }
     public function getSubKategoriById(){
         $id = $this->input->post('idKat');
-        $query = "SELECT * FROM SUB_KATEGORI WHERE KATEGORI_ID = '$id'";
+        $query = "SELECT * FROM sub_kategori WHERE kategori_id = '$id'";
         echo json_encode($this->db->query($query)->result_array());
     }
 
@@ -317,13 +317,22 @@ Class Company extends CI_Controller
     }
 
     public function getSummary(){
-        $this->load->model("company/companyModel");
+        $this->load->model("company/CompanyModel", 'companyModel');
         $idPerusahaan = $this->input->post("id");
+        $projects = $this->companyModel->getAllProjects($idPerusahaan);
         $projectDone = $this->companyModel->getProjectsDone($idPerusahaan);
         $projectOnGoing = $this->companyModel->getProjectsOnGoing($idPerusahaan);
+        $transactionNotPayed = $this->companyModel->getProjectNotPayed($idPerusahaan);
+        $transactionPending = $this->companyModel->getProjectTransactionPending($idPerusahaan);
+        $transactionDone = $this->companyModel->getProjectTransactionDone($idPerusahaan);
+
         $data = array(
-            'done' => $projectDone[0]['j'],
-            'ongoing' => $projectOnGoing[0]['j']
+            'all' => $projects,
+            'done' => $projectDone,
+            'ongoing' => $projectOnGoing,
+            'notPayed' => $transactionNotPayed,
+            'pending' => $transactionPending,
+            'transDone' => $transactionDone
         );
         echo json_encode($data);
     }

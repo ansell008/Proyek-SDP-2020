@@ -5,8 +5,6 @@ class AuthUser extends CI_Controller{
         parent::__construct();
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
-        $this->load->model('EmailModel');
-        mail("rommycy00@gmail.com","Success","Great, Localhost Mail works");
     }
 
     public function register(){
@@ -56,7 +54,7 @@ class AuthUser extends CI_Controller{
     }
 
     public function validate3(){
-        $this->load->model('authUserModel');
+        $this->load->model('AuthUserModel', 'authUserModel');
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('username', 'Username', 'required',
@@ -184,7 +182,7 @@ class AuthUser extends CI_Controller{
 
     public function validate4(){
         $this->load->library('form_validation');
-        $this->load->model('authUserModel');
+        $this->load->model('AuthUserModel', 'authUserModel');
         $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email',
             array(
                 "required" => "Email field cannot empty",
@@ -316,7 +314,7 @@ class AuthUser extends CI_Controller{
     }
 
     public function loginproses(){
-        $this->load->model('authUserModel');
+        $this->load->model('AuthUserModel', 'authUserModel');
         $a = $this->input->post('em');
         $b = $this->input->post('pass');
 
@@ -358,7 +356,7 @@ class AuthUser extends CI_Controller{
     }
 
     public function verify($code){
-        $this->load->model('authUserModel');
+        $this->load->model('AuthUserModel', 'authUserModel');
         $res = $this->authUserModel->verifyEmail($code);
         if($res) redirect('login');
         else {
@@ -367,7 +365,7 @@ class AuthUser extends CI_Controller{
     }
 
     public function verifyP($code){
-        $this->load->model('authUserModel');
+        $this->load->model('AuthUserModel', 'authUserModel');
         $res = $this->authUserModel->verifyEmailCompany($code);
         if($res) redirect('login');
         else {

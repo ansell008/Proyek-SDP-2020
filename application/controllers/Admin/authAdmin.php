@@ -3,7 +3,7 @@
 class AuthAdmin extends CI_Controller{
     public function __construct(){
         parent::__construct();
-        $this->load->model('admin/adminModel');
+        $this->load->model('admin/AdminModel', 'adminModel');
     }
 
     public function index(){

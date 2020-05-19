@@ -2,7 +2,7 @@
 class CategoryAdmin extends CI_Controller{
     public function __construct(){
         parent::__construct();
-        $this->load->model('admin/categoryModel');
+        $this->load->model('admin/CategoryModel', 'categoryModel');
     }
     public function index(){
         $this->load->view('tpl/header');
