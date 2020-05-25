@@ -108,6 +108,18 @@
       <!-- End Navbar -->
       <div class="content">
         <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h2>Summary Report</h2>
+                </div>
+                <div class="card-body">
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
@@ -142,14 +154,6 @@
 
           </div>
         </div>
-        
-         
-        <div id="box" style="display: none">
-          <script src="<?= base_url().'asset/admin' ?>/plugins/chart.js/Chart.js"></script>
-          <canvas id="myChart"></canvas>
-   
-    
-        </div>
 
       
       <footer class="main-footer">
@@ -161,6 +165,10 @@
       </footer>
     </div>
   </div>
+
+  <script src="<?= base_url().'asset/admin' ?>/plugins/chart.js/Chart.js"></script>
+  <script src="<?= base_url().'asset/admin' ?>/plugins/datatables/jquery.dataTables.js"></script>
+  <script src="<?= base_url().'asset/admin' ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 
   <style>
     a:hover{
@@ -178,7 +186,8 @@
 
 <script>
 $(window).ready(function(){
-  
+  chartLama();
+
   $("#btnGenerate").click(function () {
     summaryUser();
   })
