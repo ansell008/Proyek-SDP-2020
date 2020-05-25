@@ -288,26 +288,5 @@ function chartLama(){
                 }
             }
         });
-<<<<<<< HEAD
-  </script>
-  <style>
-    a:hover{
-      text-decoration: none;
-      color: black;
-      box-shadow: 5px 5px;
-    }
-    #box {
-        border: 2px solid black;
-        padding: 20px;
-        width: 600px;
-        height: auto;
-        }
-  </style>
-
-<script>
-
-
-=======
 }        
->>>>>>> 2146d4344a6b965ea27457f1b21e335c9ae447c5
 </script>
