@@ -337,6 +337,28 @@ Class Company extends CI_Controller
         echo json_encode($data);
     }
 
+    public function getReport(){
+        $date = date_create($this->input->post("tanggal"));
+        $idPerusahaan = $_SESSION['compAktif']['data'][0]['perusahaan_id'];
+        $query = "SELECT project_id, created_at FROM project WHERE perusahaan_id = '$idPerusahaan'";
+        $res = $this->db->query($query)->result_array();
+        
+        $reps = array();
+
+        foreach($res as $key => $value){
+            $tgl = date_create($value['created_at']);
+
+            if($tgl == $date){
+                $query = "SELECT * FROM project JOIN htrans on htrans.project_id = project.project_id WHERE perusahaan_id = '$idPerusahaan' AND project.project_id = '$value[project_id]'";
+                $arr = $this->db->query($query)->result_array();
+                $arr[0]['pekerja'] = $this->db->query("SELECT auth_user.user_firstname, auth_user.user_lastname FROM auth_user JOIN project_pekerja ON project_pekerja.user_id = auth_user.user_id WHERE project_pekerja.project_id = '$value[project_id]'")->result_array();
+                $reps[] = $arr;
+            }
+        }
+
+        echo json_encode($reps);
+    }
+
 }
 
 

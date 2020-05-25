@@ -107,12 +107,26 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-         
-      <div id="box" >
-      <script src="<?= base_url().'asset/admin' ?>/plugins/chart.js/Chart.js"></script>
-    <canvas id="myChart"></canvas>
-   
-    <script>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Summary User</h2>
+          </div>
+          <div class="card-body">
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+        <footer class="main-footer">
+          <div class="float-right d-none d-sm-block">
+          <b>Version</b> 0.0.1
+          </div>
+          <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
+          reserved.
+        </footer>
+      </div>
+    </div>
+
+  <script src="<?= base_url().'asset/admin' ?>/plugins/chart.js/Chart.js"></script>
+  <script>
         
         var ctx = document.getElementById('myChart').getContext('2d');
         var tahunawal=new Date();
@@ -174,20 +188,7 @@
                 }
             }
         });
-        </script>
-        </div>
-
-      
-      <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-        <b>Version</b> 0.0.1
-        </div>
-        <strong>Copyright &copy; 2020 Kerja.in</strong> All rights
-        reserved.
-      </footer>
-    </div>
-  </div>
-
+  </script>
   <style>
     a:hover{
       text-decoration: none;
