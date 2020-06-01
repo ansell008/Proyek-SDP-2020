@@ -355,7 +355,7 @@
                               <dt class="col-md-4">Project Kategori</dt>
                               <dd class="col-md-8"><?= $value['category_name'] ?></dd>
                               <dt class="col-md-4">Project Anggaran</dt>
-                              <dd class="col-md-8"><?= $value['project_anggaran'] ?></dd>
+                              <dd class="col-md-8"><?='Rp '. $value['project_anggaran'] .',00' ?></dd>
                               <dt class="col-md-4">Project Status</dt>
                               <?php
                                 if($value['project_status'] == '0'){
