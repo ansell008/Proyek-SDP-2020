@@ -204,6 +204,27 @@
         </div>
       </div>
 
+      <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3>Generate Report By Date</h3>
+              </div>
+              <div class="card-body">
+                <form id="rep">
+                  <div class="form-group">
+                    Date : <input type="date" class="form-control" name="tanggal">
+                  </div>
+                  <button type="submit" class="btn btn-success">Generate</button>
+                </form>
+
+                <div id="tablewrapper">
+                </div>
+              </div>
+           </div>
+          </div>
+      </div>
+
         <footer class="main-footer">
           <div class="float-right d-none d-sm-block">
             <b>Version</b> 0.0.1
@@ -245,6 +266,11 @@
 
             $("#years3").on("change", function(){
               showChart3();
+            });
+
+            $("#rep").submit(function(e){
+              e.preventDefault();
+              getReportByDate();
             });
           });
 
@@ -559,14 +585,82 @@
 
                   // This will get the first returned node in the jQuery collection.
                   var areaChart       = new Chart(areaChartCanvas, { 
-                    type: 'line',
+                    type: 'bar',
                     data: areaChartData, 
                     options: areaChartOptions
                   })
                 }
               });
           }
-        
+          
+          function getReportByDate(){
+            let data = $("#rep").serialize();
+
+            $.ajax({
+              method: "post",
+              url: "<?= base_url() ?>company/Company/getReport",
+              data: data,
+              success: function(res){
+                let data = JSON.parse(res);
+                let total = 0;
+
+                let str = `<div class="table-responsive">
+                  <table class="table">
+                    <thead class="text-primary">
+                      <th>Project Name</th>
+                      <th>Project Description</th>
+                      <th>Project Budget</th>
+                      <th>Project Status</th>
+                      <th>Payment Type</th>
+                      <th>Payment Status</th>
+                      <th>Number of Workers</th>
+                      <th>Subtotal</th>
+                    </thead>
+                    <tbody id="dataReport">`;
+
+                data.forEach(item => {
+                  let status = '';
+                  let ctr = item[0].pekerja.length;
+
+                  if(item[0].project_status == 0){
+                    status = 'Open';
+                  }else if(item[0].project_status == 1){
+                    status = 'On Going';
+                  }else if(item[0].project_status == 2){
+                    status = 'Done';
+                  }else{
+                    status = 'Payment';
+                  }
+
+                  str += `
+                    <tr>
+                      <td>${item[0].project_nama}</td>
+                      <td>${item[0].project_deskripsi}</td>
+                      <td>${item[0].project_anggaran}</td>
+                      <td>${status}</td>
+                      <td>${(item[0].payment_type == null ? '-' : item[0].payment_type)}</td>
+                      <td>${(item[0].transaction_status == null ? '-' : item[0].transaction_status)}</td>
+                      <td>${ctr}</td>
+                      <td>${ctr * item[0].project_anggaran}</td>
+                    </tr>
+                  `;
+
+                  total += ctr * item[0].project_anggaran;
+                });
+
+                str += `    
+                    <tr class='bg-danger'>
+                      <td colspan=7><b>Grand Total</b></td>
+                      <td>${total}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>`;
+
+                $("#tablewrapper").append(str);
+              }
+            });
+          }
         </script>
       </div>
     </div>

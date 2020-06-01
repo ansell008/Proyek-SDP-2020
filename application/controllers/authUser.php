@@ -157,9 +157,23 @@ class AuthUser extends CI_Controller{
 
     public function sendMail($em, $hash){
         $subject = 'Hello Kerja.In Partners !';
-        $message = "<h1>Welcome to Kerja.In</h1>
-        <p>Click the link below to start using your account!</p><br><br>
-        <a href='http://localhost/Proyek-SDP-2020/verify/$hash'>Activate Account</a><br><p>Ciao!</p>";
+        $message = "
+        <div class='container' style='margin: 0 auto; width: 500px;'>
+            <div class='header' style='text-align: center;color: white; padding: 5px; background-color: tomato; margin-bottom: 0px;'>
+                <h1>Welcome to Kerja.In</h1>
+            </div>
+            <div class='body' style='background-color: beige; font-size: 15pt; padding: 10px;'>
+                <p>Welcome to Kerja In!! Thanks for creating an account! Once you activated your account, you can start using our app!</p>
+                <p>Click the button below to start using your account!</p><br>
+                <a href='http://localhost/Proyek-SDP-2020/verify/$hash' style='display: block; padding: 10px; background-color: tomato; color: white; border-radius: 5px; width: 200px; text-decoration: none; margin: 0 auto; text-align: center;'>Activate Account</a><br>
+                <p>Thank you again for joining with us! Ciao!</p>
+                <p>Sincerely, <b>Kerjain</b></p>
+            </div>
+            <div class='footer' style='text-align: center;color: white; padding: 5px; background-color: tomato; margin-top: 0px;'>
+                <h5>Copyricht &copy; Kerja.in 2020</h5>
+            </div>
+        </div>
+        ";
         $headers = "From: kerja.in.project@gmail.com\r\n".
         "MIME-Version: 1.0" . "\r\n" .
         "Content-type: text/html; charset=UTF-8" . "\r\n";
