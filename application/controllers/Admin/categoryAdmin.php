@@ -34,13 +34,5 @@ class CategoryAdmin extends CI_Controller{
         $updateName = $updateData['nameCategoryUpdate'];
         $this->categoryModel->updateCategory($id,$updateName);
     }
-
-    public function updateCategor(){
-        $updateData = $this->input->post();
-        $id = $updateData['idCategoryUpdate'];
-        $updateName = $updateData['nameCategoryUpdate'];
-        $this->categoryModel->updateCategory($id,$updateName);
-    }
-
 }
 ?>
