@@ -17,5 +17,7 @@
   <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-eYaolrhzAHhtLCh5"></script>
   <script src="<?= base_url().'asset/admin' ?>/plugins/jquery/jquery.min.js"></script>
   <script src="<?= base_url().'asset/admin' ?>/plugins/toastr/toastr.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 </head>
 </html>

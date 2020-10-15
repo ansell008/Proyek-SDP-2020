@@ -70,8 +70,32 @@ class UserController extends Ci_Controller{
     }
     
     public function showProject(){
+        $idUser = $_SESSION['userAktif'][0]['user_id'];
+
+        $query = "SELECT DISTINCT p.kategori_id FROM project_pekerja pp JOIN project p ON p.project_id = pp.project_id WHERE pp.user_id = '$idUser'";
+        $res = $this->db->query($query)->result_array();
+        
+        $arr = [];
+
+        foreach($res[0] as $key => $value){
+            $querycat = "SELECT * FROM project WHERE kategori_id = '$value'";
+            $res2 = $this->db->query($querycat)->result_array();
+            foreach($res2 as $key => $value){
+                $arr[$value['project_id']] = $value;
+            }
+        }
+
+        $data = [];
+        $i = 0;
+        foreach($arr as $key => $value){
+            if($i < 3){
+                $data[$key] = $value;
+            }
+            $i++;
+        }
+
         $this->load->view('tpl/headerComp');
-        $this->load->view('user/projectUser');
+        $this->load->view('user/projectUser', array('recommend' => $data));
         $this->load->view('tpl/footerComp');
     }
 

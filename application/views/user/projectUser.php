@@ -139,7 +139,26 @@
                 </div>
             </div>
         </div>
-
+      
+      <br>
+      <h3>Recommended Projects</h3>
+        <div class="row">
+          <div class="container d-flex flex-wrap justify-content-left">
+            <?php
+              foreach($recommend as $key => $value){
+                echo "
+                <div class='card mr-2' style='width: 20rem'>
+                  <div class='card-body'>
+                    <h4 class='card-title'>$value[project_nama]</h4>
+                    <p class='card-text'>$value[project_deskripsi]</p>
+                    <a href='".base_url()."user/detailProject/$value[project_id]' class='btn btn-primary'>View</a>
+                  </div>
+                </div>
+                ";
+              }
+            ?>
+            
+        </div>
       
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
